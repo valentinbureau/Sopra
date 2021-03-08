@@ -1,0 +1,27 @@
+package com.zelda;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+public class JoueurInter {
+	Sprite link;
+	Texture linkTexture;
+	private float linkX;
+	private float linkY;
+	private float linkSpeed;
+	
+	public JoueurInter(Sprite link, Texture linkTexture, float linkX, float linkY, float linkSpeed) {
+		super();
+		this.link = link;
+		this.linkTexture = linkTexture;
+		this.linkX = linkX;
+		this.linkY = linkY;
+		this.linkSpeed = linkSpeed;
+	}
+
+	public JoueurInter() {
+
+	}
+	
+	
+}

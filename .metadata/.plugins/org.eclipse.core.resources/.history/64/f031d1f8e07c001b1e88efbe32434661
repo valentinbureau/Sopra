@@ -1,0 +1,59 @@
+package com.zelda;
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+public class zeldaGame extends ApplicationAdapter {
+	SpriteBatch batch;
+	//Joueur joueur = new Joueur();
+	Texture img;
+	Sprite link;
+	Texture linkTexture;
+	private float linkX =320;
+	private float linkY=175;
+	private float linkSpeed = 80;
+	
+	@Override
+	public void create () {
+		batch = new SpriteBatch();
+		img = new Texture("Scene1.png");
+//		TextureRegion linkTexture = joueur.walkAnimation.getKeyFrames(0);
+//		System.out.println(linkTexture);
+		link = new Sprite( new Texture ("link.png"));
+	}
+
+	@Override
+	public void render () {
+		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) 
+		   linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;
+		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) 
+			linkX += Gdx.graphics.getDeltaTime() * linkSpeed;
+		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) 
+			linkY += Gdx.graphics.getDeltaTime() * linkSpeed;
+		 if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) 
+			linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;
+		
+		
+		
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		batch.begin();
+		batch.draw(img, 0, 0, 650,350);
+		batch.draw(link, (int)linkX, (int)linkY);
+		batch.end();
+	}
+	
+	@Override
+	public void dispose () {
+		batch.dispose();
+		img.dispose();
+	}
+}

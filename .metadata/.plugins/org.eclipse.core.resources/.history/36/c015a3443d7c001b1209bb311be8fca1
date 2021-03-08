@@ -1,0 +1,9 @@
+package com.zelda;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+public class MyActor extends Actor{
+	Texture texture = new Texture("link.png");
+	float actorX = 320, actorY = 120;
+}

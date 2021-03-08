@@ -1,0 +1,30 @@
+package com.zelda;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class EnvironnementMap {
+	protected SpriteBatch batch;
+	private Texture environmentScene;
+	private int width=650;
+	private int heigth=350;
+	public EnvironnementMap(SpriteBatch batch, Texture environmentScene) {
+		this.batch = batch;
+		this.environmentScene = environmentScene;
+		this.heigth=heigth;
+		this.width=width;
+	}
+
+	public EnvironnementMap() {
+	}
+	
+	public void create () {
+		batch = new SpriteBatch();
+		environmentScene = new Texture("Scene1.png");
+	}
+	
+	public void render() {
+		this.batch.draw(environmentScene, 0, 0, 650,350);
+	}
+}

@@ -1,0 +1,12 @@
+#
+#Fri Mar 05 17:30:40 CET 2021
+derivedResources=.gradle;build
+linkedResources=
+classpath=<?xml version\="1.0" encoding\="UTF-8"?>\n<classpath>\n<classpathentry kind\="lib" path\="C\:/Users/utilisateur/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.14/42b1ca02aabd2aa248dc0a6beb0ea0f9f003a44d/gdx-1.9.14.jar" sourcepath\="C\:/Users/utilisateur/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.14/663ea0524f5ec10d873ccd3334b04bf93f4bbbd6/gdx-1.9.14-sources.jar">\r\n\t<attributes>\r\n\t\t<attribute name\="gradle_used_by_scope" value\="main,test"/>\r\n\t</attributes>\r\n</classpathentry>\r\n</classpath>\n
+managedNatures=org.eclipse.jdt.core.javanature
+buildDir=build
+managedBuilders=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><commands/>
+buildScriptPath=build.gradle
+subprojectPaths=
+hasAutoBuildTasks=false
+gradleVersion=6.7.1

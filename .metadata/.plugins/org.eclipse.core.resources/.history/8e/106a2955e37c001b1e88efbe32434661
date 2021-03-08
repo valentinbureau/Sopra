@@ -1,0 +1,41 @@
+package com.zelda;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+public class JoueurInter {
+	Sprite sprite;
+	Texture linkTexture;
+	private float linkX;
+	private float linkY;
+	private float linkSpeed;
+	
+	public JoueurInter(float linkX, float linkY, float linkSpeed) {
+		super();
+		this.linkX = linkX;
+		this.linkY = linkY;
+		this.linkSpeed = linkSpeed;
+	}
+
+	public JoueurInter() {
+
+	}
+	
+	public void create () {
+		this.sprite= new Sprite( new Texture ("link.png"));
+	}
+	
+	public void render() {
+		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) 
+			   linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;
+		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) 
+				linkX += Gdx.graphics.getDeltaTime() * linkSpeed;
+		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) 
+				linkY += Gdx.graphics.getDeltaTime() * linkSpeed;
+		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) 
+				linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;
+	}
+	
+}

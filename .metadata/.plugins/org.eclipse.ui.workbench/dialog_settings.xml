@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ImportExportAction">
+		<item key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID" value="org.eclipse.buildship.ui.wizards.project.import"/>
+		<item key="ImportExportPage.STORE_SELECTED_EXPORT_WIZARD_ID" value="org.eclipse.ui.wizards.export.FileSystem"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.buildship.ui.importwizards"/>
+		</list>
+		<list key="ImportExportPage.STORE_EXPANDED_EXPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
+	</section>
+	<section name="FileSystemExportWizard">
+		<item key="WizardFileSystemResourceExportPage1.STORE_OVERWRITE_EXISTING_FILES_ID" value="false"/>
+		<item key="WizardFileSystemResourceExportPage1.STORE_CREATE_STRUCTURE_ID" value="false"/>
+		<item key="WizardFileSystemResourceExportPage1.STORE_RESOLVE_LINKED_RESOURCES_ID" value="false"/>
+		<list key="WizardFileSystemResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\utilisateur\Documents\Projet Z\go"/>
+			<item value="C:\Users\utilisateur\Documents\Projet Z\retry"/>
+			<item value="C:\Users\utilisateur\Documents\Projet Z\Nouveau dossier"/>
+			<item value="C:\Users\utilisateur\Documents\Projet Z\tryin"/>
+			<item value="C:\Users\utilisateur\Documents\Projet Z\try"/>
+			<item value="C:\Users\utilisateur\Documents\Projet Z\Try"/>
+			<item value="C:\Users\utilisateur\Documents\Projet Z\TheLegendOfSopra"/>
+			<item value="C:\Users\utilisateur\Documents\Projet Z\zelda"/>
+		</list>
+	</section>
+	<section name="FileSystemImportWizard">
+	</section>
+</section>
