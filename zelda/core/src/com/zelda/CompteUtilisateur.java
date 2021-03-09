@@ -14,7 +14,8 @@ public class CompteUtilisateur {
 	private int idAvatar;
 	private int idArme;
 	
-	public CompteUtilisateur() {listUtilisateur.put(this.login, new CompteUtilisateur());}
+	public CompteUtilisateur() {listUtilisateur.put(this.login, new CompteUtilisateur());
+	}
 	
 	
 
