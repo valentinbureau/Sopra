@@ -123,7 +123,6 @@ public class Menu {
 			}
 		}while(!(pwd.equals(userConnected.getPassword())));
 		menuJoueur();
-
 	}
 
 	private static String nouveauMotDePasse()
