@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import com.zelda.*;
 
-public class Menu {
+public class MenuConsole {
 
 	public static String saisieString (String message)
 	{
@@ -41,8 +41,8 @@ public class Menu {
 	public static void main(String[] args) {
 
 		menuPrincipal();
-
 	}
+	
 	public static void menuPrincipal()
 	{
 		System.out.println("Bienvenue dans The Legend of Sopra !");
