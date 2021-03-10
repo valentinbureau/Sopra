@@ -83,7 +83,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		map.batch.begin();
-		map.batch.draw(map.gameScene, 0, 0, map.getWidth(),map.getHeigth());//Affichage map
+		map.batch.draw(map.gameScene, 0, 0, map.getWidth(),map.getHeight());//Affichage map
 		map.batch.draw(link.getSprite(), link.getLinkX(), link.getLinkY());//Affichage personnage
 		map.batch.end();
 
