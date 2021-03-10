@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 //Les méthodes sont après les getters et setters
 
 public class JoueurInter {
-	Sprite sprite;
+	private Sprite sprite;
 	Texture linkTexture;
 	private float linkX;
 	private float linkY;

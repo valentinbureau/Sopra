@@ -1,4 +1,4 @@
-package menu;
+package screen;
 
 import com.zelda.*;
 
@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MenuPrincipal implements Screen{
 	
-	private Orchestrator parent = new Orchestrator();
+	private TheLegendOfSopra parent = new TheLegendOfSopra();
 	private Stage stage;
 	private Table table;
 	private Skin skin;
@@ -37,7 +37,7 @@ public class MenuPrincipal implements Screen{
 		this.userConnected = userConnected;
 	}
 
-	public MenuPrincipal(Orchestrator orch) 
+	public MenuPrincipal(TheLegendOfSopra orch) 
 	{
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
@@ -73,7 +73,7 @@ public class MenuPrincipal implements Screen{
 			
 			connexion.addListener(new ChangeListener() {
 				public void changed (ChangeEvent event, Actor actor) {
-					parent.changeScreen(Orchestrator.CONNEXION);
+					parent.changeScreen(TheLegendOfSopra.CONNEXION);
 				}
 			});
 		}
@@ -89,7 +89,7 @@ public class MenuPrincipal implements Screen{
 		
 		creationCompte.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(Orchestrator.CREATION);
+				parent.changeScreen(TheLegendOfSopra.CREATION);
 			}
 		});
 		
@@ -99,7 +99,7 @@ public class MenuPrincipal implements Screen{
 
 	@Override
 	public void render(float delta) {
-		//parent.changeScreen(Orchestrator.PRINCIPAL);
+		//parent.changeScreen(TheLegendOfSopra.PRINCIPAL);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

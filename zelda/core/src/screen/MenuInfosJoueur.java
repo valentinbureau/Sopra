@@ -1,4 +1,4 @@
-package menu;
+package screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,10 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.zelda.TheLegendOfSopra;
 
 public class MenuInfosJoueur implements Screen{
 	
-	private Orchestrator parent;
+	private TheLegendOfSopra parent;
 	private Stage stage;
 	private Table table;
 	private Skin 		skin ;
@@ -31,7 +32,7 @@ public class MenuInfosJoueur implements Screen{
 	private TextButton commencerPartie ;
 	private TextButton deconnexion ;
 	
-	public MenuInfosJoueur(Orchestrator orch) 
+	public MenuInfosJoueur(TheLegendOfSopra orch) 
 	{
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
@@ -70,31 +71,31 @@ public class MenuInfosJoueur implements Screen{
 		
 		deconnexion.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(Orchestrator.PRINCIPAL);
+				parent.changeScreen(TheLegendOfSopra.PRINCIPAL);
 			}
 		});
 		
 		modifAvatar.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(Orchestrator.AVATAR);
+				parent.changeScreen(TheLegendOfSopra.AVATAR);
 			}
 		});
 		
 		modifMap.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(Orchestrator.MAP);
+				parent.changeScreen(TheLegendOfSopra.MAP);
 			}
 		});
 		
 		modifProfil.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(Orchestrator.PROFIL);
+				parent.changeScreen(TheLegendOfSopra.PROFIL);
 			}
 		});
 		
 		commencerPartie.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(Orchestrator.PARTIE);
+				parent.changeScreen(TheLegendOfSopra.PARTIE);
 			}
 		});
 	}

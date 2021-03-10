@@ -1,4 +1,4 @@
-package menu;
+package screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,10 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.zelda.TheLegendOfSopra;
 
 public class MenuModifMap implements Screen {
 
-	private Orchestrator parent;
+	private TheLegendOfSopra parent;
 	private Stage stage;
 	private Table table;
 	private Skin skin;
@@ -27,7 +28,7 @@ public class MenuModifMap implements Screen {
 	
 	private TextButton valider;
 
-	public MenuModifMap(Orchestrator orch) 
+	public MenuModifMap(TheLegendOfSopra orch) 
 	{
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
@@ -63,7 +64,7 @@ public class MenuModifMap implements Screen {
 		valider.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
 				MenuPrincipal.part.setIdMap(choixMap.getSelectedIndex());
-				parent.changeScreen(Orchestrator.INFOS);
+				parent.changeScreen(TheLegendOfSopra.INFOS);
 			}
 		});
 

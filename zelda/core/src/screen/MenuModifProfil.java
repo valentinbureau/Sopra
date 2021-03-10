@@ -1,6 +1,4 @@
-package menu;
-
-import java.util.Iterator;
+package screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,35 +13,38 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.zelda.CompteUtilisateur;
+import com.zelda.TheLegendOfSopra;
 
-public class MenuConnexion implements Screen{
+public class MenuModifProfil implements Screen{
 	
-	private Orchestrator parent;
+	private TheLegendOfSopra parent;
 	private Stage stage;
 	private Table table;
 	private Skin skin;
 	
-	private Label titre;
 	private Label loginLabel;
 	private Label pwdLabel;
-	
-	private Label badLogin;
-	private Label badPwd;
-	
+	private Label confPwdLabel;
+	private Label badPwdLabel;
+	private Label mailLabel;
+
 	private TextField saisieLogin;
 	private TextField saisiePwd;
+	private TextField saisieConfPwd;
+	private TextField saisieMail;
+
+	private TextButton valider;
 	
-	private TextButton connexion;
-	
-	public MenuConnexion(Orchestrator orch) 
+	public MenuModifProfil(TheLegendOfSopra orch) 
 	{
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
+		
 	}
 
 	@Override
 	public void show() {
+		
 		Gdx.input.setInputProcessor(stage);
 		stage.clear();
 		table = new Table();
@@ -53,61 +54,46 @@ public class MenuConnexion implements Screen{
 
 		skin = new Skin (Gdx.files.internal("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\src\\menu\\assets\\glassy\\glassy-ui.json"));
 
-		titre = new Label ("CONNEXION",skin);
 		loginLabel = new Label ("Login : ", skin);
 		pwdLabel = new Label("Mot de passe : ", skin);
-		
-		badLogin = new Label ("", skin);
-		badPwd = new Label ("", skin);
+		confPwdLabel = new Label ("Confirmation du mot de passe", skin);
+		mailLabel = new Label ("E-Mail : ", skin);
+		badPwdLabel = new Label ("", skin);
 		
 		saisieLogin = new TextField(MenuPrincipal.userConnected.getLogin(), skin);
 		saisiePwd = new TextField(MenuPrincipal.userConnected.getPassword(), skin);
+		saisieConfPwd = new TextField(MenuPrincipal.userConnected.getPassword(), skin);
+		saisieMail = new TextField(MenuPrincipal.userConnected.getMail(), skin);
 		
-		connexion = new TextButton("Valider", skin);
+		valider = new TextButton("Valider", skin);
 		
-		table.add(titre);
-		table.row();
-		table.add(loginLabel);
+		table.add(loginLabel).left();
 		table.add(saisieLogin);
-		table.add(badLogin);
 		table.row();
-		table.add(pwdLabel);
+		table.add(pwdLabel).left();
 		table.add(saisiePwd);
-		table.add(badPwd);
 		table.row();
-		table.add(connexion);
+		table.add(confPwdLabel).left();
+		table.add(saisieConfPwd);
+		table.add(badPwdLabel);
+		table.row();
+		table.add(mailLabel).left();
+		table.add(saisieMail);
+		table.row();
+		table.add(valider).colspan(2);
 		
-		connexion.addListener(new ChangeListener() {
+		valider.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				String log = saisieLogin.getText();
-				String pass = saisiePwd.getText();
-				System.out.println(log+ " - " + pass);
-				boolean essai = false;
-				Iterator<String>it=CompteUtilisateur.getListUtilisateur().keySet().iterator();
-				do
+				if (verifPwd(saisiePwd.getText(), saisieConfPwd.getText()))
 				{
-					String key=it.next();
-					if (key.equals(log))
-					{
-						essai=true;
-						MenuPrincipal.userConnected=CompteUtilisateur.getListUtilisateur().get(key);
-					}
-					else
-					{
-						essai=false;
-					}
-				}while(it.hasNext() && (essai == false));
-				if (essai == false)
-				{
-					badLogin.setText("Login inconnu");
-				}
-				else if (!(pass.equals(MenuPrincipal.userConnected.getPassword())))
-				{
-					badPwd.setText("Mot de passe incorrect");
+					MenuPrincipal.userConnected.setLogin(saisieLogin.getText());
+					MenuPrincipal.userConnected.setPassword(saisiePwd.getText());
+					MenuPrincipal.userConnected.setMail(saisieMail.getText());
+					parent.changeScreen(TheLegendOfSopra.INFOS);
 				}
 				else
 				{
-					parent.changeScreen(Orchestrator.INFOS);
+					badPwdLabel.setText("Mot de passe incorrect");
 				}
 			}
 		});
@@ -151,6 +137,11 @@ public class MenuConnexion implements Screen{
 	public void dispose() {
 		stage.dispose();
 		
+	}
+	
+	public boolean verifPwd(String pwd1, String pwd2)
+	{
+		return pwd1.equals(pwd2);
 	}
 
 }

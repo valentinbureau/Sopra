@@ -1,5 +1,4 @@
-package menu;
-
+package screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,33 +6,33 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.zelda.TheLegendOfSopra;
 
-public class MenuModifAvatar implements Screen{
+
+
+public class MenuRecapPartie implements Screen{
 	
-	private Orchestrator parent;
+	private TheLegendOfSopra parent;
 	private Stage stage;
 	private Table table;
 	private Skin skin;
 	
 	private Label titre;
+	private Label infoMap;
+	private Label infoAvatar;
+	private Label infoArme;
 	
-	private SelectBox choixAvatar;
-	private SelectBox choixArme;
+	private TextButton commencerPartie;
+	private TextButton annuler;
 	
-	private TextButton valider;
-	
-	private Label avatar;
-	private Label arme;
-	
-	public MenuModifAvatar(Orchestrator orch) 
+	public MenuRecapPartie(TheLegendOfSopra orch) 
 	{
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
@@ -42,45 +41,47 @@ public class MenuModifAvatar implements Screen{
 
 	@Override
 	public void show() {
-		stage.clear();
 		Gdx.input.setInputProcessor(stage);
+		stage.clear();
 		table = new Table();
 		table.setFillParent(true);
 		table.setDebug(true);
 		stage.addActor(table);
 
 		skin = new Skin (Gdx.files.internal("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\src\\menu\\assets\\glassy\\glassy-ui.json"));
-
-		titre = new Label ("MODIFICATION DE L'AVATAR", skin);
 		
-		choixArme = new SelectBox(skin);
-		choixArme.setItems(MenuPrincipal.arme);
+		titre = new Label ("RECAPITULATIF DE LA PARTIE", skin);
+		infoMap = new Label ("Map : "+MenuPrincipal.part.getIdMap(), skin);
+		infoAvatar = new Label ("Avatar : "+MenuPrincipal.userConnected.getIdAvatar(), skin);
+		infoArme = new Label ("Arme : "+MenuPrincipal.userConnected.getIdArme(), skin);
 		
-		choixAvatar = new SelectBox (skin);
-		choixAvatar.setItems(MenuPrincipal.avatar);
-		
-		avatar = new Label ("Avatar", skin);
-		arme = new Label ("Arme", skin);
-		
-		valider = new TextButton ("Valider", skin);
+		commencerPartie = new TextButton("Commencer la partie", skin);
+		annuler = new TextButton("Annuler", skin);
 		
 		table.add(titre);
 		table.row();
-		table.add(avatar);
-		table.add(choixAvatar);
+		table.add(infoMap);
 		table.row();
-		table.add(arme);
-		table.add(choixArme);
+		table.add(infoAvatar);
 		table.row();
-		table.add(valider);
+		table.add(infoArme);
+		table.row();
+		table.add(commencerPartie);
+		table.add(annuler);
 		
-		valider.addListener(new ChangeListener() {
+		annuler.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				MenuPrincipal.userConnected.setIdArme(choixArme.getSelectedIndex());
-				MenuPrincipal.userConnected.setIdAvatar(choixAvatar.getSelectedIndex());
-				parent.changeScreen(Orchestrator.INFOS);
+				parent.changeScreen(TheLegendOfSopra.INFOS);
 			}
 		});
+		
+		commencerPartie.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				parent.changeScreen(TheLegendOfSopra.APP);
+			}
+		});
+		
+		
 	}
 
 	@Override
@@ -89,8 +90,6 @@ public class MenuModifAvatar implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
-
-		
 	}
 
 	@Override
