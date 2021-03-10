@@ -1,6 +1,7 @@
 package com.zelda;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,36 +12,144 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.zelda.world.GameMap;
 
-public class TheLegendOfSopra extends ApplicationAdapter {
+import screen.GameScreen;
+import screen.MenuConnexion;
+import screen.MenuCreationCompte;
+import screen.MenuInfosJoueur;
+import screen.MenuModifAvatar;
+import screen.MenuModifMap;
+import screen.MenuModifProfil;
+import screen.MenuPrincipal;
+import screen.MenuRecapPartie;
+
+public class TheLegendOfSopra extends Game {
 	private float linkX =320;
 	private float linkY=175;
 	private float linkSpeed = 80;
 	
-	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
-	GameMap map = new GameMap();//Initialisation de la map
+	private MenuPrincipal menuPrincipal;
+	private MenuCreationCompte menuCreation;
+	private MenuInfosJoueur menuInfos;
+	private MenuConnexion menuConnexion;
+	private MenuModifAvatar menuAvatar;
+	private MenuModifMap menuMap;
+	private MenuModifProfil menuProfil;
+	private MenuRecapPartie menuPartie;
+	private GameScreen app;
 	
+	public final static int PRINCIPAL = 0;
+	public final static int CREATION = 1;
+	public final static int INFOS = 2;
+	public final static int CONNEXION = 3;
+	public final static int AVATAR = 4;
+	public final static int MAP = 5;
+	public final static int PROFIL = 6;
+	public final static int PARTIE = 7;
+	public final static int APP = 8;
+	
+//	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
+//	GameMap map = new GameMap();//Initialisation de la map
+//	
 	@Override
 	public void create () {
-		map.create();//Création de la map (batch & texture)
-		link.create();//Création du personnage (sprite)
+		menuPrincipal = new MenuPrincipal(this);
+		setScreen(menuPrincipal);
 	}
-
-	@Override
-	public void render () {
-		link.render(); //Commande de déplacement personnage
-		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		map.batch.begin();
-		map.batch.draw(map.gameScene, 0, 0, map.getWidth(),map.getHeight());//Affichage map
-		map.batch.draw(link.sprite, link.getLinkX(), link.getLinkY());//Affichage personnage
-		map.batch.end();
-	}
+//
+//	@Override
+//	public void render () {
+//		link.render(); //Commande de dÃ©placement personnage
+//		
+//		Gdx.gl.glClearColor(0, 0, 0, 1);
+//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//		
+//		map.batch.begin();
+//		map.batch.draw(map.gameScene, 0, 0, 650,300);//Affichage map
+//		map.batch.draw(link.sprite, link.getLinkX(), link.getLinkY());//Affichage personnage
+//		map.batch.end();
+//	}
+//	
+//	@Override
+//	public void dispose () {
+//		map.batch.dispose();
+//		map.gameScene.dispose();
+//	}
 	
-	@Override
-	public void dispose () {
-		map.batch.dispose();
-		map.gameScene.dispose();
+	public void changeScreen (int screen)
+	{
+		switch (screen) {
+		case PRINCIPAL :
+			if (menuPrincipal == null)
+			{
+				menuPrincipal = new MenuPrincipal(this);
+			}
+			this.setScreen(menuPrincipal);
+			break;
+		
+		case CREATION :
+			if (menuCreation == null)
+			{
+				menuCreation = new MenuCreationCompte(this);
+			}
+			this.setScreen(menuCreation);
+			break;
+        
+		case INFOS :
+			if (menuInfos == null)
+			{
+				menuInfos = new MenuInfosJoueur(this);
+			}
+			this.setScreen(menuInfos);
+			break;
+			
+		case CONNEXION : 
+			if (menuConnexion == null)
+			{
+				menuConnexion = new MenuConnexion(this);
+			}
+			this.setScreen(menuConnexion);
+			break;
+			
+		case AVATAR : 
+			if (menuAvatar == null)
+			{
+				menuAvatar = new MenuModifAvatar(this);
+			}
+			this.setScreen(menuAvatar);
+			break;
+			
+		case MAP : 
+			if (menuMap == null)
+			{
+				menuMap = new MenuModifMap(this);
+			}
+			this.setScreen(menuMap);
+			break;
+			
+		case PROFIL : 
+			if (menuProfil == null)
+			{
+				menuProfil = new MenuModifProfil(this);
+			}
+			this.setScreen(menuProfil);
+			break;
+			
+		case PARTIE : 
+			if (menuPartie == null)
+			{
+				menuPartie = new MenuRecapPartie(this);
+			}
+			this.setScreen(menuPartie);
+			break;
+			
+		case APP : 
+			if (app == null)
+			{
+				app = new GameScreen(this);
+				app.create();
+			}
+			this.setScreen(app);
+			break;
+		}
 	}
 }

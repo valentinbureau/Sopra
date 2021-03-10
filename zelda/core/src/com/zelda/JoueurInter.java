@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
-//Les méthodes sont après les getters et setters
+//Les mÃ©thodes sont aprÃ¨s les getters et setters
 
 public class JoueurInter {
 	Sprite sprite;
@@ -18,11 +18,9 @@ public class JoueurInter {
 	private float linkY;
 	private float linkSpeed;
 	private float defaultSpeed;
-
-
-	GameMap map= new GameMap();
-
 	private float stateTime;
+	GameMap map= new GameMap();
+	
 	private Animation animBot;
 	private Animation animTop;
 	private Animation animLeft;
@@ -88,7 +86,6 @@ public class JoueurInter {
 		this.linkSpeed = linkSpeed;
 	}
 
-
 	public float getDefaultSpeed() {
 		return defaultSpeed;
 	}
@@ -104,7 +101,6 @@ public class JoueurInter {
 	public void setMap(GameMap map) {
 		this.map = map;
 	}
-
 	public float getStateTime() {
 		return stateTime;
 	}
@@ -145,6 +141,7 @@ public class JoueurInter {
 		this.animRight = animRight;
 	}
 
+
 	public boolean isCanUp() {
 		return canUp;
 	}
@@ -177,9 +174,8 @@ public class JoueurInter {
 		this.canRight = canRight;
 	}
 
-	public void create () {
-		//this.linkTexture = new Texture ("link.png");
-		//this.sprite= new Sprite( linkTexture );
+
+
 
 		this.linkTexture = new Texture ("SpriteSheet_Zelda3.png");
 
@@ -206,6 +202,8 @@ public class JoueurInter {
 			this.sprite = new Sprite (tmpFrames[5][1]);
 			
 			canLeft = map.analyseImage(map.secretScene, (int)linkX-1, (int)linkY);
+			//System.out.println(canLeft);
+
 			linkSpeed = defaultSpeed;
 			System.out.println(canLeft);
 			if(linkX < 0 || !canLeft) {

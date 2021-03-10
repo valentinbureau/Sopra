@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-// Les méthodes sont après les getters et setters
+// Les mÃ©thodes sont aprÃ¨s les getters et setters
 public class GameMap {
 	public SpriteBatch batch;
 	public Texture gameScene;
@@ -77,6 +77,13 @@ public class GameMap {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int heigth) {
+		this.height = heigth;
+	}
 
 	public void create () {
 		this.batch = new SpriteBatch();
@@ -86,7 +93,7 @@ public class GameMap {
 	
 	public void render() {
 		this.batch.draw(gameScene, 0, 0,580,400);
-		
+
 	}
 	
 	public boolean analyseImage(Texture texture,int X, int Y) {
@@ -106,5 +113,22 @@ public class GameMap {
 		return true;
 	}
 	
+	public boolean analyseImage(Texture texture,int X, int Y) {
+		File fichier = 	new File("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\assets\\Scene1Secret.png");
+		try {
+			BufferedImage image = ImageIO.read(fichier);
+			Color c = new Color( image.getRGB(X, Y));
+			//System.out.println(c);
+//			System.out.println(colorNotPath);
+			if (c.toString().equals( colorNotPath)) {
+				return false;
+			}
+			else {return true;}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
 	
 }
