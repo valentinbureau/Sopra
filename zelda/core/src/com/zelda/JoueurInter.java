@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
-//Les méthodes sont après les getters et setters
+//Les mÃ©thodes sont aprÃ¨s les getters et setters
 
 public class JoueurInter {
 	Sprite sprite;
@@ -86,8 +86,21 @@ public class JoueurInter {
 		this.linkSpeed = linkSpeed;
 	}
 
-	
-	
+	public float getDefaultSpeed() {
+		return defaultSpeed;
+	}
+
+	public void setDefaultSpeed(float defaultSpeed) {
+		this.defaultSpeed = defaultSpeed;
+	}
+
+	public GameMap getMap() {
+		return map;
+	}
+
+	public void setMap(GameMap map) {
+		this.map = map;
+	}
 	public float getStateTime() {
 		return stateTime;
 	}
@@ -128,11 +141,43 @@ public class JoueurInter {
 		this.animRight = animRight;
 	}
 
-	public void create () {
-		//this.linkTexture = new Texture ("link.png");
-		//this.sprite= new Sprite( linkTexture );
 
-		this.linkTexture = new Texture ("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\assets\\SpriteSheet_Zelda3.png");
+	public boolean isCanUp() {
+		return canUp;
+	}
+
+	public void setCanUp(boolean canUp) {
+		this.canUp = canUp;
+	}
+
+	public boolean isCanDown() {
+		return canDown;
+	}
+
+	public void setCanDown(boolean canDown) {
+		this.canDown = canDown;
+	}
+
+	public boolean isCanLeft() {
+		return canLeft;
+	}
+
+	public void setCanLeft(boolean canLeft) {
+		this.canLeft = canLeft;
+	}
+
+	public boolean isCanRight() {
+		return canRight;
+	}
+
+	public void setCanRight(boolean canRight) {
+		this.canRight = canRight;
+	}
+
+
+
+
+		this.linkTexture = new Texture ("SpriteSheet_Zelda3.png");
 
 		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8);
 		this.sprite= new Sprite( tmpFrames[0][0] );
@@ -158,6 +203,7 @@ public class JoueurInter {
 			
 			canLeft = map.analyseImage(map.secretScene, (int)linkX-1, (int)linkY);
 			//System.out.println(canLeft);
+
 			linkSpeed = defaultSpeed;
 			System.out.println(canLeft);
 			if(linkX < 0 || !canLeft) {

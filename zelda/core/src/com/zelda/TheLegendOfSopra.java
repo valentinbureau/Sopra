@@ -58,7 +58,7 @@ public class TheLegendOfSopra extends Game {
 //
 //	@Override
 //	public void render () {
-//		link.render(); //Commande de déplacement personnage
+//		link.render(); //Commande de dÃ©placement personnage
 //		
 //		Gdx.gl.glClearColor(0, 0, 0, 1);
 //		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -93,7 +93,7 @@ public class TheLegendOfSopra extends Game {
 			}
 			this.setScreen(menuCreation);
 			break;
-		
+        
 		case INFOS :
 			if (menuInfos == null)
 			{

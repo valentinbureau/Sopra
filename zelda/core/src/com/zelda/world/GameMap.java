@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-// Les méthodes sont après les getters et setters
+// Les mÃ©thodes sont aprÃ¨s les getters et setters
 public class GameMap {
 	public SpriteBatch batch;
 	public Texture gameScene;
@@ -30,6 +30,30 @@ public class GameMap {
 	
 	
 	
+	public Texture getSecretScene() {
+		return secretScene;
+	}
+
+	public void setSecretScene(Texture secretScene) {
+		this.secretScene = secretScene;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public String getColorNotPath() {
+		return colorNotPath;
+	}
+
+	public void setColorNotPath(String colorNotPath) {
+		this.colorNotPath = colorNotPath;
+	}
+
 	public SpriteBatch getBatch() {
 		return batch;
 	}
@@ -53,7 +77,6 @@ public class GameMap {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
 	public int getHeight() {
 		return height;
 	}
@@ -70,7 +93,24 @@ public class GameMap {
 	
 	public void render() {
 		this.batch.draw(gameScene, 0, 0,580,400);
-		
+
+	}
+	
+	public boolean analyseImage(Texture texture,int X, int Y) {
+		File fichier = 	new File("C:\\Users\\utilisateur\\Documents\\Projet Z\\Scene1Secret.png");
+		try {
+			BufferedImage image = ImageIO.read(fichier);
+			Color c = new Color( image.getRGB(X, Y)); // On regarde la couleur en (X,Y)
+
+			if (c.toString().equals( colorNotPath)) { // On check si c'est noir
+				return false;
+			}
+			else {return true;}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	public boolean analyseImage(Texture texture,int X, int Y) {
