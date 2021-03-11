@@ -52,7 +52,7 @@ public class MenuCreationCompte implements Screen{
 		table.setDebug(true);
 		stage.addActor(table);
 
-		skin = new Skin (Gdx.files.internal("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\src\\menu\\assets\\glassy\\glassy-ui.json"));
+		skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
 
 		loginLabel = new Label ("Login : ", skin);
 		pwdLabel = new Label("Mot de passe : ", skin);

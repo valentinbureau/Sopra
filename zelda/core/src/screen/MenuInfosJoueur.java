@@ -47,7 +47,7 @@ public class MenuInfosJoueur implements Screen{
 		table.setFillParent(true);
 		table.setDebug(true);
 		stage.addActor(table);
-		skin = new Skin (Gdx.files.internal("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\src\\menu\\assets\\default\\uiskin.json"));
+		skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
 		 titre = new Label ("MENU DE "+MenuPrincipal.userConnected.getLogin(), skin);
 		recap = new Label ("Derniere partie jouée : Map - "+MenuPrincipal.part.getIdMap() + " - Avatar : "+MenuPrincipal.userConnected.getIdAvatar()+" - Arme : "+MenuPrincipal.userConnected.getIdArme(), skin);
 		modifAvatar = new TextButton("Modifier l'Avatar", skin);

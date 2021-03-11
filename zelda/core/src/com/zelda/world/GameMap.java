@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import java.net.URL;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -79,8 +80,8 @@ public class GameMap {
 	}
 	public void create () {
 		this.batch = new SpriteBatch();
-		this.gameScene = new Texture("Scene1.png");
-		this.secretScene = new Texture("Scene1Secret.png");
+		this.gameScene = new Texture("com/zelda/world/Scene1.png");
+		this.secretScene = new Texture("com/zelda/world/Scene1Secret.png");
 	}
 
 	public void render() {
@@ -89,7 +90,8 @@ public class GameMap {
 	}
 
 	public boolean analyseImage(Texture texture,int X, int Y) {
-		File fichier = 	new File("Scene1Secret.png");
+		URL url = getClass().getResource("Scene1Secret.png");
+		File fichier = 	new File(url.getPath());
 		try {
 			BufferedImage image = ImageIO.read(fichier);
 			Color c = new Color( image.getRGB(X, Y)); // On regarde la couleur en (X,Y)

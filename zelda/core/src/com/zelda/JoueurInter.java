@@ -177,8 +177,7 @@ public class JoueurInter {
 
 
 	public void create () {
-		this.linkTexture = new Texture ("SpriteSheet_Zelda3.png");
-
+		this.linkTexture = new Texture ("com/zelda/SpriteSheet_zelda3.png");
 		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8);
 		this.sprite= new Sprite( tmpFrames[0][0] );
 	}

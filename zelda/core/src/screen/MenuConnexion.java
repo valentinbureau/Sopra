@@ -52,7 +52,7 @@ public class MenuConnexion implements Screen{
 		table.setDebug(true);
 		stage.addActor(table);
 
-		skin = new Skin (Gdx.files.internal("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\src\\menu\\assets\\glassy\\glassy-ui.json"));
+		skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
 
 		titre = new Label ("CONNEXION",skin);
 		loginLabel = new Label ("Login : ", skin);
