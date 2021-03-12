@@ -31,23 +31,23 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 	private TheLegendOfSopra parent;
 	
-	static FileHandle fontFile;
+	private Hud hud;
 	
-	private String live;
+	static FileHandle fontFile;
 	BitmapFont bitmapfont;
 
 	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
-	GameMap map = new GameMap();//Initialisation de la map
+	static GameMap map = new GameMap();//Initialisation de la map
 
 	public GameScreen(TheLegendOfSopra orch) 
 	{
 		parent = orch;
 		map.create();//Création de la map (batch & texture)
 		link.create();//Création du personnage (sprite)
-		live = "Live";
-		fontFile = Gdx.files.internal("screen/assets/zelda.fnt");
-		bitmapfont = new BitmapFont(fontFile);
-		bitmapfont.getData().setScale(1.0f);
+//		fontFile = Gdx.files.internal("screen/assets/zelda.fnt");
+//		bitmapfont = new BitmapFont(fontFile);
+//		bitmapfont.getData().setScale(1.0f);
+		hud=new Hud(map.batch);
 	}
 
 	@Override
@@ -106,6 +106,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	@Override
 	public void render(float delta) {
 		draw();
+		hud.stage.draw();
 	}
 	
 	public void draw()
@@ -119,7 +120,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.draw(map.gameScene, 0, 0, map.getWidth(),map.getHeight());//Affichage map
 		map.batch.draw(link.getSprite(), link.getLinkX(), link.getLinkY());//Affichage personnage
 		//bitmapfont.setColor(0,0, 0, 0);
-		bitmapfont.draw(map.batch, "Live ", map.getWidth() -100 , map.getHeight() +50);
+		//bitmapfont.draw(map.batch, "Live ", map.getWidth() -100 , map.getHeight() +50);
 		map.batch.end();
 	}
 }
