@@ -175,7 +175,7 @@ public class JoueurInter {
 	}
 
 
-
+	public void create() {
 
 		this.linkTexture = new Texture ("SpriteSheet_Zelda3.png");
 

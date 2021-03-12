@@ -77,13 +77,7 @@ public class GameMap {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int heigth) {
-		this.height = heigth;
-	}
+	
 
 	public void create () {
 		this.batch = new SpriteBatch();
@@ -103,24 +97,6 @@ public class GameMap {
 			Color c = new Color( image.getRGB(X, Y)); // On regarde la couleur en (X,Y)
 
 			if (c.toString().equals( colorNotPath)) { // On check si c'est noir
-				return false;
-			}
-			else {return true;}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return true;
-	}
-	
-	public boolean analyseImage(Texture texture,int X, int Y) {
-		File fichier = 	new File("C:\\Users\\utilisateur\\Documents\\Perso\\Projet\\Sopra\\zelda\\core\\assets\\Scene1Secret.png");
-		try {
-			BufferedImage image = ImageIO.read(fichier);
-			Color c = new Color( image.getRGB(X, Y));
-			//System.out.println(c);
-//			System.out.println(colorNotPath);
-			if (c.toString().equals( colorNotPath)) {
 				return false;
 			}
 			else {return true;}
