@@ -18,13 +18,13 @@ public class JoueurInter {
 	private float linkY;
 	private float linkSpeed;
 	private float defaultSpeed;
-	private float stateTime;
+	private float stateTime = 0;
 	GameMap map= new GameMap();
 	
-	private Animation animBot;
-	private Animation animTop;
-	private Animation animLeft;
-	private Animation animRight;
+	private Animation<TextureRegion> animBot;
+	private Animation<TextureRegion> animTop;
+	private Animation<TextureRegion> animLeft;
+	private Animation<TextureRegion> animRight;
 
 	private boolean canUp;
 	private boolean canDown;
@@ -109,38 +109,37 @@ public class JoueurInter {
 		this.stateTime = stateTime;
 	}
 
-	public Animation getAnimBot() {
+	public Animation<TextureRegion> getAnimBot() {
 		return animBot;
 	}
 
-	public void setAnimBot(Animation animBot) {
+	public void setAnimBot(Animation<TextureRegion> animBot) {
 		this.animBot = animBot;
 	}
 
-	public Animation getAnimTop() {
+	public Animation<TextureRegion> getAnimTop() {
 		return animTop;
 	}
 
-	public void setAnimTop(Animation animTop) {
+	public void setAnimTop(Animation<TextureRegion> animTop) {
 		this.animTop = animTop;
 	}
 
-	public Animation getAnimLeft() {
+	public Animation<TextureRegion> getAnimLeft() {
 		return animLeft;
 	}
 
-	public void setAnimLeft(Animation animLeft) {
+	public void setAnimLeft(Animation<TextureRegion> animLeft) {
 		this.animLeft = animLeft;
 	}
 
-	public Animation getAnimRight() {
+	public Animation<TextureRegion> getAnimRight() {
 		return animRight;
 	}
 
-	public void setAnimRight(Animation animRight) {
+	public void setAnimRight(Animation<TextureRegion> animRight) {
 		this.animRight = animRight;
 	}
-
 
 	public boolean isCanUp() {
 		return canUp;
@@ -184,9 +183,7 @@ public class JoueurInter {
 
 	public void render() {
 		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8);
-		this.stateTime = 0;
 
-		
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 			Array<TextureRegion> framesLeft = new Array<TextureRegion>();
@@ -194,11 +191,13 @@ public class JoueurInter {
 			for (int i = 0; i < 10; i++) {
 				framesLeft.add(tmpFrames[5][i]);
 			}
-
-			this.animLeft = new Animation<TextureRegion>(0.1f, tmpFrames[5][1], tmpFrames[5][2]);
+			
+			
+			this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
 			this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
-			int currentFrame = animLeft.getKeyFrameIndex(stateTime += Gdx.graphics.getDeltaTime());
-			this.sprite = new Sprite (tmpFrames[5][1]);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (tmpFrames[5][currentFrame]);
 			
 			canLeft = map.analyseImage(map.secretScene, (int)linkX-1, (int)linkY);
 			//System.out.println(canLeft);
@@ -212,7 +211,18 @@ public class JoueurInter {
 			linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;}
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
-			this.sprite = new Sprite (tmpFrames[7][1]);
+			Array<TextureRegion> framesRight = new Array<TextureRegion>();
+
+			for (int i = 0; i < 10; i++) {
+				framesRight.add(tmpFrames[7][i]);
+			}
+			
+			
+			Animation<TextureRegion> animRight = new Animation<TextureRegion>(0.08f, framesRight);
+			animRight.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (tmpFrames[7][currentFrame]);
 			
 			canRight = map.analyseImage(map.secretScene, (int)linkX + (int)this.sprite.getWidth(), (int)linkY);
 			linkSpeed = defaultSpeed;
@@ -224,7 +234,19 @@ public class JoueurInter {
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
-			this.sprite = new Sprite (tmpFrames[6][1]);
+			Array<TextureRegion> framesUp = new Array<TextureRegion>();
+
+			for (int i = 0; i < 10; i++) {
+				framesUp.add(tmpFrames[6][i]);
+			}
+			
+			
+			Animation<TextureRegion> animUp = new Animation<TextureRegion>(0.08f, framesUp);
+			animUp.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animUp.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (tmpFrames[6][currentFrame]);
+			
 			canUp = map.analyseImage(map.secretScene, (int)linkX, (int)linkY + (int) this.sprite.getHeight()-10);
 			linkSpeed = defaultSpeed;
 			if(linkY >  map.getHeight()-this.sprite.getHeight() || !canUp) {
@@ -235,7 +257,19 @@ public class JoueurInter {
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
-			this.sprite = new Sprite (tmpFrames[4][1]);
+			Array<TextureRegion> framesBot = new Array<TextureRegion>();
+
+			for (int i = 0; i < 10; i++) {
+				framesBot.add(tmpFrames[4][i]);
+			}
+			
+			
+			Animation<TextureRegion> animBot = new Animation<TextureRegion>(0.08f, framesBot);
+			animBot.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (tmpFrames[4][currentFrame]);
+			
 			canDown = map.analyseImage(map.secretScene, (int)linkX, (int)linkY -1);
 			linkSpeed = defaultSpeed;
 			if(linkY < 0 || !canDown) {
