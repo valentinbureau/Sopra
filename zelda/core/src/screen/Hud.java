@@ -25,9 +25,12 @@ public class Hud {
 	BitmapFont bitmapfont;
 	Label lifeLabel;
 	Image img;
+	private OrthographicCamera hudCamera;
 	public Hud(SpriteBatch sb)  
 	{  
-		viewport=new FitViewport(GameScreen.map.getWidth(),GameScreen.map.getHeight()+60,new OrthographicCamera());  
+		hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		viewport=new FitViewport(GameScreen.map.getWidth(),GameScreen.map.getHeight()+60,hudCamera);  
+		GameScreen.map.batch.setProjectionMatrix(hudCamera.combined);
 		//-- Définition de l'écran  
 		stage=new Stage(viewport,sb); 
 		img = new Image (new Texture(Gdx.files.internal("screen/assets/heart.png")));
