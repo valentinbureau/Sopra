@@ -16,31 +16,37 @@ import com.zelda.world.GameMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.zelda.JoueurInter;
 import com.zelda.TheLegendOfSopra;
 import com.zelda.world.GameMap;
 
 public class GameScreen extends ApplicationAdapter implements Screen{
 
-	private float linkX =320;
-	private float linkY=175;
-	private float linkSpeed = 80;
-
-	private TheLegendOfSopra parent;
+	private float linkX =5920;
+	private float linkY=1700;
+	private float linkSpeed = 100;
 	
+	private TheLegendOfSopra parent;
 	private Hud hud;
 	
 	static FileHandle fontFile;
 	BitmapFont bitmapfont;
 
+	Sound sound;
+	OrthographicCamera camera;
 	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	public GameScreen(TheLegendOfSopra orch) 
 	{
+		sound = Gdx.audio.newSound(Gdx.files.internal("com/zelda/world/Music.mp3"));
+		sound.play();
+		camera = new OrthographicCamera();
+        camera.setToOrtho(false, map.getWidth(), map.getHeight());
 		parent = orch;
 		map.create();//Création de la map (batch & texture)
 		link.create();//Création du personnage (sprite)
@@ -53,7 +59,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	@Override
 	public void dispose () {
 		map.batch.dispose();
-		map.gameScene.dispose();
+		//map.gameScene.dispose();
 	}
 
 	@Override
@@ -112,12 +118,16 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	public void draw()
 	{
 		link.render(); //Commande de déplacement personnage
+		
 
+		camera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		camera.position.set(link.getLinkX(), link.getLinkY(), 0);
+		camera.update();
+		map.batch.setProjectionMatrix(camera.combined); 
 		map.batch.begin();
-		map.batch.draw(map.gameScene, 0, 0, map.getWidth(),map.getHeight());//Affichage map
+		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getLinkX(), link.getLinkY());//Affichage personnage
 		//bitmapfont.setColor(0,0, 0, 0);
 		//bitmapfont.draw(map.batch, "Live ", map.getWidth() -100 , map.getHeight() +50);
