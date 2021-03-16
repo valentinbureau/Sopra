@@ -23,10 +23,7 @@ import screen.MenuPrincipal;
 import screen.MenuRecapPartie;
 
 public class TheLegendOfSopra extends Game {
-	private float linkX =320;
-	private float linkY=175;
-	private float linkSpeed = 80;
-	
+
 	private MenuPrincipal menuPrincipal;
 	private MenuCreationCompte menuCreation;
 	private MenuInfosJoueur menuInfos;
@@ -47,33 +44,11 @@ public class TheLegendOfSopra extends Game {
 	public final static int PARTIE = 7;
 	public final static int APP = 8;
 	
-//	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
-//	GameMap map = new GameMap();//Initialisation de la map
-//	
 	@Override
 	public void create () {
 		menuPrincipal = new MenuPrincipal(this);
 		setScreen(menuPrincipal);
 	}
-//
-//	@Override
-//	public void render () {
-//		link.render(); //Commande de déplacement personnage
-//		
-//		Gdx.gl.glClearColor(0, 0, 0, 1);
-//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//		
-//		map.batch.begin();
-//		map.batch.draw(map.gameScene, 0, 0, 650,300);//Affichage map
-//		map.batch.draw(link.sprite, link.getLinkX(), link.getLinkY());//Affichage personnage
-//		map.batch.end();
-//	}
-//	
-//	@Override
-//	public void dispose () {
-//		map.batch.dispose();
-//		map.gameScene.dispose();
-//	}
 	
 	public void changeScreen (int screen)
 	{
