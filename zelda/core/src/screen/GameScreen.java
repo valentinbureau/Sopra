@@ -141,22 +141,25 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		camera = new OrthographicCamera(GameMap.getWidth(), GameMap.getHeight()+60);
 		//camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()+60);
 		//camera = new OrthographicCamera(MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
-        camera.position.set(link.getLinkX() /MINI_MAP_RATIO , link.getLinkY()/MINI_MAP_RATIO , 0);
+        camera.position.set(MINI_MAP_WIDTH-link.getLinkX() /MINI_MAP_RATIO , MINI_MAP_HEIGHT-link.getLinkY()/MINI_MAP_RATIO , 0);
     //    camera.normalizeUp();
         camera.update();
         
-        map.batch.setProjectionMatrix(camera.combined);
+        map.batch.setProjectionMatrix(camera.invProjectionView);
         map.batch.end();
         shapeRenderer = new ShapeRenderer();
 		
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.setProjectionMatrix(camera.combined);
-		
+		shapeRenderer.identity();
+		//shapeRenderer.rotate(1, 0, 0, 10);
        // shapeRenderer.rect(x, y, width, height);
         float linkXMiniMap=camera.position.x;
         float linkYMiniMap=camera.position.y;
-        shapeRenderer.rect(-220, 210, 6, 6);
+        //shapeRenderer.rect(camera.position.x, camera.position.y, 6, 6);
+        shapeRenderer.rect(-225, 213, 6, 6);
+        //shapeRenderer.rect(linkXMiniMap, linkYMiniMap, 6, 6);
         //shapeRenderer.rect((link.getLinkX())/ MINI_MAP_RATIO, MINI_MAP_HEIGHT- (link.getLinkY()) / MINI_MAP_RATIO  , 1, 1);        
    //     shapeRenderer.rect(link.getLinkX() * MINI_MAP_TRACK_RATIO,link.getLinkY() * MINI_MAP_TRACK_RATIO+map.getHeight(), 1, 1);        
         shapeRenderer.end();
