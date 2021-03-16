@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
@@ -19,7 +20,10 @@ public class JoueurInter {
 	private float linkSpeed;
 	private float defaultSpeed;
 	private float stateTime = 0;
-	GameMap map= new GameMap();
+	
+	private SpriteBatch batch=  new SpriteBatch();
+	private Texture gameScene= new Texture("com/zelda/world/World.png");
+	GameMap map= new GameMap(batch,gameScene);
 	
 	private Animation<TextureRegion> animBot;
 	private Animation<TextureRegion> animTop;
@@ -176,18 +180,17 @@ public class JoueurInter {
 
 
 	public void create () {
-		this.linkTexture = new Texture ("com/zelda/SpriteSheet_zelda4.png");
-		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8);
-		this.sprite= new Sprite( tmpFrames[0][0] );
+		this.linkTexture = new Texture ("com/zelda/SpriteSheet_zelda4.png"); // Image contenant les différentes positions de Link
+		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8); // On créé un tableau de sprites
+		this.sprite= new Sprite( tmpFrames[0][0] ); //Affichage de la position par défaut
 	}
 
 	public void render() {
 		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8);
 
-
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 			Array<TextureRegion> framesLeft = new Array<TextureRegion>();
-
+			
 			for (int i = 0; i < 10; i++) {
 				framesLeft.add(tmpFrames[5][i]);
 			}
@@ -199,16 +202,22 @@ public class JoueurInter {
 			int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
 			this.sprite = new Sprite (tmpFrames[5][currentFrame]);
 			
-			canLeft = map.analyseImage(map.secretScene, (int)linkX-1, (int)linkY);
-			//System.out.println(canLeft);
-
+			
+			double toScanX= (linkX)/5.01-1;
+			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
+			canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
 			linkSpeed = defaultSpeed;
-			System.out.println(canLeft);
-			if(linkX < 0 || !canLeft) {
+
+			System.out.print(toScanX);
+			System.out.print("  ");
+			System.out.println(toScanY);
+			if(!canLeft) {
 				linkSpeed=0;
 			}
+
 			else {canLeft=true;}
 			linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;}
+		
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
 			Array<TextureRegion> framesRight = new Array<TextureRegion>();
@@ -217,16 +226,22 @@ public class JoueurInter {
 				framesRight.add(tmpFrames[7][i]);
 			}
 			
-			
 			Animation<TextureRegion> animRight = new Animation<TextureRegion>(0.08f, framesRight);
 			animRight.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
 			this.sprite = new Sprite (tmpFrames[7][currentFrame]);
 			
-			canRight = map.analyseImage(map.secretScene, (int)linkX + (int)this.sprite.getWidth(), (int)linkY);
+			double toScanX= (linkX + this.sprite.getWidth())/4.987+1;
+			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
+			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
-			if(linkX > map.getWidth()-this.sprite.getWidth() || !canRight ) {
+			
+			
+//			System.out.print(toScanY);
+//			System.out.print("  ");
+//			System.out.println(linkY);
+			if(!canRight ) {
 				linkSpeed=0;
 			}
 			else {canRight=true;}
@@ -235,7 +250,7 @@ public class JoueurInter {
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
 			Array<TextureRegion> framesUp = new Array<TextureRegion>();
-
+			
 			for (int i = 0; i < 10; i++) {
 				framesUp.add(tmpFrames[6][i]);
 			}
@@ -247,10 +262,17 @@ public class JoueurInter {
 			int currentFrame = animUp.getKeyFrameIndex(stateTime += delta);
 			this.sprite = new Sprite (tmpFrames[6][currentFrame]);
 			
-			canUp = map.analyseImage(map.secretScene, (int)linkX, (int)linkY + (int) this.sprite.getHeight()-10);
+			double toScanX= (linkX+sprite.getWidth()/2)/4.996;
+			double toScanY=map.getGameSceneHeight()/5-(linkY+this.sprite.getHeight())/5-1;
+			canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
-			if(linkY >  map.getHeight()-this.sprite.getHeight() || !canUp) {
+			
+			System.out.print(toScanX);
+			System.out.print("  ");
+			System.out.println(toScanY);
+			if(!canUp) {
 				linkSpeed=0;
+
 			}
 			else {canUp=true;}
 			linkY += Gdx.graphics.getDeltaTime() * linkSpeed;}
@@ -258,6 +280,7 @@ public class JoueurInter {
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
 			Array<TextureRegion> framesBot = new Array<TextureRegion>();
+
 
 			for (int i = 0; i < 10; i++) {
 				framesBot.add(tmpFrames[4][i]);
@@ -270,11 +293,20 @@ public class JoueurInter {
 			int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
 			this.sprite = new Sprite (tmpFrames[4][currentFrame]);
 			
-			canDown = map.analyseImage(map.secretScene, (int)linkX, (int)linkY -1);
+			System.out.println(linkX);
+			double toScanX= ((linkX+sprite.getWidth()/2)/4.996);
+			double toScanY= map.getGameSceneHeight()/5-(linkY)/5+1;
+			canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
-			if(linkY < 0 || !canDown) {
+			
+
+//			System.out.print(linkY);
+//			System.out.print("  ");
+//			System.out.println(toScanY);
+			if(!canDown) {
 				linkSpeed=0;
 			}
+			
 			else {canDown=true;}
 			linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;}
 	}
