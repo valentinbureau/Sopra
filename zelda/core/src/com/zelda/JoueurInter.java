@@ -1,13 +1,18 @@
 package com.zelda;
 
+import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
+import java.util.concurrent.TimeUnit;
 
 //Les méthodes sont après les getters et setters
 
@@ -19,12 +24,16 @@ public class JoueurInter {
 	private float linkSpeed;
 	private float defaultSpeed;
 	private float stateTime = 0;
+	private int swordDirection;
 	GameMap map= new GameMap();
 	
 	private Animation<TextureRegion> animBot;
 	private Animation<TextureRegion> animTop;
 	private Animation<TextureRegion> animLeft;
 	private Animation<TextureRegion> animRight;
+	private Animation<TextureRegion> animSword;
+	private Array<TextureRegion> framesSword = new Array<TextureRegion>();
+	private SpriteBatch batch;
 
 	private boolean canUp;
 	private boolean canDown;
@@ -141,6 +150,38 @@ public class JoueurInter {
 		this.animRight = animRight;
 	}
 
+	public int getSwordDirection() {
+		return swordDirection;
+	}
+
+	public void setSwordDirection(int swordDirection) {
+		this.swordDirection = swordDirection;
+	}
+
+	public Animation<TextureRegion> getAnimSword() {
+		return animSword;
+	}
+
+	public void setAnimSword(Animation<TextureRegion> animSword) {
+		this.animSword = animSword;
+	}
+
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+
+	public void setBatch(SpriteBatch batch) {
+		this.batch = batch;
+	}
+
+	public Array<TextureRegion> getFramesSword() {
+		return framesSword;
+	}
+
+	public void setFramesSword(Array<TextureRegion> framesSword) {
+		this.framesSword = framesSword;
+	}
+
 	public boolean isCanUp() {
 		return canUp;
 	}
@@ -176,20 +217,34 @@ public class JoueurInter {
 
 
 	public void create () {
-		this.linkTexture = new Texture ("com/zelda/SpriteSheet_zelda4.png");
-		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8);
+		this.linkTexture = new Texture ("com/zelda/link2.png");
+		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
 		this.sprite= new Sprite( tmpFrames[0][0] );
 	}
 
 	public void render() {
-		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, linkTexture.getWidth()/10, linkTexture.getHeight()/8);
-
+		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
+		
+		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
+		TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
+		TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
+		TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
+		TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
+		
+		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
+		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+		
+		Texture animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
+		TextureRegion[][] tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
+		
+		Texture animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
+		TextureRegion[][] tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 			Array<TextureRegion> framesLeft = new Array<TextureRegion>();
 
-			for (int i = 0; i < 10; i++) {
-				framesLeft.add(tmpFrames[5][i]);
+			for (int i = 8; i < 14; i++) {
+				framesLeft.add(tmpFrames[1][i]);
 			}
 			
 			
@@ -197,7 +252,16 @@ public class JoueurInter {
 			this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
-			this.sprite = new Sprite (tmpFrames[5][currentFrame]);
+			this.sprite = new Sprite (framesLeft.get(currentFrame));
+			
+			framesSword.clear();
+			
+			framesSword.add(tmpFramesSword5[0][0]);
+			framesSword.add(tmpFramesSword5[0][1]);
+			framesSword.add(tmpFramesSword5[0][2]);
+			framesSword.add(tmpFramesSword5[0][3]);
+			framesSword.add(tmpFramesSword5[0][4]);
+			
 			
 			canLeft = map.analyseImage(map.secretScene, (int)linkX-1, (int)linkY);
 			//System.out.println(canLeft);
@@ -213,8 +277,8 @@ public class JoueurInter {
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
 			Array<TextureRegion> framesRight = new Array<TextureRegion>();
 
-			for (int i = 0; i < 10; i++) {
-				framesRight.add(tmpFrames[7][i]);
+			for (int i = 8; i < 14; i++) {
+				framesRight.add(tmpFrames[4][i]);
 			}
 			
 			
@@ -222,7 +286,15 @@ public class JoueurInter {
 			animRight.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
-			this.sprite = new Sprite (tmpFrames[7][currentFrame]);
+			this.sprite = new Sprite (framesRight.get(currentFrame));
+			
+			framesSword.clear();
+			
+			framesSword.add(tmpFramesSword7[0][0]);
+			framesSword.add(tmpFramesSword7[0][1]);
+			framesSword.add(tmpFramesSword7[0][2]);
+			framesSword.add(tmpFramesSword7[0][3]);
+			framesSword.add(tmpFramesSword7[0][4]);
 			
 			canRight = map.analyseImage(map.secretScene, (int)linkX + (int)this.sprite.getWidth(), (int)linkY);
 			linkSpeed = defaultSpeed;
@@ -236,8 +308,8 @@ public class JoueurInter {
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
 			Array<TextureRegion> framesUp = new Array<TextureRegion>();
 
-			for (int i = 0; i < 10; i++) {
-				framesUp.add(tmpFrames[6][i]);
+			for (int i = 0; i < 8; i++) {
+				framesUp.add(tmpFrames[4][i]);
 			}
 			
 			
@@ -245,7 +317,15 @@ public class JoueurInter {
 			animUp.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animUp.getKeyFrameIndex(stateTime += delta);
-			this.sprite = new Sprite (tmpFrames[6][currentFrame]);
+			this.sprite = new Sprite (framesUp.get(currentFrame));
+			
+			framesSword.clear();
+			
+			framesSword.add(tmpFramesSword6[0][0]);
+			framesSword.add(tmpFramesSword6[0][1]);
+			framesSword.add(tmpFramesSword6[0][2]);
+			framesSword.add(tmpFramesSword6[0][3]);
+			framesSword.add(tmpFramesSword6[0][4]);
 			
 			canUp = map.analyseImage(map.secretScene, (int)linkX, (int)linkY + (int) this.sprite.getHeight()-10);
 			linkSpeed = defaultSpeed;
@@ -259,8 +339,8 @@ public class JoueurInter {
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
 			Array<TextureRegion> framesBot = new Array<TextureRegion>();
 
-			for (int i = 0; i < 10; i++) {
-				framesBot.add(tmpFrames[4][i]);
+			for (int i = 0; i < 8; i++) {
+				framesBot.add(tmpFrames[1][i]);
 			}
 			
 			
@@ -268,7 +348,15 @@ public class JoueurInter {
 			animBot.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
-			this.sprite = new Sprite (tmpFrames[4][currentFrame]);
+			this.sprite = new Sprite (framesBot.get(currentFrame));
+			
+			framesSword.clear();
+			
+			framesSword.add(tmpFramesSword[0][0]);
+			framesSword.add(tmpFramesSword2[0][1]);
+			framesSword.add(tmpFramesSword3[0][2]);
+			framesSword.add(tmpFramesSword4[0][3]);
+			framesSword.add(tmpFramesSword4[0][4]);
 			
 			canDown = map.analyseImage(map.secretScene, (int)linkX, (int)linkY -1);
 			linkSpeed = defaultSpeed;
@@ -277,6 +365,23 @@ public class JoueurInter {
 			}
 			else {canDown=true;}
 			linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;}
+		
+		if(Gdx.input.isKeyPressed(Keys.E)) {
+			
+			Sprite initialSprite = this.sprite;
+			
+			Animation<TextureRegion> animSword = new Animation<TextureRegion>(0.04f, framesSword);
+			animSword.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			TextureRegion currentFrame = animSword.getKeyFrame(stateTime += delta, true);
+			
+			
+			this.sprite = new Sprite (currentFrame);
+		
+			
+			
+			
+		}
 	}
 
 }
