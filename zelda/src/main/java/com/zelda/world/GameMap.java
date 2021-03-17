@@ -38,7 +38,8 @@ public class GameMap {
 	public GameMap() {
 		this.height=height;
 		this.width=width;
-
+		this.gameSceneHeight=3432;
+		this.gameSceneWidth=10000;
 
 	}
 
