@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.zelda.world.GameMap;
 
+import screen.BigMiniMap;
 import screen.GameScreen;
 import screen.MenuConnexion;
 import screen.MenuCreationCompte;
@@ -33,6 +34,7 @@ public class TheLegendOfSopra extends Game {
 	private MenuModifProfil menuProfil;
 	private MenuRecapPartie menuPartie;
 	private GameScreen app;
+	private BigMiniMap miniMap;
 	
 	public final static int PRINCIPAL = 0;
 	public final static int CREATION = 1;
@@ -43,6 +45,7 @@ public class TheLegendOfSopra extends Game {
 	public final static int PROFIL = 6;
 	public final static int PARTIE = 7;
 	public final static int APP = 8;
+	public final static int MINIMAP = 9;
 	
 	@Override
 	public void create () {
@@ -126,6 +129,14 @@ public class TheLegendOfSopra extends Game {
 				app.create();
 			}
 			this.setScreen(app);
+			break;
+			
+		case MINIMAP : 
+			if (miniMap == null)
+			{
+				miniMap = new BigMiniMap(this);
+			}
+			this.setScreen(miniMap);
 			break;
 		}
 	}
