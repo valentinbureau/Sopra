@@ -19,9 +19,9 @@ public class GameMap {
 	public SpriteBatch batch;
 	public Texture gameScene;
 	public Texture secretScene;
+	protected static int width=580;
+	protected static int height=400;
 
-	protected int width=580;
-	protected int height=400;
 	protected String colorNotPath= "ff000000";
 	protected int gameSceneWidth;
 	protected int gameSceneHeight;
@@ -38,7 +38,8 @@ public class GameMap {
 	public GameMap() {
 		this.height=height;
 		this.width=width;
-
+		this.gameSceneHeight=3432;
+		this.gameSceneWidth=10000;
 
 	}
 
@@ -75,7 +76,7 @@ public class GameMap {
 		this.secretScene = secretScene;
 	}
 
-	public int getHeight() {
+	public static int getHeight() {
 		return height;
 	}
 
@@ -107,7 +108,7 @@ public class GameMap {
 		this.gameScene = environmentScene;
 	}
 
-	public int getWidth() {
+	public static int getWidth() {
 		return width;
 	}
 
