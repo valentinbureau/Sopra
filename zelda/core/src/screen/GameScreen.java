@@ -25,6 +25,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.zelda.JoueurInter;
+import com.zelda.Monstre;
 import com.zelda.TheLegendOfSopra;
 import com.zelda.world.GameMap;
 
@@ -44,6 +45,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	OrthographicCamera camera;
 	OrthographicCamera miniCamera;
 	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
+	Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
+	GameMap map = new GameMap();//Initialisation de la map
 
 	static GameMap map = new GameMap();//Initialisation de la map
 
@@ -65,12 +68,13 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		miniCamera = new OrthographicCamera();
         camera.setToOrtho(false, map.getWidth(), map.getHeight());
 		parent = orch;
-		map.create();//Création de la map (batch & texture)
-		link.create();//Création du personnage (sprite)
+		map.create();//Crï¿½ation de la map (batch & texture)
+		link.create();//Crï¿½ation du personnage (sprite)
 //		fontFile = Gdx.files.internal("screen/assets/zelda.fnt");
 //		bitmapfont = new BitmapFont(fontFile);
 //		bitmapfont.getData().setScale(1.0f);
 		hud=new Hud(map.batch);
+		monstre.create();//Crï¿½ation du monstre (sprite)
 	}
 
 	@Override
@@ -114,7 +118,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 //	@Override
 //	public void render(float delta) {
-//		link.render(); //Commande de déplacement personnage
+//		link.render(); //Commande de dï¿½placement personnage
 //
 //		Gdx.gl.glClearColor(0, 0, 0, 1);
 //		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -138,7 +142,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	
 	public void draw()
 	{
-		link.render(); //Commande de déplacement personnage
+		link.render(); //Commande de dï¿½placement personnage
 		
 
 		camera.update();
@@ -151,6 +155,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.begin();
 		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getLinkX(), link.getLinkY());//Affichage personnage
+		map.batch.draw(monstre.getSprite(), monstre.getMonstreX(), monstre.getMonstreY()); //Affichage Monstre
 		//map.batch.draw(miniMap, camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/2, MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
 //		draw(Texture texture, float x, float y, float width, float height)
 //		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.
