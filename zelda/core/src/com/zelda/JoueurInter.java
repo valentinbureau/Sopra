@@ -27,6 +27,10 @@ public class JoueurInter {
 	private int swordDirection;
 	GameMap map= new GameMap();
 	
+	private SpriteBatch batch=  new SpriteBatch();
+	private Texture gameScene= new Texture("com/zelda/world/World.png");
+	GameMap map= new GameMap(batch,gameScene);
+	
 	private Animation<TextureRegion> animBot;
 	private Animation<TextureRegion> animTop;
 	private Animation<TextureRegion> animLeft;
@@ -242,7 +246,6 @@ public class JoueurInter {
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 			Array<TextureRegion> framesLeft = new Array<TextureRegion>();
-
 			for (int i = 8; i < 14; i++) {
 				framesLeft.add(tmpFrames[1][i]);
 			}
@@ -255,24 +258,27 @@ public class JoueurInter {
 			this.sprite = new Sprite (framesLeft.get(currentFrame));
 			
 			framesSword.clear();
-			
 			framesSword.add(tmpFramesSword5[0][0]);
 			framesSword.add(tmpFramesSword5[0][1]);
+			
 			framesSword.add(tmpFramesSword5[0][2]);
 			framesSword.add(tmpFramesSword5[0][3]);
 			framesSword.add(tmpFramesSword5[0][4]);
-			
-			
-			canLeft = map.analyseImage(map.secretScene, (int)linkX-1, (int)linkY);
-			//System.out.println(canLeft);
-
+			double toScanX= (linkX)/5.01-1;
+			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
+			canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
 			linkSpeed = defaultSpeed;
-			System.out.println(canLeft);
-			if(linkX < 0 || !canLeft) {
+
+			System.out.print(toScanX);
+			System.out.print("  ");
+			System.out.println(toScanY);
+			if(!canLeft) {
 				linkSpeed=0;
 			}
+
 			else {canLeft=true;}
 			linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;}
+		
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
 			Array<TextureRegion> framesRight = new Array<TextureRegion>();
@@ -280,7 +286,6 @@ public class JoueurInter {
 			for (int i = 8; i < 14; i++) {
 				framesRight.add(tmpFrames[4][i]);
 			}
-			
 			
 			Animation<TextureRegion> animRight = new Animation<TextureRegion>(0.08f, framesRight);
 			animRight.setPlayMode(Animation.PlayMode.LOOP);
@@ -295,10 +300,16 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword7[0][2]);
 			framesSword.add(tmpFramesSword7[0][3]);
 			framesSword.add(tmpFramesSword7[0][4]);
-			
-			canRight = map.analyseImage(map.secretScene, (int)linkX + (int)this.sprite.getWidth(), (int)linkY);
+			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
+			double toScanX= (linkX + this.sprite.getWidth())/4.987+1;
+			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
 			linkSpeed = defaultSpeed;
-			if(linkX > map.getWidth()-this.sprite.getWidth() || !canRight ) {
+			
+			
+//			System.out.print(toScanY);
+//			System.out.print("  ");
+//			System.out.println(linkY);
+			if(!canRight ) {
 				linkSpeed=0;
 			}
 			else {canRight=true;}
@@ -325,12 +336,19 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword6[0][1]);
 			framesSword.add(tmpFramesSword6[0][2]);
 			framesSword.add(tmpFramesSword6[0][3]);
-			framesSword.add(tmpFramesSword6[0][4]);
 			
-			canUp = map.analyseImage(map.secretScene, (int)linkX, (int)linkY + (int) this.sprite.getHeight()-10);
+			framesSword.add(tmpFramesSword6[0][4]);
+			double toScanX= (linkX+sprite.getWidth()/2)/4.996;
+			double toScanY=map.getGameSceneHeight()/5-(linkY+this.sprite.getHeight())/5-1;
+			canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
-			if(linkY >  map.getHeight()-this.sprite.getHeight() || !canUp) {
+			
+			System.out.print(toScanX);
+			System.out.print("  ");
+			System.out.println(toScanY);
+			if(!canUp) {
 				linkSpeed=0;
+
 			}
 			else {canUp=true;}
 			linkY += Gdx.graphics.getDeltaTime() * linkSpeed;}
@@ -355,14 +373,23 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword[0][0]);
 			framesSword.add(tmpFramesSword2[0][1]);
 			framesSword.add(tmpFramesSword3[0][2]);
-			framesSword.add(tmpFramesSword4[0][3]);
 			framesSword.add(tmpFramesSword4[0][4]);
+			framesSword.add(tmpFramesSword4[0][3]);
 			
-			canDown = map.analyseImage(map.secretScene, (int)linkX, (int)linkY -1);
+			System.out.println(linkX);
+			double toScanX= ((linkX+sprite.getWidth()/2)/4.996);
+			double toScanY= map.getGameSceneHeight()/5-(linkY)/5+1;
+			canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
-			if(linkY < 0 || !canDown) {
+			
+
+//			System.out.print(linkY);
+//			System.out.print("  ");
+//			System.out.println(toScanY);
+			if(!canDown) {
 				linkSpeed=0;
 			}
+			
 			else {canDown=true;}
 			linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;}
 		
