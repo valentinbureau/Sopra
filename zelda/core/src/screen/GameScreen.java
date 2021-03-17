@@ -25,6 +25,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.zelda.JoueurInter;
+import com.zelda.Monstre;
 import com.zelda.TheLegendOfSopra;
 import com.zelda.world.GameMap;
 
@@ -43,11 +44,11 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	Sound sound;
 	OrthographicCamera camera;
 	OrthographicCamera miniCamera;
-	static JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
 
+	static JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
+	Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
 	static GameMap map = new GameMap();//Initialisation de la map
 
-	
 	private Texture miniMap;
 	private static final int MINI_MAP_RATIO = 69;
     private static final int MINI_MAP_WIDTH = map.getGameSceneWidth()/MINI_MAP_RATIO;
@@ -65,7 +66,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		parent = orch;
 		map.create();//Création de la map (batch & texture)
 		link.create();//Création du personnage (sprite)
+
 		hud=new Hud(map.batch);
+		monstre.create();//Crï¿½ation du monstre (sprite)
 	}
 
 	@Override
@@ -106,6 +109,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		// TODO Auto-generated method stub
 
 	}
+
 	
 	@Override
 	public void render(float delta) {
@@ -127,6 +131,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.begin();
 		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getLinkX(), link.getLinkY());//Affichage personnage
+
+		map.batch.draw(monstre.getSprite(), monstre.getMonstreX(), monstre.getMonstreY()); //Affichage Monstre
+
 //		draw(Texture texture, float x, float y, float width, float height)
 //		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.
 		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
