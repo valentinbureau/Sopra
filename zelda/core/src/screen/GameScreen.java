@@ -46,9 +46,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	OrthographicCamera miniCamera;
 	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
 	Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
-	GameMap map = new GameMap();//Initialisation de la map
-
 	static GameMap map = new GameMap();//Initialisation de la map
+
+	
 
 	
 	//private static final int MINI_MAP_SIZE = 64;
