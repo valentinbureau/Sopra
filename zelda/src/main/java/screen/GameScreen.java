@@ -47,6 +47,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 	static JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
 	Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
+	Monstre monstre1 = new Monstre(5920, 1300, 80, 4);
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	private Texture miniMap;
@@ -69,6 +70,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 		hud=new Hud(map.batch);
 		monstre.create();//Crï¿½ation du monstre (sprite)
+		monstre1.create();
 	}
 
 	@Override
@@ -121,6 +123,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	public void draw()
 	{
 		link.render(); //Commande de déplacement personnage
+		monstre.render();//Déplacement Monstre
+		monstre1.render();
 		camera.update();
 		miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -133,6 +137,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.draw(link.getSprite(), link.getLinkX(), link.getLinkY());//Affichage personnage
 
 		map.batch.draw(monstre.getSprite(), monstre.getMonstreX(), monstre.getMonstreY()); //Affichage Monstre
+		map.batch.draw(monstre1.getSprite(), monstre1.getMonstreX(), monstre1.getMonstreY());
 
 //		draw(Texture texture, float x, float y, float width, float height)
 //		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.

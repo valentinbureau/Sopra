@@ -1,11 +1,15 @@
 package com.zelda;
 
+import java.time.LocalTime;
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
 public class Monstre extends Entite{
@@ -17,6 +21,7 @@ public class Monstre extends Entite{
 	private float monstreSpeed;
 	private float defaultSpeed;
 	private float stateTime = 0;
+	private static LocalTime tempsDeplacement = LocalTime.now();
 	
 	private boolean canUp;
 	private boolean canDown;
@@ -207,6 +212,14 @@ public class Monstre extends Entite{
 		this.monsterType = monsterType;
 	}
 
+	public static LocalTime getTempsDeplacement() {
+		return tempsDeplacement;
+	}
+
+	public static void setTempsDeplacement(LocalTime tempsDeplacement) {
+		Monstre.tempsDeplacement = tempsDeplacement;
+	}
+
 	public void create () {
 		this.monstreTexture = new Texture("com/zelda/Monster-sprites.png");
 		this.tmpFrames = TextureRegion.split(monstreTexture, monstreTexture.getWidth()/12, monstreTexture.getHeight()/8);
@@ -221,12 +234,111 @@ public class Monstre extends Entite{
 	
 	public void render() {
 		
-//		if(!canLeft) {
-//			monstreSpeed = 0;
-//		}
-//		else {
-//			monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed
-//		}
+		
+		int deplacement = (int) (Math.random() * 4);
+		int indexSprite = 3*monsterType -3 ;
+		int lineSprite = (this.monsterType < 4) ? 0 : 4;
+		LocalTime now = LocalTime.now();
+		
+		
+		if (now.isAfter(tempsDeplacement.plusNanos(5*10^8))) {
+			if (deplacement == 1) {
+				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
+				for (int i = indexSprite; i < indexSprite + 3; i++) {
+					framesLeft.add(tmpFrames[lineSprite+3][i]);
+				}
+				
+				this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
+				this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
+				float delta = Gdx.graphics.getDeltaTime();
+				int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
+				this.sprite = new Sprite (framesLeft.get(currentFrame));
+				
+				double toScanX= (monstreX)/5.01-1;
+				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
+				canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
+				
+				if(!canLeft) {
+					monstreSpeed = 0;
+				}
+				else {
+					monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+					tempsDeplacement = LocalTime.now();
+				}
+			}
+			else if (deplacement == 2) {
+				Array<TextureRegion> framesRight = new Array<TextureRegion>();
+				for (int i = indexSprite; i < indexSprite + 3; i++) {
+					framesRight.add(tmpFrames[lineSprite+1][i]);
+				}
+				
+				this.animRight = new Animation<TextureRegion>(0.08f, framesRight);
+				this.animRight.setPlayMode(Animation.PlayMode.LOOP);
+				float delta = Gdx.graphics.getDeltaTime();
+				int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
+				this.sprite = new Sprite (framesRight.get(currentFrame));
+				
+				double toScanX= (monstreX + this.sprite.getWidth())/4.987+1;
+				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
+				canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
+				
+				if(!canRight) {
+					monstreSpeed = 0;
+				}
+				else {
+					monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+					tempsDeplacement = LocalTime.now();
+				}
+			}
+			else if (deplacement == 3) {
+				Array<TextureRegion> framesUp = new Array<TextureRegion>();
+				for (int i = indexSprite; i < indexSprite + 3; i++) {
+					framesUp.add(tmpFrames[lineSprite+1][i]);
+				}
+				
+				this.animTop = new Animation<TextureRegion>(0.08f, framesUp);
+				this.animTop.setPlayMode(Animation.PlayMode.LOOP);
+				float delta = Gdx.graphics.getDeltaTime();
+				int currentFrame = animTop.getKeyFrameIndex(stateTime += delta);
+				this.sprite = new Sprite (framesUp.get(currentFrame));
+				
+				double toScanX= (monstreX+sprite.getWidth()/2)/4.996;
+				double toScanY=map.getGameSceneHeight()/5-(monstreY+this.sprite.getHeight())/5-1;
+				canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
+				
+				if(!canRight) {
+					monstreSpeed = 0;
+				}
+				else {
+					monstreY += Gdx.graphics.getDeltaTime() * monstreSpeed;
+					tempsDeplacement = LocalTime.now();
+				}
+			}
+			else if (deplacement == 4) {
+				Array<TextureRegion> framesBot = new Array<TextureRegion>();
+				for (int i = indexSprite; i < indexSprite + 3; i++) {
+					framesBot.add(tmpFrames[lineSprite+1][i]);
+				}
+				
+				this.animBot = new Animation<TextureRegion>(0.08f, framesBot);
+				this.animBot.setPlayMode(Animation.PlayMode.LOOP);
+				float delta = Gdx.graphics.getDeltaTime();
+				int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
+				this.sprite = new Sprite (framesBot.get(currentFrame));
+				
+				double toScanX= ((monstreX+sprite.getWidth()/2)/4.996);
+				double toScanY= map.getGameSceneHeight()/5-(monstreY)/5+1;
+				canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
+				
+				if(!canRight) {
+					monstreSpeed = 0;
+				}
+				else {
+					monstreY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+					tempsDeplacement = LocalTime.now();
+				}
+			}
+		}
 	}
 	
 }
