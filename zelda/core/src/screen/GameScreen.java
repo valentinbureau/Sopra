@@ -42,23 +42,27 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	BitmapFont bitmapfont;
 	Sound sound;
 	OrthographicCamera camera;
+	OrthographicCamera miniCamera;
 	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
 
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	
 	//private static final int MINI_MAP_SIZE = 64;
-	private static final int MINI_MAP_RATIO = 9;
-    private static final int MINI_MAP_WIDTH = map.getWidth()/MINI_MAP_RATIO;
-    private static final int MINI_MAP_HEIGHT = map.getHeight()/MINI_MAP_RATIO;
+	private Texture miniMap;
+	private static final int MINI_MAP_RATIO = 69;
+    private static final int MINI_MAP_WIDTH = map.getGameSceneWidth()/MINI_MAP_RATIO;
+    private static final int MINI_MAP_HEIGHT = map.getGameSceneHeight()/MINI_MAP_RATIO;
 	private ShapeRenderer shapeRenderer;
 	// private Mode7 mode7;
 	 
 	public GameScreen(TheLegendOfSopra orch) 
 	{
+		miniMap = new Texture(Gdx.files.internal("screen/assets/miniMap.png"));
 		sound = Gdx.audio.newSound(Gdx.files.internal("com/zelda/world/Music.mp3"));
-		sound.play();
+		//sound.play();
 		camera = new OrthographicCamera();
+		miniCamera = new OrthographicCamera();
         camera.setToOrtho(false, map.getWidth(), map.getHeight());
 		parent = orch;
 		map.create();//Création de la map (batch & texture)
@@ -138,6 +142,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		
 
 		camera.update();
+		miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.position.set(link.getLinkX(), link.getLinkY(), 0);
@@ -146,29 +151,36 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.begin();
 		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getLinkX(), link.getLinkY());//Affichage personnage
-		map.batch.draw(map.gameScene, 0, 0+map.getHeight(), MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
-		
-		camera = new OrthographicCamera(GameMap.getWidth(), GameMap.getHeight()+60);
+		//map.batch.draw(miniMap, camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/2, MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
+//		draw(Texture texture, float x, float y, float width, float height)
+//		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.
+		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
+
 		//camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()+60);
 		//camera = new OrthographicCamera(MINI_MAP_WIDTH, MINI_MAP_HEIGHT);
-        camera.position.set(MINI_MAP_WIDTH-link.getLinkX() /MINI_MAP_RATIO , MINI_MAP_HEIGHT-link.getLinkY()/MINI_MAP_RATIO , 0);
+        //camera.position.set(MINI_MAP_WIDTH-link.getLinkX() /MINI_MAP_RATIO , MINI_MAP_HEIGHT-link.getLinkY()/MINI_MAP_RATIO , 0);
     //    camera.normalizeUp();
-        camera.update();
-        
+       // camera.update();
+//		miniCamera.position.set(link.getLinkX()  , link.getLinkY() , 0);
+//		miniCamera.update();
         map.batch.setProjectionMatrix(camera.invProjectionView);
+        camera.position.set(link.getLinkX() , link.getLinkY() , 0);
+        camera.update();
+		//map.batch.draw(map.gameScene, camera.position.x, camera.position.y, camera.position.x-MINI_MAP_WIDTH, camera.position.y+MINI_MAP_HEIGHT);
+
         map.batch.end();
         shapeRenderer = new ShapeRenderer();
 		
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.identity();
+//		shapeRenderer.identity();
 		//shapeRenderer.rotate(1, 0, 0, 10);
        // shapeRenderer.rect(x, y, width, height);
-        float linkXMiniMap=camera.position.x;
-        float linkYMiniMap=camera.position.y;
+//        float linkXMiniMap=camera.position.x;
+//        float linkYMiniMap=camera.position.y;
         //shapeRenderer.rect(camera.position.x, camera.position.y, 6, 6);
-        shapeRenderer.rect(-225, 213, 6, 6);
+        shapeRenderer.rect(link.getLinkX()-map.getWidth()/2-2 + link.getLinkX()/MINI_MAP_RATIO, (link.getLinkY()+map.getHeight()/3+14)+link.getLinkY()/MINI_MAP_RATIO,2, 2);
         //shapeRenderer.rect(linkXMiniMap, linkYMiniMap, 6, 6);
         //shapeRenderer.rect((link.getLinkX())/ MINI_MAP_RATIO, MINI_MAP_HEIGHT- (link.getLinkY()) / MINI_MAP_RATIO  , 1, 1);        
    //     shapeRenderer.rect(link.getLinkX() * MINI_MAP_TRACK_RATIO,link.getLinkY() * MINI_MAP_TRACK_RATIO+map.getHeight(), 1, 1);        

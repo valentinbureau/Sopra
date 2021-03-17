@@ -28,7 +28,7 @@ public class Hud {
 	private OrthographicCamera hudCamera;
 	public Hud(SpriteBatch sb)  
 	{  
-		hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		hudCamera = new OrthographicCamera(GameScreen.map.getWidth(), GameScreen.map.getHeight()+60);
 		viewport=new FitViewport(GameScreen.map.getWidth(),GameScreen.map.getHeight()+60,hudCamera);  
 		GameScreen.map.batch.setProjectionMatrix(hudCamera.combined);
 		//-- Définition de l'écran  
