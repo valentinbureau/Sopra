@@ -25,7 +25,6 @@ public class JoueurInter {
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private int swordDirection;
-	GameMap map= new GameMap();
 	
 	private SpriteBatch batch=  new SpriteBatch();
 	private Texture gameScene= new Texture("com/zelda/world/World.png");
@@ -37,7 +36,6 @@ public class JoueurInter {
 	private Animation<TextureRegion> animRight;
 	private Animation<TextureRegion> animSword;
 	private Array<TextureRegion> framesSword = new Array<TextureRegion>();
-	private SpriteBatch batch;
 
 	private boolean canUp;
 	private boolean canDown;
@@ -300,9 +298,9 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword7[0][2]);
 			framesSword.add(tmpFramesSword7[0][3]);
 			framesSword.add(tmpFramesSword7[0][4]);
-			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
 			double toScanX= (linkX + this.sprite.getWidth())/4.987+1;
 			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
+			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
 			
 			
