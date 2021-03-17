@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.Sprite"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureAtlas"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.Actor"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.InputListener"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.utils.IntIntMap.Keys"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.Input.Keys"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.math.Rectangle"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.Animation"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.TextureRegion"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Texture"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+    <fullyQualifiedTypeName name="com.zelda.EnvironnementMap"/>
+    <fullyQualifiedTypeName name="com.zelda.world.GameMap"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Pixmap"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Color"/>
+</qualifiedTypeNameHistroy>

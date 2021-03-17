@@ -1,0 +1,50 @@
+package com.zelda;
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+public class zeldaGame extends ApplicationAdapter {
+	SpriteBatch batch;
+	Texture environmentScene;
+
+	private float linkX =320;
+	private float linkY=175;
+	private float linkSpeed = 80;
+	JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed);
+	EnvironnementMap map = new EnvironnementMap();
+	@Override
+	public void create () {
+		//batch = new SpriteBatch();
+		//map.environmentScene = new Texture("Scene1.png");
+//		map.create();
+		link.create();
+
+	}
+
+	@Override
+	public void render () {
+		
+		link.render();
+		
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		map.batch.begin();
+		map.batch.draw(map.environmentScene, 0, 0, 650,300);
+		map.batch.draw(link.sprite, link.getLinkX(), link.getLinkY());
+		map.batch.end();
+	}
+	
+	@Override
+	public void dispose () {
+		map.batch.dispose();
+		map.environmentScene.dispose();
+	}
+}

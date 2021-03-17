@@ -1,0 +1,5 @@
+package com.zelda.world;
+
+public abstract class GameMap {
+
+}

@@ -8,11 +8,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 import java.util.concurrent.TimeUnit;
+
 
 //Les méthodes sont après les getters et setters
 
@@ -23,6 +25,7 @@ public class JoueurInter {
 	private float linkY;
 	private float linkSpeed;
 	private float defaultSpeed;
+
 	private float stateTime = 0;
 	private int swordDirection;
 	
@@ -49,8 +52,9 @@ public class JoueurInter {
 		this.defaultSpeed = linkSpeed;
 		this.canUp=true;
 		this.canDown=true;
+		this.canLeft=true;
 		this.canRight=true;
-
+		
 	}
 
 	public JoueurInter() {
@@ -219,12 +223,15 @@ public class JoueurInter {
 
 
 	public void create () {
+
 		this.linkTexture = new Texture ("com/zelda/link2.png");
 		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
 		this.sprite= new Sprite( tmpFrames[0][0] );
+
 	}
 
 	public void render() {
+
 		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
 		
 		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
@@ -407,6 +414,7 @@ public class JoueurInter {
 			
 			
 		}
+
 	}
 
 }

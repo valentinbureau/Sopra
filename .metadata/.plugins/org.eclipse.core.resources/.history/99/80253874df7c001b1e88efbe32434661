@@ -1,0 +1,15 @@
+package com.zelda;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class EnvironnementMap {
+	SpriteBatch batch;
+	Texture environmentScene;
+	public EnvironnementMap(SpriteBatch batch, Texture environmentScene) {
+		this.batch = batch;
+		this.environmentScene = environmentScene;
+	}
+	
+	
+}

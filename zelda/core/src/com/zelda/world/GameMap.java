@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class GameMap {
 	public SpriteBatch batch;
 	public Texture gameScene;
+
 	public Texture secretScene;
 	protected static int width=580;
 	protected static int height=400;
@@ -26,6 +27,7 @@ public class GameMap {
 	protected int gameSceneWidth;
 	protected int gameSceneHeight;
 	OrthographicCamera camera;
+
 	
 	public GameMap(SpriteBatch batch, Texture gameScene) {
 		this.height=height;
@@ -115,6 +117,7 @@ public class GameMap {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+
 	public void create () {
 		this.batch = new SpriteBatch();
 		this.gameScene = new Texture("com/zelda/world/World.png");
@@ -123,12 +126,14 @@ public class GameMap {
 	}
 
 	public void render() {
+
 		
 
 		this.batch.begin();
 		//this.batch.draw(this.secretScene, 0, 0,width,height);
 		 
 		this.batch.end();
+
 
 	}
 
