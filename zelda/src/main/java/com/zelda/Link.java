@@ -496,8 +496,6 @@ public class Link implements Serializable{
 			animSword.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			TextureRegion currentFrame = animSword.getKeyFrame(stateTime += delta, true);
-			
-			
 			this.sprite = new Sprite (currentFrame);
 			
 		}

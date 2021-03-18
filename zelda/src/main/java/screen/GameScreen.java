@@ -44,7 +44,6 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	BitmapFont bitmapfont;
 	Sound sound;
 	OrthographicCamera camera;
-	OrthographicCamera miniCamera;
 
 	static Link link = new Link(linkX,linkY, linkVie,linkSpeed); // Initialisation du Joueur
 	Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
@@ -63,11 +62,10 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		sound = Gdx.audio.newSound(Gdx.files.internal("com/zelda/world/Music.mp3"));
 		sound.play();
 		camera = new OrthographicCamera();
-		miniCamera = new OrthographicCamera();
         camera.setToOrtho(false, map.getWidth(), map.getHeight());
 		parent = orch;
 		map.create();//Création de la map (batch & texture)
-		link.create();//Création du personnage (sprite)
+		//link.create();//Création du personnage (sprite)
 		MenuPrincipal.userConnected.getAvatar().create();
 		hud=new Hud(map.batch);
 		monstre.create();//Crï¿½ation du monstre (sprite)
@@ -125,11 +123,11 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	public void draw()
 	{
 		//link.render(); //Commande de déplacement personnage
+		//System.out.println("SPEED : "+MenuPrincipal.userConnected.getAvatar().getSpeed());
 		MenuPrincipal.userConnected.getAvatar().render(); //Commande de déplacement personnage
 		monstre.render();//Déplacement Monstre
 		monstre1.render();
 		camera.update();
-		miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.position.set(MenuPrincipal.userConnected.getAvatar().getPosX(), MenuPrincipal.userConnected.getAvatar().getPosY(), 0);
