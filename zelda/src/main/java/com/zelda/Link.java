@@ -24,7 +24,10 @@ public class Link extends Entite {
 	private float stateTime = 0;
 	private int swordDirection;
 	private Rectangle hitbox;
+	private Rectangle attackHitbox;
 	private boolean collision = false;
+	private boolean collisionAttack = false;
+	private int attackDirection = 0;
 
 	private SpriteBatch batch=  new SpriteBatch();
 	private Texture gameScene= new Texture("com/zelda/world/World.png");
@@ -352,8 +355,31 @@ public class Link extends Entite {
 		return framesRight;
 	}
 
+	public Rectangle getAttackHitbox() {
+		return attackHitbox;
+	}
 
-//	public void render() {
+	public void setAttackHitbox(Rectangle attackHitbox) {
+		this.attackHitbox = attackHitbox;
+	}
+
+	public boolean isCollisionAttack() {
+		return collisionAttack;
+	}
+
+	public void setCollisionAttack(boolean collisionAttack) {
+		this.collisionAttack = collisionAttack;
+	}
+
+	public int getAttackDirection() {
+		return attackDirection;
+	}
+
+	public void setAttackDirection(int attackDirection) {
+		this.attackDirection = attackDirection;
+	}
+
+	//	public void render() {
 //		//Préparation du spriteSheet de Link
 //		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
 //
@@ -391,6 +417,7 @@ public class Link extends Entite {
 	public void create () {
 		sprite= new Sprite( tmpFrames[0][0] );
 		hitbox = new Rectangle(posX, posY, 45, 45);
+		attackHitbox = new Rectangle(posX, posY, 55, 55);
 
 		for (int i = 8; i < 14; i++) {
 			framesLeft.add(tmpFrames[1][i]);
@@ -412,23 +439,6 @@ public class Link extends Entite {
 
 	public void render(List<Monstre> monstres) {
 
-//		public void render() {
-			//Préparation du spriteSheet de Link
-			TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
-
-			//Préparation du SpriteSheet de l'attaque
-			Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
-			TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
-			TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
-			TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
-			TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-
-
-			Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
-			TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
-			
-
-
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 
 			animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
@@ -444,6 +454,7 @@ public class Link extends Entite {
 			framesSword.add(tmpFramesSword5[0][2]);
 			framesSword.add(tmpFramesSword5[0][3]);
 			framesSword.add(tmpFramesSword5[0][4]);
+			attackDirection = 1;
 			double toScanX= (this.posX)/5.01-1;
 			double toScanY=map.getGameSceneHeight()/5-(this.posY+sprite.getHeight()/2)/5;
 			canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
@@ -459,7 +470,6 @@ public class Link extends Entite {
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -485,6 +495,7 @@ public class Link extends Entite {
 			framesSword.add(tmpFramesSword7[0][2]);
 			framesSword.add(tmpFramesSword7[0][3]);
 			framesSword.add(tmpFramesSword7[0][4]);
+			attackDirection = 3;
 			double toScanX= (posX + this.sprite.getWidth())/5;
 			double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
 			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
@@ -501,7 +512,6 @@ public class Link extends Entite {
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -529,6 +539,7 @@ public class Link extends Entite {
 			framesSword.add(tmpFramesSword6[0][3]);
 
 			framesSword.add(tmpFramesSword6[0][4]);
+			attackDirection = 2;
 			double toScanX= (posX+sprite.getWidth()/2)/4.996;
 			double toScanY=map.getGameSceneHeight()/5-(posY+this.sprite.getHeight())/5-1;
 			canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
@@ -545,7 +556,6 @@ public class Link extends Entite {
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -572,7 +582,7 @@ public class Link extends Entite {
 			framesSword.add(tmpFramesSword4[0][4]);
 			framesSword.add(tmpFramesSword4[0][3]);
 
-
+			attackDirection = 4;
 			double toScanX= ((posX+sprite.getWidth()/2)/4.996);
 			double toScanY= map.getGameSceneHeight()/5-(posY)/5+1;
 			canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
@@ -589,7 +599,6 @@ public class Link extends Entite {
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -600,22 +609,54 @@ public class Link extends Entite {
 		}
 
 		if(Gdx.input.isKeyPressed(Keys.E)) {
-
-			Sprite initialSprite = this.sprite;
-
+			
 			Animation<TextureRegion> animSword = new Animation<TextureRegion>(0.04f, framesSword);
 			animSword.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			TextureRegion currentFrame = animSword.getKeyFrame(stateTime += delta, true);
-
-
 			this.sprite = new Sprite (currentFrame);
 
-
+			switch (attackDirection) {
+			case 1:
+				attackHitbox.setPosition(posX - 15, posY);
+				System.out.println(attackHitbox.getX());
+				System.out.println(getPosX());
+				break;
+			case 2 :
+				attackHitbox.setPosition(posX, posY + 15);
+				System.out.println(attackHitbox.getX());
+				System.out.println(getPosX());
+				break;
+			case 3 :
+				attackHitbox.setPosition(posX + 15, posY);
+				System.out.println(attackHitbox.getX());
+				System.out.println(getPosX());
+				break;
+			case 4 : 
+				attackHitbox.setPosition(posX, posY - 15);
+				System.out.println(attackHitbox.getX());
+				System.out.println(getPosX());
+				break;
+			default:
+				break;
+			}
+			
+			for (Monstre monstre : monstres) {
+				if (collisionAttack == false) {
+					collisionAttack = attackHitbox.overlaps(monstre.getHitbox());
+					if(collisionAttack) {
+						monstre.setPosX(100);
+						monstre.setPosY(100);
+						monstre.getHitbox().setPosition(100, 100);
+					}
+				}
+			}
 
 
 		}
-		collision = false;	
+		collision = false;
+		collisionAttack = false;
+		attackHitbox.setPosition(posX, posY);
 	}
 
 }

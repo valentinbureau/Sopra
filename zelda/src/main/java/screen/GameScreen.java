@@ -197,19 +197,19 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
 		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
-		map.batch.draw(monstre2.getSprite(), monstre2.getMonstreX(), monstre2.getMonstreY());
-		map.batch.draw(monstre3.getSprite(), monstre3.getMonstreX(), monstre3.getMonstreY());
-		map.batch.draw(monstre4.getSprite(), monstre4.getMonstreX(), monstre4.getMonstreY());
-		map.batch.draw(monstre5.getSprite(), monstre5.getMonstreX(), monstre5.getMonstreY());
-		map.batch.draw(monstre6.getSprite(), monstre6.getMonstreX(), monstre6.getMonstreY());
-		map.batch.draw(monstre7.getSprite(), monstre7.getMonstreX(), monstre7.getMonstreY());
-//		map.batch.draw(monstre8.getSprite(), monstre8.getMonstreX(), monstre8.getMonstreY());
-//		map.batch.draw(monstre9.getSprite(), monstre9.getMonstreX(), monstre9.getMonstreY());
-//		map.batch.draw(monstre10.getSprite(), monstre10.getMonstreX(), monstre10.getMonstreY());
-//		map.batch.draw(monstre11.getSprite(), monstre11.getMonstreX(), monstre11.getMonstreY());
-//		map.batch.draw(monstre12.getSprite(), monstre12.getMonstreX(), monstre12.getMonstreY());
-//		map.batch.draw(monstre13.getSprite(), monstre13.getMonstreX(), monstre13.getMonstreY());
-//		map.batch.draw(monstre14.getSprite(), monstre14.getMonstreX(), monstre14.getMonstreY());
+		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
+		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
+		map.batch.draw(monstre4.getSprite(), monstre4.getPosX(), monstre4.getPosY());
+		map.batch.draw(monstre5.getSprite(), monstre5.getPosX(), monstre5.getPosY());
+		map.batch.draw(monstre6.getSprite(), monstre6.getPosX(), monstre6.getPosY());
+		map.batch.draw(monstre7.getSprite(), monstre7.getPosX(), monstre7.getPosY());
+//		map.batch.draw(monstre8.getSprite(), monstre8.getPosX(), monstre8.getPosY());
+//		map.batch.draw(monstre9.getSprite(), monstre9.getPosX(), monstre9.getPosY());
+//		map.batch.draw(monstre10.getSprite(), monstre10.getPosX(), monstre10.getPosY());
+//		map.batch.draw(monstre11.getSprite(), monstre11.getPosX(), monstre11.getPosY());
+//		map.batch.draw(monstre12.getSprite(), monstre12.getPosX(), monstre12.getPosY());
+//		map.batch.draw(monstre13.getSprite(), monstre13.getPosX(), monstre13.getPosY());
+//		map.batch.draw(monstre14.getSprite(), monstre14.getPosX(), monstre14.getPosY());
 
 //		draw(Texture texture, float x, float y, float width, float height)
 //		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.

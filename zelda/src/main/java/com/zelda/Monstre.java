@@ -317,7 +317,6 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-//					System.out.println(hitbox.overlaps(link.getHitbox()));
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {
@@ -351,7 +350,6 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-//					System.out.println(hitbox.overlaps(link.getHitbox()));
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {
