@@ -233,12 +233,13 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 			System.out.println("PRESSED");
 			parent.changeScreen(TheLegendOfSopra.MINIMAP);
 		}
-		hud.show();
+		
 		
 		if (link.getVie() <= 0)
 		{
 			parent.changeScreen(TheLegendOfSopra.GAMEOVER);
 		}
+		hud.show();
 	}
 }
 
