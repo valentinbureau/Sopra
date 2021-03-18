@@ -1,5 +1,8 @@
 package com.zelda;
 
+import java.util.Iterator;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
@@ -21,6 +25,8 @@ public class JoueurInter {
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private int swordDirection;
+	private Rectangle hitbox;
+	private boolean collision = false;
 	
 	private SpriteBatch batch=  new SpriteBatch();
 	private Texture gameScene= new Texture("com/zelda/world/World.png");
@@ -32,7 +38,7 @@ public class JoueurInter {
 	private TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
 	private TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
 	private TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-	private TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
+	private TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 44);
 	private Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
 	private TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
 	private Texture animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
@@ -327,11 +333,58 @@ public class JoueurInter {
 	public void setTmpFrames(TextureRegion[][] tmpFrames) {
 		this.tmpFrames = tmpFrames;
 	}
-	
-	
+
+	public Rectangle getHitbox() {
+		return hitbox;
+	}
+
+	public void setHitbox(Rectangle hitbox) {
+		this.hitbox = hitbox;
+	}
+
+	public boolean isCollision() {
+		return collision;
+	}
+
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+
+	public Array<TextureRegion> getFramesLeft() {
+		return framesLeft;
+	}
+
+	public void setFramesLeft(Array<TextureRegion> framesLeft) {
+		this.framesLeft = framesLeft;
+	}
+
+	public Array<TextureRegion> getFramesRight() {
+		return framesRight;
+	}
+
+	public void setFramesRight(Array<TextureRegion> framesRight) {
+		this.framesRight = framesRight;
+	}
+
+	public Array<TextureRegion> getFramesUp() {
+		return framesUp;
+	}
+
+	public void setFramesUp(Array<TextureRegion> framesUp) {
+		this.framesUp = framesUp;
+	}
+
+	public Array<TextureRegion> getFramesBot() {
+		return framesBot;
+	}
+
+	public void setFramesBot(Array<TextureRegion> framesBot) {
+		this.framesBot = framesBot;
+	}
 
 	public void create () {
-		this.sprite= new Sprite( tmpFrames[0][0] );
+		sprite= new Sprite( tmpFrames[0][0] );
+		hitbox = new Rectangle(linkX, linkY, 45, 45);
 		
 		for (int i = 8; i < 14; i++) {
 			framesLeft.add(tmpFrames[1][i]);
@@ -351,7 +404,9 @@ public class JoueurInter {
 		
 	}
 
-	public void render() {
+	public void render(List<Monstre> monstres) {
+		
+		
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 			
@@ -381,7 +436,19 @@ public class JoueurInter {
 			}
 
 			else {canLeft=true;}
-			linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;}
+			linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(linkX, linkY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+				System.out.println(hitbox.overlaps(monstre.getHitbox()));
+				collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				linkX += Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(linkX, linkY);
+				}
+			}
 		
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
@@ -412,7 +479,20 @@ public class JoueurInter {
 				linkSpeed=0;
 			}
 			else {canRight=true;}
-			linkX += Gdx.graphics.getDeltaTime() * linkSpeed;}
+			linkX += Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(linkX, linkY);
+			hitbox.setPosition(linkX, linkY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+				System.out.println(hitbox.overlaps(monstre.getHitbox()));
+				collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(linkX, linkY);
+				}
+			}
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
@@ -446,7 +526,19 @@ public class JoueurInter {
 
 			}
 			else {canUp=true;}
-			linkY += Gdx.graphics.getDeltaTime() * linkSpeed;}
+			linkY += Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(linkX, linkY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+				System.out.println(hitbox.overlaps(monstre.getHitbox()));
+				collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(linkX, linkY);
+				}
+			}
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
@@ -480,7 +572,19 @@ public class JoueurInter {
 			}
 			
 			else {canDown=true;}
-			linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;}
+			linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(linkX, linkY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+				System.out.println(hitbox.overlaps(monstre.getHitbox()));
+				collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				linkY += Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(linkX, linkY);
+				}
+			}
 		
 		if(Gdx.input.isKeyPressed(Keys.E)) {
 			
@@ -498,6 +602,7 @@ public class JoueurInter {
 			
 			
 		}
+		collision = false;	
 	}
 
 }

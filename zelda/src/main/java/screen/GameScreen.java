@@ -1,5 +1,10 @@
 package screen;
 
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -46,8 +51,10 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	OrthographicCamera miniCamera;
 
 	static JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
-	Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
-	Monstre monstre1 = new Monstre(5920, 1300, 80, 7);
+	static Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
+	static Monstre monstre1 = new Monstre(5920, 1300, 80, 7);
+	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
+
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	private Texture miniMap;
@@ -122,9 +129,11 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	
 	public void draw()
 	{
-		link.render(); //Commande de déplacement personnage
-		monstre.render();//Déplacement Monstre
-		monstre1.render();
+		monstres.add(monstre);
+		monstres.add(monstre1);
+		link.render(monstres); //Commande de déplacement personnage
+		monstre.render(link);//Déplacement Monstre
+		monstre1.render(link);
 		camera.update();
 		miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
