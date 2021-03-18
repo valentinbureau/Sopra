@@ -3,12 +3,10 @@ package com.zelda;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Princesse extends PNJ{
 	
-	
-	Sprite sprite;
-	Texture princessTexture;
 	private float width;
 	private float height;
 	
@@ -16,29 +14,19 @@ public class Princesse extends PNJ{
 		super();
 		this.posX=7145;
 		this.posY=3230;
-		this.width=42;
-		this.height=50;
+		this.width=60;
+		this.height=60;
 	}
 	public void create() {
-		this.princessTexture = new Texture ("com/zelda/princesse.png");
-		TextureRegion[][] tmpFrames = TextureRegion.split(princessTexture, 30, 38);
-		this.sprite= new Sprite( tmpFrames[1][0] );
+		texture = new Texture ("com/zelda/princesse.png");
+		TextureRegion[][] tmpFrames = TextureRegion.split(texture, 30, 38);
+		sprite= new Sprite( tmpFrames[1][0] );
+		hitbox = new Rectangle(posX, posY, sprite.getWidth(), sprite.getHeight());
 	}
-	public void render() {
+	public void render(Link link) {
 		
 	}
-	public Sprite getSprite() {
-		return sprite;
-	}
-	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
-	}
-	public Texture getPrincessTexture() {
-		return princessTexture;
-	}
-	public void setPrincessTexture(Texture princessTexture) {
-		this.princessTexture = princessTexture;
-	}
+	
 	public float getWidth() {
 		return width;
 	}

@@ -10,6 +10,7 @@ public class Entite {
 	protected Rectangle hitbox;
 	protected float posX;
 	protected float posY;
+	protected boolean collision = false;
 	public Entite() {
 		
 	}	
@@ -59,6 +60,15 @@ public class Entite {
 		this.hitbox = hitbox;
 	}
 
+	public boolean isCollision() {
+		return collision;
+	}
+
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+
+	
 	
 	
 	

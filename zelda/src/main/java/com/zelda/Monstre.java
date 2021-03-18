@@ -19,9 +19,8 @@ public class Monstre extends Entite{
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private static LocalTime tempsDeplacement = LocalTime.now();
-	//private Rectangle hitbox;
-	private boolean collision = false;
 	private int deplacement = 1;
+
 	
 	private boolean canUp;
 	private boolean canDown;
@@ -293,6 +292,73 @@ public class Monstre extends Entite{
 //				}
 ////			}
 			if (deplacement == 1) {
+				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
+				for (int i = indexSprite; i < indexSprite + 3; i++) {
+					framesLeft.add(tmpFrames[lineSprite+3][i]);
+				}
+				
+				this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
+				this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
+				float delta = Gdx.graphics.getDeltaTime();
+				int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
+				this.sprite = new Sprite (framesLeft.get(currentFrame));
+				
+				double toScanX= (posX)/5.01-1;
+				double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
+				canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
+				
+				if(!canLeft) {
+					monstreSpeed = 0;
+				}
+				else {
+					posX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(posX, posY);
+					if (collision == false) {
+					//System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						posX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(posX, posY);
+					}
+				}
+			}
+			else if (deplacement == 2) {
+				Array<TextureRegion> framesRight = new Array<TextureRegion>();
+				for (int i = indexSprite; i < indexSprite + 3; i++) {
+					framesRight.add(tmpFrames[lineSprite+1][i]);
+				}
+				
+				this.animRight = new Animation<TextureRegion>(0.08f, framesRight);
+				this.animRight.setPlayMode(Animation.PlayMode.LOOP);
+				float delta = Gdx.graphics.getDeltaTime();
+				int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
+				this.sprite = new Sprite (framesRight.get(currentFrame));
+				
+				double toScanX= (posX + this.sprite.getWidth())/4.987+1;
+				double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
+				canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
+				
+				if(!canRight) {
+					monstreSpeed = 0;
+				}
+				else {
+					posX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(posX, posY);
+					if (collision == false) {
+					//System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						posX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(posX, posY);
+					}
+				}
+			}
+			else if (deplacement == 3) {
+
 				Array<TextureRegion> framesUp = new Array<TextureRegion>();
 				for (int i = indexSprite; i < indexSprite + 3; i++) {
 					framesUp.add(tmpFrames[lineSprite][i]);
@@ -317,7 +383,7 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-//					System.out.println(hitbox.overlaps(link.getHitbox()));
+
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {
@@ -351,7 +417,7 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-//					System.out.println(hitbox.overlaps(link.getHitbox()));
+
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {

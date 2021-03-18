@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.zelda.Link;
 import com.zelda.Monstre;
@@ -24,13 +25,13 @@ import com.zelda.TheLegendOfSopra;
 import com.zelda.world.GameMap;
 
 public class GameScreen extends ApplicationAdapter implements Screen{
-	
 
 
-	
+
+
 	private TheLegendOfSopra parent;
 	private Hud hud;
-	
+
 	static FileHandle fontFile;
 	BitmapFont bitmapfont;
 	Sound sound;
@@ -38,7 +39,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	OrthographicCamera miniCamera;
 
 	static Princesse princesse = new Princesse();
+
 	static Link link = MenuPrincipal.userConnected.getAvatar(); // Initialisation du Joueur
+
 	static Monstre monstre = new Monstre(6500, 2050, 80, 2); //Initialisation du Monstre de type 1
 	static Monstre monstre1 = new Monstre(7114, 2316, 80, 2);
 	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
@@ -58,14 +61,15 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
 
 
+
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	private Texture miniMap;
 	private static final int MINI_MAP_RATIO = 69;
-    private static final int MINI_MAP_WIDTH = map.getGameSceneWidth()/MINI_MAP_RATIO;
-    private static final int MINI_MAP_HEIGHT = map.getGameSceneHeight()/MINI_MAP_RATIO;
+	private static final int MINI_MAP_WIDTH = map.getGameSceneWidth()/MINI_MAP_RATIO;
+	private static final int MINI_MAP_HEIGHT = map.getGameSceneHeight()/MINI_MAP_RATIO;
 	private ShapeRenderer shapeRenderer;
-	 
+	public static boolean victory = false;
 	public GameScreen(TheLegendOfSopra orch) 
 	{
 		miniMap = new Texture(Gdx.files.internal("screen/assets/miniMap.png"));
@@ -73,13 +77,13 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		//sound.play(0.05f);
 		camera = new OrthographicCamera();
 		miniCamera = new OrthographicCamera();
-        camera.setToOrtho(false, map.getWidth(), map.getHeight());
+		camera.setToOrtho(false, map.getWidth(), map.getHeight());
 		parent = orch;
 		map.create();//Cr�ation de la map (batch & texture)
 		link.create();//Cr�ation du personnage (sprite)
 		princesse.create();
 		hud=new Hud(map.batch);
-		monstre.create();//Cr�ation du monstre (sprite)
+		monstre.create();//Creation du monstre (sprite)
 		monstre1.create();
 		monstre2.create();
 		monstre3.create();
@@ -137,37 +141,26 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 	}
 
-	
+
 	@Override
 	public void render(float delta) {
-		
+
 		draw();
 		hud.stage.draw();
 	}
-	
+
 	public void draw()
 	{
+		
 
-		princesse.render();
+		princesse.render(link);
+		//link.render(princesse);
 		//link.render();
 		monstres.add(monstre);
 		monstres.add(monstre1);
-		monstres.add(monstre2);
-		monstres.add(monstre3);
-		monstres.add(monstre4);
-		monstres.add(monstre5);
-		monstres.add(monstre6);
-		monstres.add(monstre7);
-//		monstres.add(monstre8);
-//		monstres.add(monstre9);
-//		monstres.add(monstre10);
-//		monstres.add(monstre11);
-//		monstres.add(monstre12);
-//		monstres.add(monstre13);
-//		monstres.add(monstre14);
 
-		
-		link.render(monstres); //Commande de d�placement personnage
+		link.render(monstres,princesse); //Commande de d�placement personnage
+
 		monstre.render(link);//D�placement Monstre
 		monstre1.render(link);
 		monstre2.render(link);
@@ -191,6 +184,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		camera.update();
 		map.batch.setProjectionMatrix(camera.combined); 
 		map.batch.begin();
+		
 		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getPosX(), link.getPosY());//Affichage personnage
 		map.batch.draw(princesse.getSprite(), princesse.getPosX(), princesse.getPosY(),princesse.getWidth(),princesse.getHeight());//Affichage personnage
@@ -211,27 +205,25 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //		map.batch.draw(monstre13.getSprite(), monstre13.getPosX(), monstre13.getPosY());
 //		map.batch.draw(monstre14.getSprite(), monstre14.getPosX(), monstre14.getPosY());
 
-//		draw(Texture texture, float x, float y, float width, float height)
-//		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.
-		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
-        map.batch.setProjectionMatrix(camera.invProjectionView);
-        camera.position.set(link.getPosX() , link.getPosY() , 0);
-        camera.update();
 
-        map.batch.end();
-        shapeRenderer = new ShapeRenderer();
-		
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.rect(link.getPosX()-map.getWidth()/2-2 + link.getPosX()/MINI_MAP_RATIO, (link.getPosY()+map.getHeight()/3+14)+link.getPosY()/MINI_MAP_RATIO,2, 2);
-        shapeRenderer.end();
-        
-        if(Gdx.input.isKeyPressed(Keys.TAB)) {
-        		System.out.println("PRESSED");
-        		parent.changeScreen(TheLegendOfSopra.MINIMAP);
-			}
-        hud.show();
-        
+		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
+		map.batch.setProjectionMatrix(camera.invProjectionView);
+		camera.position.set(link.getPosX() , link.getPosY() , 0);
+		camera.update();
+	
+		map.batch.end();
+		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		shapeRenderer.setColor(Color.RED);
+		shapeRenderer.setProjectionMatrix(camera.combined);
+		shapeRenderer.rect(link.getPosX()-map.getWidth()/2-2 + link.getPosX()/MINI_MAP_RATIO, (link.getPosY()+map.getHeight()/3+14)+link.getPosY()/MINI_MAP_RATIO,2, 2);
+		shapeRenderer.end();
+
+		if(Gdx.input.isKeyPressed(Keys.TAB)) {
+			System.out.println("PRESSED");
+			parent.changeScreen(TheLegendOfSopra.MINIMAP);
+		}
+		hud.show();
 	}
 }
+

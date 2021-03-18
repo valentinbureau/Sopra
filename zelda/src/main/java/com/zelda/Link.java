@@ -16,7 +16,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
+import screen.GameScreen;
+
 //Les méthodes sont après les getters et setters
+
 
 @Embeddable
 public class Link{
@@ -87,7 +90,7 @@ public class Link{
 	private transient boolean canRight;
 	
 	private int vie;
-	
+	private transient Texture texture;
 	public int getVie() {
 		return vie;
 	}
@@ -129,13 +132,6 @@ public class Link{
 		this.sprite = sprite;
 	}
 
-	public Texture getLinkTexture() {
-		return linkTexture;
-	}
-
-	public void setLinkTexture(Texture linkTexture) {
-		this.linkTexture = linkTexture;
-	}
 
 
 	public float getLinkSpeed() {
@@ -369,14 +365,6 @@ public class Link{
 		this.hitbox = hitbox;
 	}
 
-	public boolean isCollision() {
-		return collision;
-	}
-
-	public void setCollision(boolean collision) {
-		this.collision = collision;
-	}
-
 	public Array<TextureRegion> getFramesLeft() {
 		return framesLeft;
 	}
@@ -413,6 +401,7 @@ public class Link{
 		this.attackDirection = attackDirection;
 	}
 
+
 	//	public void render() {
 //		//Pr�paration du spriteSheet de Link
 //		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
@@ -428,6 +417,7 @@ public class Link{
 //		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
 //		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
 //	}
+
 	public void setFramesRight(Array<TextureRegion> framesRight) {
 		this.framesRight = framesRight;
 	}
@@ -449,10 +439,37 @@ public class Link{
 	}
 
 	public void create () {
-		sprite= new Sprite( tmpFrames[0][0] );
+		texture = new Texture ("com/zelda/link2.png");
+
 		hitbox = new Rectangle(posX, posY, 45, 45);
 		attackHitbox = new Rectangle(posX, posY, 55, 55);
 
+		
+		// Setting Frames for movements
+		animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
+		tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
+		tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
+		tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
+		tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
+		tmpFrames = TextureRegion.split(texture, 45, 44);
+		animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
+		tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+		animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
+		tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
+		animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
+		tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
+
+		attackHitbox = new Rectangle(posX, posY, 55, 55);
+
+
+		sprite= new Sprite( tmpFrames[0][0] );
+		
+		framesLeft = new Array<TextureRegion>();
+		framesRight = new Array<TextureRegion>();
+		framesUp = new Array<TextureRegion>();
+		framesBot = new Array<TextureRegion>();
+		
+		
 		for (int i = 8; i < 14; i++) {
 			framesLeft.add(tmpFrames[1][i]);
 		}
@@ -471,7 +488,8 @@ public class Link{
 
 	}
 
-	public void render(List<Monstre> monstres) {
+
+	public void render(List<Monstre> monstres,Princesse princesse) {
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 
@@ -502,6 +520,10 @@ public class Link{
 			else {canLeft=true;}
 			posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
+			if (!collision) {
+				collision = hitbox.overlaps(princesse.getHitbox());
+				if(collision) { GameScreen.victory=true;}
+			}
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 					collision = hitbox.overlaps(monstre.getHitbox());
@@ -546,6 +568,7 @@ public class Link{
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
+
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -590,6 +613,7 @@ public class Link{
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
+
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -633,6 +657,7 @@ public class Link{
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
+
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
