@@ -19,8 +19,6 @@ public class Monstre extends Entite{
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private static LocalTime tempsDeplacement = LocalTime.now();
-	//private Rectangle hitbox;
-	private boolean collision = false;
 	
 	private boolean canUp;
 	private boolean canDown;
@@ -243,7 +241,7 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-					System.out.println(hitbox.overlaps(link.getHitbox()));
+					//System.out.println(hitbox.overlaps(link.getHitbox()));
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {
@@ -276,7 +274,7 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-					System.out.println(hitbox.overlaps(link.getHitbox()));
+					//System.out.println(hitbox.overlaps(link.getHitbox()));
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {
@@ -309,7 +307,7 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-					System.out.println(hitbox.overlaps(link.getHitbox()));
+					//System.out.println(hitbox.overlaps(link.getHitbox()));
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {
@@ -342,7 +340,7 @@ public class Monstre extends Entite{
 					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
 					if (collision == false) {
-					System.out.println(hitbox.overlaps(link.getHitbox()));
+					//System.out.println(hitbox.overlaps(link.getHitbox()));
 					collision = hitbox.overlaps(link.getHitbox());
 					}
 					if(collision) {

@@ -14,40 +14,37 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
+import screen.GameScreen;
+
 //Les mÃ©thodes sont aprÃ¨s les getters et setters
 
 public class Link extends Entite {
-	Sprite sprite;
-	Texture linkTexture = new Texture ("com/zelda/link2.png");
 	private float linkSpeed;
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private int swordDirection;
-	private Rectangle hitbox;
-	private boolean collision = false;
-
 	private SpriteBatch batch=  new SpriteBatch();
 	private Texture gameScene= new Texture("com/zelda/world/World.png");
 	GameMap map= new GameMap(batch,gameScene);
 
 
-	private Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
-	private TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
-	private TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
-	private TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
-	private TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-	private TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 44);
-	private Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
-	private TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
-	private Texture animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
-	private TextureRegion[][] tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
-	private Texture animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
-	private TextureRegion[][] tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
+	private Texture animationSwordDown;
+	private TextureRegion[][] tmpFramesSword;
+	private TextureRegion[][] tmpFramesSword2;
+	private TextureRegion[][] tmpFramesSword3;
+	private TextureRegion[][] tmpFramesSword4;
+	private TextureRegion[][] tmpFrames;
+	private Texture animationSwordLeft;
+	private TextureRegion[][] tmpFramesSword5;
+	private Texture animationSwordUp;
+	private TextureRegion[][] tmpFramesSword6;
+	private Texture animationSwordRight;
+	private TextureRegion[][] tmpFramesSword7;
 
-	private Array<TextureRegion> framesLeft = new Array<TextureRegion>();
-	private Array<TextureRegion> framesRight = new Array<TextureRegion>();
-	private Array<TextureRegion> framesUp = new Array<TextureRegion>();
-	private Array<TextureRegion> framesBot = new Array<TextureRegion>();
+	private Array<TextureRegion> framesLeft;
+	private Array<TextureRegion> framesRight;
+	private Array<TextureRegion> framesUp;
+	private Array<TextureRegion> framesBot;
 
 
 	private Animation<TextureRegion> animBot;
@@ -92,13 +89,6 @@ public class Link extends Entite {
 		this.sprite = sprite;
 	}
 
-	public Texture getLinkTexture() {
-		return linkTexture;
-	}
-
-	public void setLinkTexture(Texture linkTexture) {
-		this.linkTexture = linkTexture;
-	}
 
 
 	public float getLinkSpeed() {
@@ -332,14 +322,6 @@ public class Link extends Entite {
 		this.hitbox = hitbox;
 	}
 
-	public boolean isCollision() {
-		return collision;
-	}
-
-	public void setCollision(boolean collision) {
-		this.collision = collision;
-	}
-
 	public Array<TextureRegion> getFramesLeft() {
 		return framesLeft;
 	}
@@ -353,21 +335,6 @@ public class Link extends Entite {
 	}
 
 
-//	public void render() {
-//		//Préparation du spriteSheet de Link
-//		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
-//
-//		//Préparation du SpriteSheet de l'attaque
-//		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
-//		TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
-//		TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
-//		TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
-//		TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-//
-//
-//		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
-//		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
-//	}
 	public void setFramesRight(Array<TextureRegion> framesRight) {
 		this.framesRight = framesRight;
 	}
@@ -389,9 +356,32 @@ public class Link extends Entite {
 	}
 
 	public void create () {
-		sprite= new Sprite( tmpFrames[0][0] );
-		hitbox = new Rectangle(posX, posY, 45, 45);
+		texture = new Texture ("com/zelda/link2.png");
 
+		hitbox = new Rectangle(posX, posY, 45, 45);
+		
+		// Setting Frames for movements
+		animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
+		tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
+		tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
+		tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
+		tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
+		tmpFrames = TextureRegion.split(texture, 45, 44);
+		animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
+		tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+		animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
+		tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
+		animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
+		tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
+
+		sprite= new Sprite( tmpFrames[0][0] );
+		
+		framesLeft = new Array<TextureRegion>();
+		framesRight = new Array<TextureRegion>();
+		framesUp = new Array<TextureRegion>();
+		framesBot = new Array<TextureRegion>();
+		
+		
 		for (int i = 8; i < 14; i++) {
 			framesLeft.add(tmpFrames[1][i]);
 		}
@@ -410,24 +400,7 @@ public class Link extends Entite {
 
 	}
 
-	public void render(List<Monstre> monstres) {
-
-//		public void render() {
-			//Préparation du spriteSheet de Link
-			TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
-
-			//Préparation du SpriteSheet de l'attaque
-			Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
-			TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
-			TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
-			TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
-			TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-
-
-			Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
-			TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
-			
-
+	public void render(List<Monstre> monstres,Princesse princesse) {
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 
@@ -457,9 +430,13 @@ public class Link extends Entite {
 			else {canLeft=true;}
 			posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
+			if (!collision) {
+				collision = hitbox.overlaps(princesse.getHitbox());
+				if(collision) { GameScreen.victory=true;}
+			}
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					//System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -501,7 +478,7 @@ public class Link extends Entite {
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					//System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -545,7 +522,7 @@ public class Link extends Entite {
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					//System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
@@ -589,7 +566,7 @@ public class Link extends Entite {
 			hitbox.setPosition(posX, posY);
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
-					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					//System.out.println(hitbox.overlaps(monstre.getHitbox()));
 					collision = hitbox.overlaps(monstre.getHitbox());
 				}
 			}
