@@ -532,6 +532,7 @@ public class Link{
 			if(collision) {
 				posX += Gdx.graphics.getDeltaTime() * linkSpeed;
 				hitbox.setPosition(posX, posY);
+				vie--;
 			}
 		}
 
@@ -575,6 +576,7 @@ public class Link{
 			if(collision) {
 				posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
 				hitbox.setPosition(posX, posY);
+				vie--;
 			}
 		}
 
@@ -620,6 +622,7 @@ public class Link{
 			if(collision) {
 				posY -= Gdx.graphics.getDeltaTime() * linkSpeed;
 				hitbox.setPosition(posX, posY);
+				vie--;
 			}
 		}
 
@@ -664,6 +667,7 @@ public class Link{
 			if(collision) {
 				posY += Gdx.graphics.getDeltaTime() * linkSpeed;
 				hitbox.setPosition(posX, posY);
+				vie--;
 			}
 		}
 
