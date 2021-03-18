@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
@@ -22,6 +23,8 @@ public class Monstre extends Entite{
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private static LocalTime tempsDeplacement = LocalTime.now();
+	private Rectangle hitbox;
+	private boolean collision = false;
 	
 	private boolean canUp;
 	private boolean canDown;
@@ -220,24 +223,41 @@ public class Monstre extends Entite{
 		Monstre.tempsDeplacement = tempsDeplacement;
 	}
 
+	public boolean isCollision() {
+		return collision;
+	}
+
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+
+	public Rectangle getHitbox() {
+		return hitbox;
+	}
+
+	public void setHitbox(Rectangle hitbox) {
+		this.hitbox = hitbox;
+	}
+
 	public void create () {
 		this.monstreTexture = new Texture("com/zelda/Monster-sprites.png");
 		this.tmpFrames = TextureRegion.split(monstreTexture, monstreTexture.getWidth()/12, monstreTexture.getHeight()/8);
-		int indexSprite = 3*monsterType -3 ;
-		if (monsterType < 4) {
+		int indexSprite = (this.monsterType < 5) ? (3*monsterType -3) : (3*(monsterType-4) -3) ;
+		if (monsterType < 5) {
 			this.sprite = new Sprite (tmpFrames[2][indexSprite]);
 		}
 		else {
 			this.sprite = new Sprite (tmpFrames[6][indexSprite]);
 		}
+		hitbox = new Rectangle(monstreX, monstreY, sprite.getWidth(), sprite.getHeight());
 	}
 	
-	public void render() {
+	public void render(Link link) {
 		
 		
 		int deplacement = (int) (Math.random() * 4);
-		int indexSprite = 3*monsterType -3 ;
-		int lineSprite = (this.monsterType < 4) ? 0 : 4;
+		int indexSprite = (this.monsterType < 5) ? (3*monsterType -3) : (3*(monsterType-4) -3) ;
+		int lineSprite = (this.monsterType < 5) ? 0 : 4;
 		LocalTime now = LocalTime.now();
 		
 		
@@ -264,6 +284,15 @@ public class Monstre extends Entite{
 				else {
 					monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
 					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(monstreX, monstreY);
+					if (collision == false) {
+					System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(monstreX, monstreY);
+					}
 				}
 			}
 			else if (deplacement == 2) {
@@ -288,6 +317,15 @@ public class Monstre extends Entite{
 				else {
 					monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
 					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(monstreX, monstreY);
+					if (collision == false) {
+					System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(monstreX, monstreY);
+					}
 				}
 			}
 			else if (deplacement == 3) {
@@ -312,6 +350,15 @@ public class Monstre extends Entite{
 				else {
 					monstreY += Gdx.graphics.getDeltaTime() * monstreSpeed;
 					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(monstreX, monstreY);
+					if (collision == false) {
+					System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						monstreY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(monstreX, monstreY);
+					}
 				}
 			}
 			else if (deplacement == 4) {
@@ -336,9 +383,19 @@ public class Monstre extends Entite{
 				else {
 					monstreY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
 					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(monstreX, monstreY);
+					if (collision == false) {
+					System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						monstreY += Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(monstreX, monstreY);
+					}
 				}
 			}
 		}
+		collision = false;
 	}
 	
 }
