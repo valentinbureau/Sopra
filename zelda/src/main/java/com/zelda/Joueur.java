@@ -30,10 +30,6 @@ public class Joueur implements Serializable{
 	
 	@Embedded
 	@AttributeOverrides({
-        @AttributeOverride(name="id",
-                           column=@Column(name="id_link")),
-        @AttributeOverride(name="arme",
-                           column=@Column(name="arme_link", columnDefinition="VARCHAR(20)")),
         @AttributeOverride(name="posX",
         column=@Column(name="posX_link")),
         @AttributeOverride(name="posY",
@@ -41,7 +37,8 @@ public class Joueur implements Serializable{
         @AttributeOverride(name="vie",
         column=@Column(name="vie_link")),
 	})
-	private Link link;
+	@Column(nullable=true)
+	private Link link=new Link();
 	
 	public Joueur() {}
 
@@ -85,14 +82,10 @@ public class Joueur implements Serializable{
 	public Link getAvatar() {
 		return link;
 	}
-
-
-
+	
 	public void setAvatar(Link link) {
 		this.link = link;
 	}
-
-
 
 	@Override
 	public String toString() {

@@ -51,8 +51,8 @@ public class MenuRecapPartie implements Screen{
 		
 		titre = new Label ("RECAPITULATIF DE LA PARTIE", skin);
 		infoMap = new Label ("Map : "+MenuPrincipal.part.getIdMap(), skin);
-		infoAvatar = new Label ("Avatar : "+MenuPrincipal.userConnected.getAvatar().getId(), skin);
-		infoArme = new Label ("Arme : "+MenuPrincipal.userConnected.getAvatar().getArme().name(), skin);
+//		infoAvatar = new Label ("Avatar : "+MenuPrincipal.userConnected.getAvatar().getId(), skin);
+//		infoArme = new Label ("Arme : "+MenuPrincipal.userConnected.getAvatar().getArme().name(), skin);
 		
 		commencerPartie = new TextButton("Commencer la partie", skin);
 		annuler = new TextButton("Annuler", skin);

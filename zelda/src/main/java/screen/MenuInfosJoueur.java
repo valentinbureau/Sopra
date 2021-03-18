@@ -49,7 +49,7 @@ public class MenuInfosJoueur implements Screen{
 		stage.addActor(table);
 		skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
 		titre = new Label ("MENU DE "+MenuPrincipal.userConnected.getLogin(), skin);
-		recap = new Label ("Derniere partie jouée : Map - "+MenuPrincipal.part.getIdMap() + " - Avatar : " +MenuPrincipal.userConnected.getAvatar(),skin);
+		//recap = new Label ("Derniere partie jouée : Map - "+MenuPrincipal.part.getIdMap() + " - Avatar : " +MenuPrincipal.userConnected.getAvatar(),skin);
 		modifAvatar = new TextButton("Modifier l'Avatar", skin);
 		modifMap = new TextButton("Modifier la Map", skin);
 		modifProfil =new TextButton("Modifier le profil", skin);
@@ -59,11 +59,11 @@ public class MenuInfosJoueur implements Screen{
 		
 		table.add(titre).colspan(2);
 		table.row();
-		table.add(recap).colspan(2);
-		table.row();
-		table.add(modifAvatar);
-		table.add(modifMap);
-		table.row();
+//		table.add(recap).colspan(2);
+//		table.row();
+//		table.add(modifAvatar);
+//		table.add(modifMap);
+//		table.row();
 		table.add(modifProfil);
 		table.add(commencerPartie);
 		table.row();
@@ -95,7 +95,8 @@ public class MenuInfosJoueur implements Screen{
 		
 		commencerPartie.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(TheLegendOfSopra.PARTIE);
+				//parent.changeScreen(TheLegendOfSopra.PARTIE);
+				parent.changeScreen(TheLegendOfSopra.APP);
 			}
 		});
 	}

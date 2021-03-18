@@ -9,20 +9,20 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
-public class Monstre{
+public class Monstre extends Entite{
 	
-	Sprite sprite;
-	Texture monstreTexture;
+	private float monstreSpeed;
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private static LocalTime tempsDeplacement = LocalTime.now();
-	private float posX;
-	private float posY;
-	protected transient float speed;
-	private int vie;
+	//private Rectangle hitbox;
+	private boolean collision = false;
+	private int deplacement = 1;
+	
 	private boolean canUp;
 	private boolean canDown;
 	private boolean canLeft;
@@ -39,88 +39,25 @@ public class Monstre{
 	GameMap map= new GameMap(batch,gameScene);
 	
 	
-	public float getPosX() {
-		return posX;
-	}
-
-	public void setPosX(float posX) {
-		this.posX = posX;
-	}
-
-	public float getPosY() {
-		return posY;
-	}
-
-	public void setPosY(float posY) {
-		this.posY = posY;
-	}
-
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
-	public int getVie() {
-		return vie;
-	}
-
-	public void setVie(int vie) {
-		this.vie = vie;
-	}
-
 	public Monstre() {
 		super();
 	}
 	
-	public Monstre(float posX, float posY, float speed, int monsterType) {
+	public Monstre(float posX, float posY, float monstreSpeed, int monsterType) {
 		super();
 		this.posX = posX;
 		this.posY = posY;
-		this.speed = speed;
+		this.monstreSpeed = monstreSpeed;
 		this.monsterType = monsterType;
 	}
 
-	public Sprite getSprite() {
-		return sprite;
-	}
-
-	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
-	}
-
-	public Texture getMonsterTexture() {
-		return monstreTexture;
-	}
-
-	public void setMonstreTexture(Texture monstreTexture) {
-		this.monstreTexture = monstreTexture;
-	}
-
-	public float getMonstreX() {
-		return posX;
-	}
-
-	public void setMonstreX(float posX) {
-		this.posX = posX;
-	}
-
-	public float getMonstreY() {
-		return posY;
-	}
-
-	public void setMonstreY(float posY) {
-		this.posY = posY;
-	}
 
 	public float getMonstreSpeed() {
-		return speed;
+		return monstreSpeed;
 	}
 
-	public void setMonstreSpeed(float speed) {
-		this.speed = speed;
+	public void setMonstreSpeed(float monstreSpeed) {
+		this.monstreSpeed = monstreSpeed;
 	}
 
 	public float getDefaultSpeed() {
@@ -251,100 +188,114 @@ public class Monstre{
 	public static void setTempsDeplacement(LocalTime tempsDeplacement) {
 		Monstre.tempsDeplacement = tempsDeplacement;
 	}
-	
-	public void setPosition( int axisX, int axisY) {
-		this.posX=axisX;
-		this.posY=axisY;
-	}
-	
-	public void recevoirDegats()
-	{
-		this.vie--;
-	}
-	
-	public void attaquer()
-	{
-		this.vie++;
-		if (this.vie>8)
-		{
-			this.vie=8;
-		}
+
+	public boolean isCollision() {
+		return collision;
 	}
 
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+
+	public int getDeplacement() {
+		return deplacement;
+	}
+	public void setDeplacement(int deplacement) {
+		this.deplacement = deplacement;
+	}
 	public void create () {
-		this.monstreTexture = new Texture("com/zelda/Monster-sprites.png");
-		this.tmpFrames = TextureRegion.split(monstreTexture, monstreTexture.getWidth()/12, monstreTexture.getHeight()/8);
-		int indexSprite = 3*monsterType -3 ;
-		if (monsterType < 4) {
+		this.texture = new Texture("com/zelda/Monster-sprites.png");
+		this.tmpFrames = TextureRegion.split(texture, texture.getWidth()/12, texture.getHeight()/8);
+		int indexSprite = (this.monsterType < 5) ? (3*monsterType -3) : (3*(monsterType-4) -3) ;
+		if (monsterType < 5) {
 			this.sprite = new Sprite (tmpFrames[2][indexSprite]);
 		}
 		else {
 			this.sprite = new Sprite (tmpFrames[6][indexSprite]);
 		}
+		this.hitbox = new Rectangle(posX, posY, sprite.getWidth(), sprite.getHeight());
 	}
 	
-	public void render() {
+	public void render(Link link) {
 		
 		
-		int deplacement = (int) (Math.random() * 4);
-		int indexSprite = 3*monsterType -3 ;
-		int lineSprite = (this.monsterType < 4) ? 0 : 4;
+//		int deplacement = (int) (Math.random() * 4);
+		int indexSprite = (this.monsterType < 5) ? (3*monsterType -3) : (3*(monsterType-4) -3) ;
+		int lineSprite = (this.monsterType < 5) ? 0 : 4;
 		LocalTime now = LocalTime.now();
 		
 		
-		if (now.isAfter(tempsDeplacement.plusNanos(5*10^8))) {
+		if (now.isAfter(tempsDeplacement.plusSeconds(1))) {
+////			if (deplacement == 1) {
+//				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
+//				for (int i = indexSprite; i < indexSprite + 3; i++) {
+//					framesLeft.add(tmpFrames[lineSprite+3][i]);
+//				}
+//				
+//				this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
+//				this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
+//				float delta = Gdx.graphics.getDeltaTime();
+//				int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
+//				this.sprite = new Sprite (framesLeft.get(currentFrame));
+//				
+//				double toScanX= (monstreX)/5.01-1;
+//				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
+//				canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
+//				
+//				if(!canLeft) {
+//					monstreSpeed = 0;
+//				}
+//				else {
+//					monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+//					tempsDeplacement = LocalTime.now();
+//					hitbox.setPosition(monstreX, monstreY);
+//					if (collision == false) {
+////					System.out.println(hitbox.overlaps(link.getHitbox()));
+//					collision = hitbox.overlaps(link.getHitbox());
+//					}
+//					if(collision) {
+//						monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+//						hitbox.setPosition(monstreX, monstreY);
+//					}
+//				}
+////			}
+////			else if (deplacement == 2) {
+//				Array<TextureRegion> framesRight = new Array<TextureRegion>();
+//				for (int i = indexSprite; i < indexSprite + 3; i++) {
+//					framesRight.add(tmpFrames[lineSprite+1][i]);
+//				}
+//				
+//				this.animRight = new Animation<TextureRegion>(0.08f, framesRight);
+//				this.animRight.setPlayMode(Animation.PlayMode.LOOP);
+//				float delta = Gdx.graphics.getDeltaTime();
+//				int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
+//				this.sprite = new Sprite (framesRight.get(currentFrame));
+//				
+//				double toScanX= (monstreX + this.sprite.getWidth())/4.987+1;
+//				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
+//				canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
+//				
+//				if(!canRight) {
+//					monstreSpeed = 0;
+//				}
+//				else {
+//					monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+//					tempsDeplacement = LocalTime.now();
+//					hitbox.setPosition(monstreX, monstreY);
+//					if (collision == false) {
+////					System.out.println(hitbox.overlaps(link.getHitbox()));
+//					collision = hitbox.overlaps(link.getHitbox());
+//					}
+//					if(collision) {
+//						monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+//						hitbox.setPosition(monstreX, monstreY);
+//					}
+//				}
+////			}
 			if (deplacement == 1) {
-				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
-				for (int i = indexSprite; i < indexSprite + 3; i++) {
-					framesLeft.add(tmpFrames[lineSprite+3][i]);
-				}
-				
-				this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
-				this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
-				float delta = Gdx.graphics.getDeltaTime();
-				int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
-				this.sprite = new Sprite (framesLeft.get(currentFrame));
-				
-				double toScanX= (posX)/5.01-1;
-				double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
-				canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
-				
-				if(!canLeft) {
-					speed = 0;
-				}
-				else {
-					posX -= Gdx.graphics.getDeltaTime() * speed;
-					tempsDeplacement = LocalTime.now();
-				}
-			}
-			else if (deplacement == 2) {
-				Array<TextureRegion> framesRight = new Array<TextureRegion>();
-				for (int i = indexSprite; i < indexSprite + 3; i++) {
-					framesRight.add(tmpFrames[lineSprite+1][i]);
-				}
-				
-				this.animRight = new Animation<TextureRegion>(0.08f, framesRight);
-				this.animRight.setPlayMode(Animation.PlayMode.LOOP);
-				float delta = Gdx.graphics.getDeltaTime();
-				int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
-				this.sprite = new Sprite (framesRight.get(currentFrame));
-				
-				double toScanX= (posX + this.sprite.getWidth())/4.987+1;
-				double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
-				canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
-				
-				if(!canRight) {
-					speed = 0;
-				}
-				else {
-					posX += Gdx.graphics.getDeltaTime() * speed;
-					tempsDeplacement = LocalTime.now();
-				}
-			}
-			else if (deplacement == 3) {
 				Array<TextureRegion> framesUp = new Array<TextureRegion>();
 				for (int i = indexSprite; i < indexSprite + 3; i++) {
-					framesUp.add(tmpFrames[lineSprite+1][i]);
+					framesUp.add(tmpFrames[lineSprite][i]);
 				}
 				
 				this.animTop = new Animation<TextureRegion>(0.08f, framesUp);
@@ -357,18 +308,28 @@ public class Monstre{
 				double toScanY=map.getGameSceneHeight()/5-(posY+this.sprite.getHeight())/5-1;
 				canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
 				
-				if(!canRight) {
-					speed = 0;
+				if(!canUp) {
+					monstreSpeed = 0;
+					deplacement = 2;
 				}
 				else {
-					posY += Gdx.graphics.getDeltaTime() * speed;
+					posY += Gdx.graphics.getDeltaTime() * monstreSpeed;
 					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(posX, posY);
+					if (collision == false) {
+//					System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						posY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(posX, posY);
+					}
 				}
 			}
-			else if (deplacement == 4) {
+			else if (deplacement == 2) {
 				Array<TextureRegion> framesBot = new Array<TextureRegion>();
 				for (int i = indexSprite; i < indexSprite + 3; i++) {
-					framesBot.add(tmpFrames[lineSprite+1][i]);
+					framesBot.add(tmpFrames[lineSprite+2][i]);
 				}
 				
 				this.animBot = new Animation<TextureRegion>(0.08f, framesBot);
@@ -381,15 +342,26 @@ public class Monstre{
 				double toScanY= map.getGameSceneHeight()/5-(posY)/5+1;
 				canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
 				
-				if(!canRight) {
-					speed = 0;
+				if(!canDown) {
+					monstreSpeed = 0;
+					deplacement = 1;
 				}
 				else {
-					posY -= Gdx.graphics.getDeltaTime() * speed;
+					posY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
 					tempsDeplacement = LocalTime.now();
+					hitbox.setPosition(posX, posY);
+					if (collision == false) {
+//					System.out.println(hitbox.overlaps(link.getHitbox()));
+					collision = hitbox.overlaps(link.getHitbox());
+					}
+					if(collision) {
+						posY += Gdx.graphics.getDeltaTime() * monstreSpeed;
+						hitbox.setPosition(posX, posY);
+					}
 				}
 			}
 		}
+		collision = false;
 	}
 	
 }

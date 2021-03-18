@@ -1,5 +1,5 @@
 package com.zelda;
 
-public class PNJ{
+public class PNJ extends Entite{
 
 }

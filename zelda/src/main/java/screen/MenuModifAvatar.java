@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.zelda.Arme;
 import com.zelda.Link;
 import com.zelda.TheLegendOfSopra;
 
@@ -100,20 +99,20 @@ public class MenuModifAvatar implements Screen{
 		table.row();
 		table.add(valider);
 		
-		valider.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
-				if (MenuPrincipal.userConnected.getAvatar()==null)
-				{
-					Link newL = new Link(GameScreen.link.getPosX(), GameScreen.link.getPosY(), GameScreen.link.getVie(), GameScreen.link.getSpeed());
-					MenuPrincipal.userConnected.setAvatar(newL);
-				}
-				MenuPrincipal.userConnected.getAvatar().setId(choixAvatar.getSelectedIndex()+1);
-				System.out.println(choixArme.getSelected().toString());
-				MenuPrincipal.userConnected.getAvatar().setArme(Arme.valueOf(choixArme.getSelected().toString()));
-				Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
-				parent.changeScreen(TheLegendOfSopra.INFOS);
-			}
-		});
+//		valider.addListener(new ChangeListener() {
+//			public void changed (ChangeEvent event, Actor actor) {
+//				if (MenuPrincipal.userConnected.getAvatar()==null)
+//				{
+//					Link newL = new Link(GameScreen.link.getPosX(), GameScreen.link.getPosY(), GameScreen.link.getVie(), GameScreen.link.getSpeed());
+//					MenuPrincipal.userConnected.setAvatar(newL);
+//				}
+//				MenuPrincipal.userConnected.getAvatar().(choixAvatar.getSelectedIndex()+1);
+//				System.out.println(choixArme.getSelected().toString());
+//				MenuPrincipal.userConnected.getAvatar().setArme(Arme.valueOf(choixArme.getSelected().toString()));
+//				Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
+//				parent.changeScreen(TheLegendOfSopra.INFOS);
+//			}
+//		});
 	}
 	@Override
 	public void render(float delta) {
