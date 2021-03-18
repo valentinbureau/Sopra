@@ -123,6 +123,16 @@ public class Link{
 		this.canRight=true;
 		this.vie=8;
 	}
+	
+	public boolean recevoirDegats()
+	{
+		this.vie--;
+		if (vie ==0)
+		{
+			return true;
+		}
+		return false;
+	}
 
 	public Sprite getSprite() {
 		return sprite;
