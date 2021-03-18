@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 //Les mÃ©thodes sont aprÃ¨s les getters et setters
 
-public class JoueurInter {
+public class Link extends Entite {
 	Sprite sprite;
 	Texture linkTexture;
 	private float linkX;
@@ -41,10 +41,10 @@ public class JoueurInter {
 	private boolean canDown;
 	private boolean canLeft;
 	private boolean canRight;
-	public JoueurInter(float linkX, float linkY, float linkSpeed) {
+	public Link(float linkX, float linkY, float linkSpeed) {
 		super();
-		this.linkX = linkX;
-		this.linkY = linkY;
+		this.posX = linkX;
+		this.posY = linkY;
 		this.linkSpeed = linkSpeed;
 		this.defaultSpeed = linkSpeed;
 		this.canUp=true;
@@ -53,8 +53,15 @@ public class JoueurInter {
 
 	}
 
-	public JoueurInter() {
-
+	public Link() {
+		super();
+		this.posX = 5920;
+		this.posY = 1700;
+		this.linkSpeed = 80;
+		this.defaultSpeed = linkSpeed;
+		this.canUp=true;
+		this.canDown=true;
+		this.canRight=true;
 	}
 
 	public Sprite getSprite() {
@@ -73,21 +80,6 @@ public class JoueurInter {
 		this.linkTexture = linkTexture;
 	}
 
-	public float getLinkX() {
-		return linkX;
-	}
-
-	public void setLinkX(float linkX) {
-		this.linkX = linkX;
-	}
-
-	public float getLinkY() {
-		return linkY;
-	}
-
-	public void setLinkY(float linkY) {
-		this.linkY = linkY;
-	}
 
 	public float getLinkSpeed() {
 		return linkSpeed;
@@ -225,14 +217,17 @@ public class JoueurInter {
 	}
 
 	public void render() {
+		//Préparation du spriteSheet de Link
 		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
 		
-		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
+		//Préparation du SpriteSheet de l'attaque
+		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
 		TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
 		TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
 		TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
 		TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
 		
+
 		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
 		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
 		
@@ -267,9 +262,7 @@ public class JoueurInter {
 			canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
 			linkSpeed = defaultSpeed;
 
-//			System.out.print(toScanX);
-//			System.out.print("  ");
-//			System.out.println(toScanY);
+
 			if(!canLeft) {
 				linkSpeed=0;
 			}
@@ -298,15 +291,13 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword7[0][2]);
 			framesSword.add(tmpFramesSword7[0][3]);
 			framesSword.add(tmpFramesSword7[0][4]);
-			double toScanX= (linkX + this.sprite.getWidth())/4.987+1;
+			double toScanX= (linkX + this.sprite.getWidth())/5;
 			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
 			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
 			
 			
-//			System.out.print(toScanY);
-//			System.out.print("  ");
-//			System.out.println(linkY);
+
 			if(!canRight ) {
 				linkSpeed=0;
 			}
@@ -341,9 +332,7 @@ public class JoueurInter {
 			canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
 			
-//			System.out.print(toScanX);
-//			System.out.print("  ");
-//			System.out.println(toScanY);
+
 			
 			if(!canUp) {
 				linkSpeed=0;
@@ -375,16 +364,14 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword4[0][4]);
 			framesSword.add(tmpFramesSword4[0][3]);
 			
-			//System.out.println(linkX);
+
 			double toScanX= ((linkX+sprite.getWidth()/2)/4.996);
 			double toScanY= map.getGameSceneHeight()/5-(linkY)/5+1;
 			canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
 			
 
-//			System.out.print(linkY);
-//			System.out.print("  ");
-//			System.out.println(toScanY);
+
 			if(!canDown) {
 				linkSpeed=0;
 			}
