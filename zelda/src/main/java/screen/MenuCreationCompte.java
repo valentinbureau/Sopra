@@ -1,6 +1,8 @@
 package screen;
 import com.zelda.*;
 
+import util.Context;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -86,8 +88,9 @@ public class MenuCreationCompte implements Screen{
 			public void changed (ChangeEvent event, Actor actor) {
 				if (verifPwd(saisiePwd.getText(), saisieConfPwd.getText()))
 				{
-					CompteUtilisateur newC= new CompteUtilisateur(saisieLogin.getText(), saisieMail.getText(), saisiePwd.getText());
-					MenuPrincipal.userConnected = newC;
+					MenuPrincipal.userConnected= new Joueur(saisieLogin.getText(), saisieMail.getText(), saisiePwd.getText());
+				//	MenuPrincipal.userConnected = newC;
+					Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
 					parent.changeScreen(TheLegendOfSopra.INFOS);
 				}
 				else

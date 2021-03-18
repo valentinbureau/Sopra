@@ -2,6 +2,8 @@ package screen;
 
 import com.zelda.*;
 
+import util.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +25,17 @@ public class MenuPrincipal implements Screen{
 	private Table table;
 	private Skin skin;
 	
-	static CompteUtilisateur userConnected;
+	static Joueur userConnected;
 	static Partie part = new Partie();
-	static String arme[] = {"1 - Epee", "2 - Massue"};
-	static String avatar[] = {"1 - Vert", "2 - Bleu", "3 - Jaune", "4 - Violet" };
+	static String arme[] = {"EPEE", "MASSUE"};
+	static String avatar[] = {"1", "2"};
 	static String map[] = {"1 -Campagne"};
 	
-	public CompteUtilisateur getUserConnected() {
+	public Joueur getUserConnected() {
 		return userConnected;
 	}
 
-	public void setUserConnected(CompteUtilisateur userConnected) {
+	public void setUserConnected(Joueur userConnected) {
 		this.userConnected = userConnected;
 	}
 
@@ -41,16 +43,10 @@ public class MenuPrincipal implements Screen{
 	{
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
-		
-		
-		
-		
 	}
 
 	@Override
 	public void show() {
-		
-		
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 		
@@ -65,7 +61,7 @@ public class MenuPrincipal implements Screen{
 		TextButton creationCompte = new TextButton ("Creation Compte", skin);
 		TextButton quitter = new TextButton("Quitter", skin);
 		
-		if (!(CompteUtilisateur.getListUtilisateur().isEmpty()))
+		if (Context.getInstance().getDaoJoueur().findAll()!=null)
 		{
 			TextButton connexion = new TextButton ("Connexion", skin);
 			table.add(connexion).fillX().uniformX();

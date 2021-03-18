@@ -1,7 +1,18 @@
 package com.zelda;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -16,47 +27,134 @@ import java.util.concurrent.TimeUnit;
 
 //Les méthodes sont après les getters et setters
 
-public class JoueurInter {
-	Sprite sprite;
-	Texture linkTexture;
-	private float linkX;
-	private float linkY;
-	private float linkSpeed;
-	private float defaultSpeed;
-	private float stateTime = 0;
-	private int swordDirection;
-	
-	private SpriteBatch batch=  new SpriteBatch();
-	private Texture gameScene= new Texture("com/zelda/world/World.png");
-	GameMap map= new GameMap(batch,gameScene);
-	
-	private Animation<TextureRegion> animBot;
-	private Animation<TextureRegion> animTop;
-	private Animation<TextureRegion> animLeft;
-	private Animation<TextureRegion> animRight;
-	private Animation<TextureRegion> animSword;
-	private Array<TextureRegion> framesSword = new Array<TextureRegion>();
+@Embeddable
+public class Link implements Serializable{
 
-	private boolean canUp;
-	private boolean canDown;
-	private boolean canLeft;
-	private boolean canRight;
-	public JoueurInter(float linkX, float linkY, float linkSpeed) {
-		super();
-		this.linkX = linkX;
-		this.linkY = linkY;
-		this.linkSpeed = linkSpeed;
-		this.defaultSpeed = linkSpeed;
+	transient Sprite sprite;
+	transient Texture linkTexture;
+	@Column(nullable=true)
+	private float posX;
+	@Column(nullable=true)
+	private float posY;
+	@Column(nullable=true)
+	protected transient float speed;
+	@Column(nullable=true)
+	private int vie;
+
+	private int id;
+	private Arme arme;
+	
+	@Lob
+    @Basic(fetch = FetchType.LAZY)
+	private byte[] avatar;
+	
+	private transient float defaultSpeed;
+
+	private transient float stateTime = 0;
+
+	private transient int swordDirection;
+
+	private transient SpriteBatch batch=  new SpriteBatch();
+
+	private transient Texture gameScene= new Texture("com/zelda/world/World.png");
+
+	transient GameMap  map= new GameMap(batch,gameScene);
+
+	private transient Animation<TextureRegion> animBot;
+
+	private transient Animation<TextureRegion> animTop;
+
+	private transient Animation<TextureRegion> animLeft;
+
+	private transient Animation<TextureRegion> animRight;
+
+	private transient Animation<TextureRegion> animSword;
+	
+	private transient Array<TextureRegion> framesSword = new Array<TextureRegion>();
+	
+	private transient boolean canUp;
+	
+	private transient boolean canDown;
+
+	private transient boolean canLeft;
+
+	private transient boolean canRight;
+	
+	public Link(float posX, float posY, int vie, float speed) {
+
+		this.defaultSpeed = speed;
 		this.canUp=true;
 		this.canDown=true;
 		this.canRight=true;
-
+		this.id=++id;
+		this.posX=posX;
+		this.posY=posY;
+		this.vie = vie;
+		this.speed=speed;
 	}
 
-	public JoueurInter() {
+	public Link() {
+		this.defaultSpeed = 0;
+		this.canUp=true;
+		this.canDown=true;
+		this.canRight=true;
+		this.id=0;
+		this.posX=0;
+		this.posY=0;
+		this.vie = 0;
+		this.speed=0;
+	}
+	
+	
 
+	public int getId() {
+		return id;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public Arme getArme() {
+		return arme;
+	}
+
+	public void setArme(Arme arme) {
+		this.arme = arme;
+	}
+	
+	public float getPosX() {
+		return posX;
+	}
+
+	public void setPosX(float posX) {
+		this.posX = posX;
+	}
+
+	public float getPosY() {
+		return posY;
+	}
+
+	public void setPosY(float posY) {
+		this.posY = posY;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public int getVie() {
+		return vie;
+	}
+
+	public void setVie(int vie) {
+		this.vie = vie;
+	}
+	
 	public Sprite getSprite() {
 		return sprite;
 	}
@@ -71,30 +169,6 @@ public class JoueurInter {
 
 	public void setLinkTexture(Texture linkTexture) {
 		this.linkTexture = linkTexture;
-	}
-
-	public float getLinkX() {
-		return linkX;
-	}
-
-	public void setLinkX(float linkX) {
-		this.linkX = linkX;
-	}
-
-	public float getLinkY() {
-		return linkY;
-	}
-
-	public void setLinkY(float linkY) {
-		this.linkY = linkY;
-	}
-
-	public float getLinkSpeed() {
-		return linkSpeed;
-	}
-
-	public void setLinkSpeed(float linkSpeed) {
-		this.linkSpeed = linkSpeed;
 	}
 
 	public float getDefaultSpeed() {
@@ -216,7 +290,29 @@ public class JoueurInter {
 		this.canRight = canRight;
 	}
 
+	public void setPosition( int axisX, int axisY) {
+		this.posX=axisX;
+		this.posY=axisY;
+	}
+	
+	public void recevoirDegats()
+	{
+		this.vie--;
+	}
+	
+	public void attaquer()
+	{
+		this.vie++;
+		if (this.vie>8)
+		{
+			this.vie=8;
+		}
+	}
 
+	@Override
+	public String toString() {
+		return "Link [id=" + id + ", arme=" + arme + "]";
+	}
 
 	public void create () {
 		this.linkTexture = new Texture ("com/zelda/link2.png");
@@ -262,20 +358,20 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword5[0][2]);
 			framesSword.add(tmpFramesSword5[0][3]);
 			framesSword.add(tmpFramesSword5[0][4]);
-			double toScanX= (linkX)/5.01-1;
-			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
+			double toScanX= (posX)/5.01-1;
+			double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
 			canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
-			linkSpeed = defaultSpeed;
+			speed = defaultSpeed;
 
 //			System.out.print(toScanX);
 //			System.out.print("  ");
 //			System.out.println(toScanY);
 			if(!canLeft) {
-				linkSpeed=0;
+				speed=0;
 			}
 
 			else {canLeft=true;}
-			linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;}
+			posX -= Gdx.graphics.getDeltaTime() * speed;}
 		
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
@@ -298,20 +394,20 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword7[0][2]);
 			framesSword.add(tmpFramesSword7[0][3]);
 			framesSword.add(tmpFramesSword7[0][4]);
-			double toScanX= (linkX + this.sprite.getWidth())/4.987+1;
-			double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
+			double toScanX= (posX + this.sprite.getWidth())/4.987+1;
+			double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
 			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
-			linkSpeed = defaultSpeed;
+			speed = defaultSpeed;
 			
 			
 //			System.out.print(toScanY);
 //			System.out.print("  ");
-//			System.out.println(linkY);
+//			System.out.println(posY);
 			if(!canRight ) {
-				linkSpeed=0;
+				speed=0;
 			}
 			else {canRight=true;}
-			linkX += Gdx.graphics.getDeltaTime() * linkSpeed;}
+			posX += Gdx.graphics.getDeltaTime() * speed;}
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
@@ -336,21 +432,21 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword6[0][3]);
 			
 			framesSword.add(tmpFramesSword6[0][4]);
-			double toScanX= (linkX+sprite.getWidth()/2)/4.996;
-			double toScanY=map.getGameSceneHeight()/5-(linkY+this.sprite.getHeight())/5-1;
+			double toScanX= (posX+sprite.getWidth()/2)/4.996;
+			double toScanY=map.getGameSceneHeight()/5-(posY+this.sprite.getHeight())/5-1;
 			canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
-			linkSpeed = defaultSpeed;
+			speed = defaultSpeed;
 			
 //			System.out.print(toScanX);
 //			System.out.print("  ");
 //			System.out.println(toScanY);
 			
 			if(!canUp) {
-				linkSpeed=0;
+				speed=0;
 
 			}
 			else {canUp=true;}
-			linkY += Gdx.graphics.getDeltaTime() * linkSpeed;}
+			posY += Gdx.graphics.getDeltaTime() * speed;}
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
@@ -375,22 +471,22 @@ public class JoueurInter {
 			framesSword.add(tmpFramesSword4[0][4]);
 			framesSword.add(tmpFramesSword4[0][3]);
 			
-			//System.out.println(linkX);
-			double toScanX= ((linkX+sprite.getWidth()/2)/4.996);
-			double toScanY= map.getGameSceneHeight()/5-(linkY)/5+1;
+			//System.out.println(posX);
+			double toScanX= ((posX+sprite.getWidth()/2)/4.996);
+			double toScanY= map.getGameSceneHeight()/5-(posY)/5+1;
 			canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
-			linkSpeed = defaultSpeed;
+			speed = defaultSpeed;
 			
 
-//			System.out.print(linkY);
+//			System.out.print(posY);
 //			System.out.print("  ");
 //			System.out.println(toScanY);
 			if(!canDown) {
-				linkSpeed=0;
+				speed=0;
 			}
 			
 			else {canDown=true;}
-			linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;}
+			posY -= Gdx.graphics.getDeltaTime() * speed;}
 		
 		if(Gdx.input.isKeyPressed(Keys.E)) {
 			
@@ -403,9 +499,6 @@ public class JoueurInter {
 			
 			
 			this.sprite = new Sprite (currentFrame);
-		
-			
-			
 			
 		}
 	}

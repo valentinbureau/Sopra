@@ -12,17 +12,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
 
-public class Monstre extends Entite{
+public class Monstre{
 	
 	Sprite sprite;
 	Texture monstreTexture;
-	private float monstreX;
-	private float monstreY;
-	private float monstreSpeed;
 	private float defaultSpeed;
 	private float stateTime = 0;
 	private static LocalTime tempsDeplacement = LocalTime.now();
-	
+	private float posX;
+	private float posY;
+	protected transient float speed;
+	private int vie;
 	private boolean canUp;
 	private boolean canDown;
 	private boolean canLeft;
@@ -39,15 +39,47 @@ public class Monstre extends Entite{
 	GameMap map= new GameMap(batch,gameScene);
 	
 	
+	public float getPosX() {
+		return posX;
+	}
+
+	public void setPosX(float posX) {
+		this.posX = posX;
+	}
+
+	public float getPosY() {
+		return posY;
+	}
+
+	public void setPosY(float posY) {
+		this.posY = posY;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public int getVie() {
+		return vie;
+	}
+
+	public void setVie(int vie) {
+		this.vie = vie;
+	}
+
 	public Monstre() {
 		super();
 	}
 	
-	public Monstre(float monstreX, float monstreY, float monstreSpeed, int monsterType) {
+	public Monstre(float posX, float posY, float speed, int monsterType) {
 		super();
-		this.monstreX = monstreX;
-		this.monstreY = monstreY;
-		this.monstreSpeed = monstreSpeed;
+		this.posX = posX;
+		this.posY = posY;
+		this.speed = speed;
 		this.monsterType = monsterType;
 	}
 
@@ -68,27 +100,27 @@ public class Monstre extends Entite{
 	}
 
 	public float getMonstreX() {
-		return monstreX;
+		return posX;
 	}
 
-	public void setMonstreX(float monstreX) {
-		this.monstreX = monstreX;
+	public void setMonstreX(float posX) {
+		this.posX = posX;
 	}
 
 	public float getMonstreY() {
-		return monstreY;
+		return posY;
 	}
 
-	public void setMonstreY(float monstreY) {
-		this.monstreY = monstreY;
+	public void setMonstreY(float posY) {
+		this.posY = posY;
 	}
 
 	public float getMonstreSpeed() {
-		return monstreSpeed;
+		return speed;
 	}
 
-	public void setMonstreSpeed(float monstreSpeed) {
-		this.monstreSpeed = monstreSpeed;
+	public void setMonstreSpeed(float speed) {
+		this.speed = speed;
 	}
 
 	public float getDefaultSpeed() {
@@ -219,6 +251,25 @@ public class Monstre extends Entite{
 	public static void setTempsDeplacement(LocalTime tempsDeplacement) {
 		Monstre.tempsDeplacement = tempsDeplacement;
 	}
+	
+	public void setPosition( int axisX, int axisY) {
+		this.posX=axisX;
+		this.posY=axisY;
+	}
+	
+	public void recevoirDegats()
+	{
+		this.vie--;
+	}
+	
+	public void attaquer()
+	{
+		this.vie++;
+		if (this.vie>8)
+		{
+			this.vie=8;
+		}
+	}
 
 	public void create () {
 		this.monstreTexture = new Texture("com/zelda/Monster-sprites.png");
@@ -254,15 +305,15 @@ public class Monstre extends Entite{
 				int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
 				this.sprite = new Sprite (framesLeft.get(currentFrame));
 				
-				double toScanX= (monstreX)/5.01-1;
-				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
+				double toScanX= (posX)/5.01-1;
+				double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
 				canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
 				
 				if(!canLeft) {
-					monstreSpeed = 0;
+					speed = 0;
 				}
 				else {
-					monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+					posX -= Gdx.graphics.getDeltaTime() * speed;
 					tempsDeplacement = LocalTime.now();
 				}
 			}
@@ -278,15 +329,15 @@ public class Monstre extends Entite{
 				int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
 				this.sprite = new Sprite (framesRight.get(currentFrame));
 				
-				double toScanX= (monstreX + this.sprite.getWidth())/4.987+1;
-				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
+				double toScanX= (posX + this.sprite.getWidth())/4.987+1;
+				double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
 				canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
 				
 				if(!canRight) {
-					monstreSpeed = 0;
+					speed = 0;
 				}
 				else {
-					monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+					posX += Gdx.graphics.getDeltaTime() * speed;
 					tempsDeplacement = LocalTime.now();
 				}
 			}
@@ -302,15 +353,15 @@ public class Monstre extends Entite{
 				int currentFrame = animTop.getKeyFrameIndex(stateTime += delta);
 				this.sprite = new Sprite (framesUp.get(currentFrame));
 				
-				double toScanX= (monstreX+sprite.getWidth()/2)/4.996;
-				double toScanY=map.getGameSceneHeight()/5-(monstreY+this.sprite.getHeight())/5-1;
+				double toScanX= (posX+sprite.getWidth()/2)/4.996;
+				double toScanY=map.getGameSceneHeight()/5-(posY+this.sprite.getHeight())/5-1;
 				canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
 				
 				if(!canRight) {
-					monstreSpeed = 0;
+					speed = 0;
 				}
 				else {
-					monstreY += Gdx.graphics.getDeltaTime() * monstreSpeed;
+					posY += Gdx.graphics.getDeltaTime() * speed;
 					tempsDeplacement = LocalTime.now();
 				}
 			}
@@ -326,15 +377,15 @@ public class Monstre extends Entite{
 				int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
 				this.sprite = new Sprite (framesBot.get(currentFrame));
 				
-				double toScanX= ((monstreX+sprite.getWidth()/2)/4.996);
-				double toScanY= map.getGameSceneHeight()/5-(monstreY)/5+1;
+				double toScanX= ((posX+sprite.getWidth()/2)/4.996);
+				double toScanY= map.getGameSceneHeight()/5-(posY)/5+1;
 				canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
 				
 				if(!canRight) {
-					monstreSpeed = 0;
+					speed = 0;
 				}
 				else {
-					monstreY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
+					posY -= Gdx.graphics.getDeltaTime() * speed;
 					tempsDeplacement = LocalTime.now();
 				}
 			}

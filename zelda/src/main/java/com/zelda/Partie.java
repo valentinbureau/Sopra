@@ -2,7 +2,7 @@ package com.zelda;
 
 public class Partie {
 	
-	private CompteUtilisateur user;
+	private Joueur user;
 	private int idMap;
 	
 	
@@ -10,16 +10,16 @@ public class Partie {
 	public Partie() {
 	}
 
-	public Partie(CompteUtilisateur user, int idMap) {
+	public Partie(Joueur user, int idMap) {
 		this.user = user;
 		this.idMap = idMap;
 	}
 
-	public CompteUtilisateur getUser() {
+	public Joueur getUser() {
 		return user;
 	}
 
-	public void setUser(CompteUtilisateur user) {
+	public void setUser(Joueur user) {
 		this.user = user;
 	}
 

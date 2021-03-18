@@ -91,7 +91,7 @@ public class BigMiniMap extends ApplicationAdapter implements Screen{
 		map.batch.setProjectionMatrix(camera.combined); 
 		map.batch.begin();
 		map.batch.draw(GameScreen.map.gameScene, 0, 0,10000,3424);//Affichage map
-		map.batch.draw(GameScreen.link.getSprite(), GameScreen.link.getLinkX(), GameScreen.link.getLinkY());//Affichage personnage
+		map.batch.draw(GameScreen.link.getSprite(), GameScreen.link.getPosX(), GameScreen.link.getPosY());//Affichage personnage
 //        camera.position.set(GameScreen.link.getLinkX() , GameScreen.link.getLinkY() , 0);
 //        camera.update();
 		
@@ -99,9 +99,10 @@ public class BigMiniMap extends ApplicationAdapter implements Screen{
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.rect(GameScreen.link.getLinkX(), GameScreen.link.getLinkY(),50, 50);
+        shapeRenderer.rect(GameScreen.link.getPosX(), GameScreen.link.getPosY(),50, 50);
        
         shapeRenderer.end();
+        
         map.batch.end();
 		
 		if(!(Gdx.input.isKeyPressed(Keys.TAB))) {
