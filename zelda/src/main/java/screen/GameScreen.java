@@ -174,9 +174,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //		monstre.render(link);//D�placement Monstre
 //		monstre1.render(link);
 //		monstre2.render(link);
+		monstre3.render(link);
 //		monstre4.render(link);
 //		monstre5.render(link);
-		monstre3.render(link);
 		monstre6.render(link);
 //		monstre7.render(link);
 //		monstre8.render(link);
@@ -202,7 +202,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
 //		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
 //		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
-//		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
+		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
 //		map.batch.draw(monstre4.getSprite(), monstre4.getPosX(), monstre4.getPosY());
 //		map.batch.draw(monstre5.getSprite(), monstre5.getPosX(), monstre5.getPosY());
 		map.batch.draw(monstre6.getSprite(), monstre6.getPosX(), monstre6.getPosY());
