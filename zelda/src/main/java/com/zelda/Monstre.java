@@ -224,7 +224,7 @@ public class Monstre extends Entite{
 		LocalTime now = LocalTime.now();
 		
 		
-		if (now.isAfter(tempsDeplacement.plusNanos(100000000))) {
+		if (now.isAfter(tempsDeplacement.plusSeconds(1))) {
 ////			if (deplacement == 1) {
 //				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
 //				for (int i = indexSprite; i < indexSprite + 3; i++) {
@@ -292,34 +292,31 @@ public class Monstre extends Entite{
 //				}
 ////			}
 			if (deplacement == 1) {
-				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
+				Array<TextureRegion> framesUp = new Array<TextureRegion>();
 				for (int i = indexSprite; i < indexSprite + 3; i++) {
-					framesLeft.add(tmpFrames[lineSprite+3][i]);
+					framesUp.add(tmpFrames[lineSprite][i]);
 				}
-				
-				this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
-				this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
+				this.animTop = new Animation<TextureRegion>(0.08f, framesUp);
+				this.animTop.setPlayMode(Animation.PlayMode.LOOP);
 				float delta = Gdx.graphics.getDeltaTime();
-				int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
-				this.sprite = new Sprite (framesLeft.get(currentFrame));
+				int currentFrame = animTop.getKeyFrameIndex(stateTime += delta);
+				this.sprite = new Sprite (framesUp.get(currentFrame));
 				
-				double toScanX= (posX)/5.01-1;
-				double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
-				canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
+				double toScanX= (posX+sprite.getWidth()/2)/4.996;
+				double toScanY=map.getGameSceneHeight()/5-(posY+this.sprite.getHeight())/5-1;
+				canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
 				
-				if(!canLeft) {
+				
+				if(!canUp) {
 					monstreSpeed = 0;
+					deplacement = 2;
 				}
 				else {
-					posX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
-					tempsDeplacement = LocalTime.now();
+					posY += Gdx.graphics.getDeltaTime() * monstreSpeed;
 					hitbox.setPosition(posX, posY);
-					if (collision == false) {
-					//System.out.println(hitbox.overlaps(link.getHitbox()));
 					collision = hitbox.overlaps(link.getHitbox());
-					}
 					if(collision) {
-						posX += Gdx.graphics.getDeltaTime() * monstreSpeed;
+						posY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
 						hitbox.setPosition(posX, posY);
 					}
 				}
@@ -345,12 +342,8 @@ public class Monstre extends Entite{
 				}
 				else {
 					posY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
-					tempsDeplacement = LocalTime.now();
 					hitbox.setPosition(posX, posY);
-					if (collision == false) {
-
 					collision = hitbox.overlaps(link.getHitbox());
-					}
 					if(collision) {
 						posY += Gdx.graphics.getDeltaTime() * monstreSpeed;
 						hitbox.setPosition(posX, posY);

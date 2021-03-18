@@ -43,10 +43,10 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //	static Monstre monstre = new Monstre(6500, 2050, 80, 2); //Initialisation du Monstre de type 1
 //	static Monstre monstre1 = new Monstre(7114, 2316, 80, 2);
 //	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
-	static Monstre monstre3 = new Monstre(7198, 2162, 80, 2);
+	static Monstre monstre3 = new Monstre(7198, 2162, 50, 2);
 //	static Monstre monstre4 = new Monstre(7112, 1947, 80, 5);
 //	static Monstre monstre5 = new Monstre(6838, 1922, 80, 2);
-	static Monstre monstre6 = new Monstre(5920, 1503, 80, 3);
+	static Monstre monstre6 = new Monstre(5920, 1503, 50, 3);
 //	static Monstre monstre7 = new Monstre(7042, 1461, 80, 5);
 //	static Monstre monstre8 = new Monstre(7323, 2868, 80, 5);
 //	static Monstre monstre9 = new Monstre(7702, 2789, 80, 1);
@@ -174,9 +174,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //		monstre.render(link);//D�placement Monstre
 //		monstre1.render(link);
 //		monstre2.render(link);
+		monstre3.render(link);
 //		monstre4.render(link);
 //		monstre5.render(link);
-		monstre3.render(link);
 		monstre6.render(link);
 //		monstre7.render(link);
 //		monstre8.render(link);
@@ -202,7 +202,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
 //		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
 //		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
-//		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
+		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
 //		map.batch.draw(monstre4.getSprite(), monstre4.getPosX(), monstre4.getPosY());
 //		map.batch.draw(monstre5.getSprite(), monstre5.getPosX(), monstre5.getPosY());
 		map.batch.draw(monstre6.getSprite(), monstre6.getPosX(), monstre6.getPosY());
