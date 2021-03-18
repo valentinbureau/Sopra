@@ -47,7 +47,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 	static JoueurInter link = new JoueurInter(linkX,linkY,linkSpeed); // Initialisation du Joueur
 	Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
-	Monstre monstre1 = new Monstre(5920, 1300, 80, 4);
+	Monstre monstre1 = new Monstre(5920, 1300, 80, 7);
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	private Texture miniMap;

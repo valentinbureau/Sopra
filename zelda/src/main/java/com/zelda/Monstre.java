@@ -223,8 +223,8 @@ public class Monstre extends Entite{
 	public void create () {
 		this.monstreTexture = new Texture("com/zelda/Monster-sprites.png");
 		this.tmpFrames = TextureRegion.split(monstreTexture, monstreTexture.getWidth()/12, monstreTexture.getHeight()/8);
-		int indexSprite = 3*monsterType -3 ;
-		if (monsterType < 4) {
+		int indexSprite = (this.monsterType < 5) ? (3*monsterType -3) : (3*(monsterType-4) -3) ;
+		if (monsterType < 5) {
 			this.sprite = new Sprite (tmpFrames[2][indexSprite]);
 		}
 		else {
@@ -236,8 +236,8 @@ public class Monstre extends Entite{
 		
 		
 		int deplacement = (int) (Math.random() * 4);
-		int indexSprite = 3*monsterType -3 ;
-		int lineSprite = (this.monsterType < 4) ? 0 : 4;
+		int indexSprite = (this.monsterType < 5) ? (3*monsterType -3) : (3*(monsterType-4) -3) ;
+		int lineSprite = (this.monsterType < 5) ? 0 : 4;
 		LocalTime now = LocalTime.now();
 		
 		

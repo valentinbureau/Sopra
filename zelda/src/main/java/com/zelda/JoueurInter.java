@@ -1,8 +1,5 @@
 package com.zelda;
 
-import java.time.LocalTime;
-import java.util.concurrent.TimeUnit;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,13 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
-import java.util.concurrent.TimeUnit;
 
 //Les méthodes sont après les getters et setters
 
 public class JoueurInter {
 	Sprite sprite;
-	Texture linkTexture;
+	Texture linkTexture = new Texture ("com/zelda/link2.png");
 	private float linkX;
 	private float linkY;
 	private float linkSpeed;
@@ -29,6 +25,26 @@ public class JoueurInter {
 	private SpriteBatch batch=  new SpriteBatch();
 	private Texture gameScene= new Texture("com/zelda/world/World.png");
 	GameMap map= new GameMap(batch,gameScene);
+	
+	
+	private Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
+	private TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
+	private TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
+	private TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
+	private TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
+	private TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
+	private Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
+	private TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+	private Texture animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
+	private TextureRegion[][] tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
+	private Texture animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
+	private TextureRegion[][] tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
+	
+	private Array<TextureRegion> framesLeft = new Array<TextureRegion>();
+	private Array<TextureRegion> framesRight = new Array<TextureRegion>();
+	private Array<TextureRegion> framesUp = new Array<TextureRegion>();
+	private Array<TextureRegion> framesBot = new Array<TextureRegion>();
+	
 	
 	private Animation<TextureRegion> animBot;
 	private Animation<TextureRegion> animTop;
@@ -216,41 +232,131 @@ public class JoueurInter {
 		this.canRight = canRight;
 	}
 
+	public TextureRegion[][] getTmpFrames() {
+		return tmpFrames;
+	}
 
+	public Texture getAnimationSwordDown() {
+		return animationSwordDown;
+	}
+
+	public void setAnimationSwordDown(Texture animationSwordDown) {
+		this.animationSwordDown = animationSwordDown;
+	}
+
+	public TextureRegion[][] getTmpFramesSword() {
+		return tmpFramesSword;
+	}
+
+	public void setTmpFramesSword(TextureRegion[][] tmpFramesSword) {
+		this.tmpFramesSword = tmpFramesSword;
+	}
+
+	public TextureRegion[][] getTmpFramesSword2() {
+		return tmpFramesSword2;
+	}
+
+	public void setTmpFramesSword2(TextureRegion[][] tmpFramesSword2) {
+		this.tmpFramesSword2 = tmpFramesSword2;
+	}
+
+	public TextureRegion[][] getTmpFramesSword3() {
+		return tmpFramesSword3;
+	}
+
+	public void setTmpFramesSword3(TextureRegion[][] tmpFramesSword3) {
+		this.tmpFramesSword3 = tmpFramesSword3;
+	}
+
+	public TextureRegion[][] getTmpFramesSword4() {
+		return tmpFramesSword4;
+	}
+
+	public void setTmpFramesSword4(TextureRegion[][] tmpFramesSword4) {
+		this.tmpFramesSword4 = tmpFramesSword4;
+	}
+
+	public Texture getAnimationSwordLeft() {
+		return animationSwordLeft;
+	}
+
+	public void setAnimationSwordLeft(Texture animationSwordLeft) {
+		this.animationSwordLeft = animationSwordLeft;
+	}
+
+	public TextureRegion[][] getTmpFramesSword5() {
+		return tmpFramesSword5;
+	}
+
+	public void setTmpFramesSword5(TextureRegion[][] tmpFramesSword5) {
+		this.tmpFramesSword5 = tmpFramesSword5;
+	}
+
+	public Texture getAnimationSwordUp() {
+		return animationSwordUp;
+	}
+
+	public void setAnimationSwordUp(Texture animationSwordUp) {
+		this.animationSwordUp = animationSwordUp;
+	}
+
+	public TextureRegion[][] getTmpFramesSword6() {
+		return tmpFramesSword6;
+	}
+
+	public void setTmpFramesSword6(TextureRegion[][] tmpFramesSword6) {
+		this.tmpFramesSword6 = tmpFramesSword6;
+	}
+
+	public Texture getAnimationSwordRight() {
+		return animationSwordRight;
+	}
+
+	public void setAnimationSwordRight(Texture animationSwordRight) {
+		this.animationSwordRight = animationSwordRight;
+	}
+
+	public TextureRegion[][] getTmpFramesSword7() {
+		return tmpFramesSword7;
+	}
+
+	public void setTmpFramesSword7(TextureRegion[][] tmpFramesSword7) {
+		this.tmpFramesSword7 = tmpFramesSword7;
+	}
+
+	public void setTmpFrames(TextureRegion[][] tmpFrames) {
+		this.tmpFrames = tmpFrames;
+	}
+	
+	
 
 	public void create () {
-		this.linkTexture = new Texture ("com/zelda/link2.png");
-		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
 		this.sprite= new Sprite( tmpFrames[0][0] );
+		
+		for (int i = 8; i < 14; i++) {
+			framesLeft.add(tmpFrames[1][i]);
+		}
+		
+		for (int i = 8; i < 14; i++) {
+			framesRight.add(tmpFrames[4][i]);
+		}
+		
+		for (int i = 0; i < 8; i++) {
+			framesUp.add(tmpFrames[4][i]);
+		}
+		
+		for (int i = 0; i < 8; i++) {
+			framesBot.add(tmpFrames[1][i]);
+		}
+		
 	}
 
 	public void render() {
-		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
-		
-		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
-		TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
-		TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
-		TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
-		TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-		
-		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
-		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
-		
-		Texture animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
-		TextureRegion[][] tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
-		
-		Texture animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
-		TextureRegion[][] tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
-			Array<TextureRegion> framesLeft = new Array<TextureRegion>();
-			for (int i = 8; i < 14; i++) {
-				framesLeft.add(tmpFrames[1][i]);
-			}
 			
-			
-			this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
-			this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
+			animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
+			animLeft.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
 			this.sprite = new Sprite (framesLeft.get(currentFrame));
@@ -279,13 +385,8 @@ public class JoueurInter {
 		
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
-			Array<TextureRegion> framesRight = new Array<TextureRegion>();
 
-			for (int i = 8; i < 14; i++) {
-				framesRight.add(tmpFrames[4][i]);
-			}
-			
-			Animation<TextureRegion> animRight = new Animation<TextureRegion>(0.08f, framesRight);
+			animRight = new Animation<TextureRegion>(0.08f, framesRight);
 			animRight.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
@@ -315,17 +416,12 @@ public class JoueurInter {
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
-			Array<TextureRegion> framesUp = new Array<TextureRegion>();
-
-			for (int i = 0; i < 8; i++) {
-				framesUp.add(tmpFrames[4][i]);
-			}
 			
 			
-			Animation<TextureRegion> animUp = new Animation<TextureRegion>(0.08f, framesUp);
-			animUp.setPlayMode(Animation.PlayMode.LOOP);
+			this.animTop = new Animation<TextureRegion>(0.08f, framesUp);
+			animTop.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
-			int currentFrame = animUp.getKeyFrameIndex(stateTime += delta);
+			int currentFrame = animTop.getKeyFrameIndex(stateTime += delta);
 			this.sprite = new Sprite (framesUp.get(currentFrame));
 			
 			framesSword.clear();
@@ -354,14 +450,8 @@ public class JoueurInter {
 
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
-			Array<TextureRegion> framesBot = new Array<TextureRegion>();
-
-			for (int i = 0; i < 8; i++) {
-				framesBot.add(tmpFrames[1][i]);
-			}
 			
-			
-			Animation<TextureRegion> animBot = new Animation<TextureRegion>(0.08f, framesBot);
+			animBot = new Animation<TextureRegion>(0.08f, framesBot);
 			animBot.setPlayMode(Animation.PlayMode.LOOP);
 			float delta = Gdx.graphics.getDeltaTime();
 			int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
