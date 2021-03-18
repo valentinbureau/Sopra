@@ -1,6 +1,13 @@
 package com.zelda;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+
 public class Entite {
+	protected Sprite sprite;
+	protected Texture texture;
+	protected Rectangle hitbox;
 	protected float posX;
 	protected float posY;
 	public Entite() {
@@ -27,4 +34,32 @@ public class Entite {
 		this.posX=axisX;
 		this.posY=axisY;
 	}
+
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
+
+	public Texture getTexture() {
+		return texture;
+	}
+
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
+
+	public Rectangle getHitbox() {
+		return hitbox;
+	}
+
+	public void setHitbox(Rectangle hitbox) {
+		this.hitbox = hitbox;
+	}
+
+	
+	
+	
 }

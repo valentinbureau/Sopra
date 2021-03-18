@@ -19,8 +19,6 @@ import com.zelda.world.GameMap;
 public class Link extends Entite {
 	Sprite sprite;
 	Texture linkTexture = new Texture ("com/zelda/link2.png");
-	private float linkX;
-	private float linkY;
 	private float linkSpeed;
 	private float defaultSpeed;
 	private float stateTime = 0;
@@ -392,7 +390,7 @@ public class Link extends Entite {
 
 	public void create () {
 		sprite= new Sprite( tmpFrames[0][0] );
-		hitbox = new Rectangle(linkX, linkY, 45, 45);
+		hitbox = new Rectangle(posX, posY, 45, 45);
 
 		for (int i = 8; i < 14; i++) {
 			framesLeft.add(tmpFrames[1][i]);

@@ -141,8 +141,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.draw(link.getSprite(), link.getPosX(), link.getPosY());//Affichage personnage
 		map.batch.draw(princesse.getSprite(), princesse.getPosX(), princesse.getPosY(),princesse.getWidth(),princesse.getHeight());//Affichage personnage
 
-		map.batch.draw(monstre.getSprite(), monstre.getMonstreX(), monstre.getMonstreY()); //Affichage Monstre
-		map.batch.draw(monstre1.getSprite(), monstre1.getMonstreX(), monstre1.getMonstreY());
+		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
+		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
 
 //		draw(Texture texture, float x, float y, float width, float height)
 //		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.
