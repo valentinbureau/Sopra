@@ -3,6 +3,8 @@ package com.zelda;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.Embeddable;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,52 +20,85 @@ import screen.GameScreen;
 
 //Les méthodes sont après les getters et setters
 
-public class Link extends Entite {
-	private float linkSpeed;
-	private float defaultSpeed;
-	private float stateTime = 0;
-	private int swordDirection;
 
-	private Rectangle attackHitbox;
-	private boolean collision = false;
-	private boolean collisionAttack = false;
-	private int attackDirection = 0;
+@Embeddable
+public class Link{
+	private float posX;
+	private float posY;
+	public float getPosX() {
+		return posX;
+	}
 
-	private SpriteBatch batch=  new SpriteBatch();
-	private Texture gameScene= new Texture("com/zelda/world/World.png");
-	GameMap map= new GameMap(batch,gameScene);
+	public void setPosX(float posX) {
+		this.posX = posX;
+	}
+
+	public float getPosY() {
+		return posY;
+	}
+
+	public void setPosY(float posY) {
+		this.posY = posY;
+	}
+
+	transient Sprite sprite;
+	transient Texture linkTexture = new Texture ("com/zelda/link2.png");
+	private transient float linkSpeed;
+	private transient float defaultSpeed;
+	private transient float stateTime = 0;
+	private transient int swordDirection;
+	private transient Rectangle hitbox;
+	private transient Rectangle attackHitbox;
+	private transient boolean collision = false;
+	private transient boolean collisionAttack = false;
+	private transient int attackDirection = 0;
+
+	private transient SpriteBatch batch=  new SpriteBatch();
+	private transient Texture gameScene= new Texture("com/zelda/world/World.png");
+	transient GameMap map= new GameMap(batch,gameScene);
 
 
-	private Texture animationSwordDown;
-	private TextureRegion[][] tmpFramesSword;
-	private TextureRegion[][] tmpFramesSword2;
-	private TextureRegion[][] tmpFramesSword3;
-	private TextureRegion[][] tmpFramesSword4;
-	private TextureRegion[][] tmpFrames;
-	private Texture animationSwordLeft;
-	private TextureRegion[][] tmpFramesSword5;
-	private Texture animationSwordUp;
-	private TextureRegion[][] tmpFramesSword6;
-	private Texture animationSwordRight;
-	private TextureRegion[][] tmpFramesSword7;
+	private transient Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png");
+	private transient TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
+	private transient TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
+	private transient TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
+	private transient TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
+	private transient TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 44);
+	private transient Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
+	private transient TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+	private transient Texture animationSwordUp = new Texture("com/zelda/link2-sword_up.png");
+	private transient TextureRegion[][] tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
+	private transient Texture animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
+	private transient TextureRegion[][] tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
 
-	private Array<TextureRegion> framesLeft;
-	private Array<TextureRegion> framesRight;
-	private Array<TextureRegion> framesUp;
-	private Array<TextureRegion> framesBot;
+	private transient Array<TextureRegion> framesLeft = new Array<TextureRegion>();
+	private transient Array<TextureRegion> framesRight = new Array<TextureRegion>();
+	private transient Array<TextureRegion> framesUp = new Array<TextureRegion>();
+	private transient Array<TextureRegion> framesBot = new Array<TextureRegion>();
 
 
-	private Animation<TextureRegion> animBot;
-	private Animation<TextureRegion> animTop;
-	private Animation<TextureRegion> animLeft;
-	private Animation<TextureRegion> animRight;
-	private Animation<TextureRegion> animSword;
-	private Array<TextureRegion> framesSword = new Array<TextureRegion>();
+	private transient Animation<TextureRegion> animBot;
+	private transient Animation<TextureRegion> animTop;
+	private transient Animation<TextureRegion> animLeft;
+	private transient Animation<TextureRegion> animRight;
+	private transient Animation<TextureRegion> animSword;
+	private transient Array<TextureRegion> framesSword = new Array<TextureRegion>();
 
-	private boolean canUp;
-	private boolean canDown;
-	private boolean canLeft;
-	private boolean canRight;
+	private transient boolean canUp;
+	private transient boolean canDown;
+	private transient boolean canLeft;
+	private transient boolean canRight;
+	
+	private int vie;
+	private transient Texture texture;
+	public int getVie() {
+		return vie;
+	}
+
+	public void setVie(int vie) {
+		this.vie = vie;
+	}
+
 	public Link(float linkX, float linkY, float linkSpeed) {
 		super();
 		this.posX = linkX;
@@ -73,6 +108,7 @@ public class Link extends Entite {
 		this.canUp=true;
 		this.canDown=true;
 		this.canRight=true;
+		this.vie=8;
 
 	}
 
@@ -85,6 +121,7 @@ public class Link extends Entite {
 		this.canUp=true;
 		this.canDown=true;
 		this.canRight=true;
+		this.vie=8;
 	}
 
 	public Sprite getSprite() {
@@ -364,6 +401,7 @@ public class Link extends Entite {
 		this.attackDirection = attackDirection;
 	}
 
+
 	//	public void render() {
 //		//Pr�paration du spriteSheet de Link
 //		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
@@ -404,6 +442,7 @@ public class Link extends Entite {
 		texture = new Texture ("com/zelda/link2.png");
 
 		hitbox = new Rectangle(posX, posY, 45, 45);
+		attackHitbox = new Rectangle(posX, posY, 55, 55);
 
 		
 		// Setting Frames for movements
@@ -451,7 +490,6 @@ public class Link extends Entite {
 
 
 	public void render(List<Monstre> monstres,Princesse princesse) {
-
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 

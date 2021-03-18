@@ -1,40 +1,96 @@
 package com.zelda;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
-public class Joueur extends Entite{
-	 private static final int FRAME_COLS =7, FRAME_ROWS = 1;
-	 
-	Animation<TextureRegion> walkAnimation;
-	Texture walkSheet;
-	private final static int STARTING_X = 320;
-    private final static int STARTING_Y = 175;
+@Entity
+public class Joueur implements Serializable{
 	
-	public Joueur(){
-        createIdleAnimation();
-        this.setPosition(STARTING_X, STARTING_Y);
-        this.walkAnimation=walkAnimation;
-    }
+	//static Map<String, Joueur> listUtilisateur = new HashMap();
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+	private String login; //Unique
+	private String mail; //Unique
+	private String password;
 	
-	private void createIdleAnimation() {
-		walkSheet = new Texture(Gdx.files.internal("LinkAnimation2.png"));
-		
-		 TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-				 	walkSheet.getWidth() / FRAME_COLS,
-	                walkSheet.getHeight() / FRAME_ROWS);
-		 
-		 TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-		 int index = 0;
-	        for (int i = 0; i < FRAME_ROWS; i++) {
-	            for (int j = 0; j < FRAME_COLS; j++) {
-	                walkFrames[index++] = tmp[i][j];
-	            }
-	        }
-	     walkAnimation = new Animation<TextureRegion>(0.025f, walkFrames);
+	@Embedded
+	@AttributeOverrides({
+        @AttributeOverride(name="posX",
+        column=@Column(name="posX_link")),
+        @AttributeOverride(name="posY",
+        column=@Column(name="posY_link")),
+        @AttributeOverride(name="vie",
+        column=@Column(name="vie_link")),
+	})
+	@Column(nullable=true)
+	private Link link=new Link();
+	
+	public Joueur() {}
+
+	public Joueur(String login, String mail, String password, Link link) {
+		this.login = login;
+		this.mail = mail;
+		this.password = password;
+		this.link = link;
 	}
+
+	public Joueur(String login, String mail, String password) {
+		this.login = login;
+		this.mail = mail;
+		this.password = password;
+	}
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Link getAvatar() {
+		return link;
+	}
+	
+	public void setAvatar(Link link) {
+		this.link = link;
+	}
+
+	@Override
+	public String toString() {
+		return "Joueur [login=" + login + ", mail=" + mail + ", password=" + password + ", link=" + link + "]";
+	}
+
+	
 }

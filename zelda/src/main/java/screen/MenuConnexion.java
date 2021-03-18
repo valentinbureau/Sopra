@@ -15,8 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.zelda.CompteUtilisateur;
+import com.zelda.Joueur;
 import com.zelda.TheLegendOfSopra;
+
+import util.Context;
 
 public class MenuConnexion implements Screen{
 	
@@ -61,8 +63,8 @@ public class MenuConnexion implements Screen{
 		badLogin = new Label ("", skin);
 		badPwd = new Label ("", skin);
 		
-		saisieLogin = new TextField(MenuPrincipal.userConnected.getLogin(), skin);
-		saisiePwd = new TextField(MenuPrincipal.userConnected.getPassword(), skin);
+		saisieLogin = new TextField(null, skin);
+		saisiePwd = new TextField(null, skin);
 		
 		connexion = new TextButton("Valider", skin);
 		
@@ -83,33 +85,35 @@ public class MenuConnexion implements Screen{
 				String log = saisieLogin.getText();
 				String pass = saisiePwd.getText();
 				System.out.println(log+ " - " + pass);
-				boolean essai = false;
-				Iterator<String>it=CompteUtilisateur.getListUtilisateur().keySet().iterator();
-				do
-				{
-					String key=it.next();
-					if (key.equals(log))
-					{
-						essai=true;
-						MenuPrincipal.userConnected=CompteUtilisateur.getListUtilisateur().get(key);
-					}
-					else
-					{
-						essai=false;
-					}
-				}while(it.hasNext() && (essai == false));
-				if (essai == false)
-				{
-					badLogin.setText("Login inconnu");
-				}
-				else if (!(pass.equals(MenuPrincipal.userConnected.getPassword())))
-				{
-					badPwd.setText("Mot de passe incorrect");
-				}
-				else
-				{
-					parent.changeScreen(TheLegendOfSopra.INFOS);
-				}
+				MenuPrincipal.userConnected = Context.getInstance().getDaoJoueur().checkConnect(log, pass);
+				parent.changeScreen(TheLegendOfSopra.INFOS);
+			//	boolean essai = false;
+//				Iterator<String>it=Joueur.getListUtilisateur().keySet().iterator();
+//				do
+//				{
+//					String key=it.next();
+//					if (key.equals(log))
+//					{
+//						essai=true;
+//						MenuPrincipal.userConnected=Joueur.getListUtilisateur().get(key);
+//					}
+//					else
+//					{
+//						essai=false;
+//					}
+//				}while(it.hasNext() && (essai == false));
+//				if (essai == false)
+//				{
+//					badLogin.setText("Login inconnu");
+//				}
+//				else if (!(pass.equals(MenuPrincipal.userConnected.getPassword())))
+//				{
+//					badPwd.setText("Mot de passe incorrect");
+//				}
+//				else
+//				{
+//					parent.changeScreen(TheLegendOfSopra.INFOS);
+//				}
 			}
 		});
 		

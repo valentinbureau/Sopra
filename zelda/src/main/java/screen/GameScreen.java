@@ -39,7 +39,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	OrthographicCamera miniCamera;
 
 	static Princesse princesse = new Princesse();
-	static Link link = new Link(); // Initialisation du Joueur
+	static Link link = MenuPrincipal.userConnected.getAvatar(); // Initialisation du Joueur
 //	static Monstre monstre = new Monstre(6500, 2050, 80, 2); //Initialisation du Monstre de type 1
 //	static Monstre monstre1 = new Monstre(7114, 2316, 80, 2);
 //	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
@@ -215,26 +215,25 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //		map.batch.draw(monstre13.getSprite(), monstre13.getPosX(), monstre13.getPosY());
 //		map.batch.draw(monstre14.getSprite(), monstre14.getPosX(), monstre14.getPosY());
 
-		//		draw(Texture texture, float x, float y, float width, float height)
-		//		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.
+
 		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
 		map.batch.setProjectionMatrix(camera.invProjectionView);
 		camera.position.set(link.getPosX() , link.getPosY() , 0);
 		camera.update();
-		
+	
 		map.batch.end();
 		shapeRenderer = new ShapeRenderer();
-
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.setColor(Color.RED);
 		shapeRenderer.setProjectionMatrix(camera.combined);
-		shapeRenderer.rect(link.getPosY()-map.getWidth()/2-2 + link.getPosX()/MINI_MAP_RATIO, (link.getPosY()+map.getHeight()/3+14)+link.getPosY()/MINI_MAP_RATIO,2, 2);
+		shapeRenderer.rect(link.getPosX()-map.getWidth()/2-2 + link.getPosX()/MINI_MAP_RATIO, (link.getPosY()+map.getHeight()/3+14)+link.getPosY()/MINI_MAP_RATIO,2, 2);
 		shapeRenderer.end();
 
 		if(Gdx.input.isKeyPressed(Keys.TAB)) {
 			System.out.println("PRESSED");
 			parent.changeScreen(TheLegendOfSopra.MINIMAP);
 		}
+		hud.show();
 	}
 }
 

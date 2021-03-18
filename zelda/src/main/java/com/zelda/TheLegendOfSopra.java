@@ -49,10 +49,10 @@ public class TheLegendOfSopra extends Game {
 	
 	@Override
 	public void create () {
-		app = new GameScreen(this);
-		setScreen(app);
-//		menuPrincipal = new MenuPrincipal(this);
-//		setScreen(menuPrincipal);
+//		app = new GameScreen(this);
+//		setScreen(app);
+		menuPrincipal = new MenuPrincipal(this);
+		setScreen(menuPrincipal);
 	}
 	
 	public void changeScreen (int screen)

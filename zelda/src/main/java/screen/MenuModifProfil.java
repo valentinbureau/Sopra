@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.zelda.TheLegendOfSopra;
 
+import util.Context;
+
 public class MenuModifProfil implements Screen{
 	
 	private TheLegendOfSopra parent;
@@ -89,6 +91,7 @@ public class MenuModifProfil implements Screen{
 					MenuPrincipal.userConnected.setLogin(saisieLogin.getText());
 					MenuPrincipal.userConnected.setPassword(saisiePwd.getText());
 					MenuPrincipal.userConnected.setMail(saisieMail.getText());
+					Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
 					parent.changeScreen(TheLegendOfSopra.INFOS);
 				}
 				else
