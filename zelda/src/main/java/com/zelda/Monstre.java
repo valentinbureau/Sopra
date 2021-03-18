@@ -213,6 +213,7 @@ public class Monstre extends Entite{
 			this.sprite = new Sprite (tmpFrames[6][indexSprite]);
 		}
 		this.hitbox = new Rectangle(posX, posY, sprite.getWidth(), sprite.getHeight());
+		defaultSpeed = monstreSpeed;
 	}
 	
 	public void render(Link link) {
@@ -312,6 +313,7 @@ public class Monstre extends Entite{
 					deplacement = 2;
 				}
 				else {
+					monstreSpeed = defaultSpeed;
 					posY += Gdx.graphics.getDeltaTime() * monstreSpeed;
 					hitbox.setPosition(posX, posY);
 					collision = hitbox.overlaps(link.getHitbox());
@@ -341,6 +343,7 @@ public class Monstre extends Entite{
 					deplacement = 1;
 				}
 				else {
+					monstreSpeed = defaultSpeed;
 					posY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
 					hitbox.setPosition(posX, posY);
 					collision = hitbox.overlaps(link.getHitbox());

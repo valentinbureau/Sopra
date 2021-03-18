@@ -42,7 +42,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	static Link link = MenuPrincipal.userConnected.getAvatar(); // Initialisation du Joueur
 //	static Monstre monstre = new Monstre(6500, 2050, 80, 2); //Initialisation du Monstre de type 1
 //	static Monstre monstre1 = new Monstre(7114, 2316, 80, 2);
-//	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
+	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
 	static Monstre monstre3 = new Monstre(7198, 2162, 50, 2);
 //	static Monstre monstre4 = new Monstre(7112, 1947, 80, 5);
 //	static Monstre monstre5 = new Monstre(6838, 1922, 80, 2);
@@ -83,7 +83,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		hud=new Hud(map.batch);
 //		monstre.create();//Cr�ation du monstre (sprite)
 //		monstre1.create();
-//		monstre2.create();
+		monstre2.create();
 		monstre3.create();
 //		monstre4.create();
 //		monstre5.create();
@@ -156,7 +156,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		//link.render();
 //		monstres.add(monstre);
 //		monstres.add(monstre1);
-//		monstres.add(monstre2);
+		monstres.add(monstre2);
 		monstres.add(monstre3);
 //		monstres.add(monstre4);
 //		monstres.add(monstre5);
@@ -173,7 +173,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		link.render(monstres,princesse); //Commande de d�placement personnage
 //		monstre.render(link);//D�placement Monstre
 //		monstre1.render(link);
-//		monstre2.render(link);
+		monstre2.render(link);
 		monstre3.render(link);
 //		monstre4.render(link);
 //		monstre5.render(link);
@@ -201,7 +201,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 //		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
 //		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
-//		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
+		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
 		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
 //		map.batch.draw(monstre4.getSprite(), monstre4.getPosX(), monstre4.getPosY());
 //		map.batch.draw(monstre5.getSprite(), monstre5.getPosX(), monstre5.getPosY());
