@@ -39,10 +39,22 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 	static Princesse princesse = new Princesse();
 	static Link link = new Link(); // Initialisation du Joueur
-
-
-	static Monstre monstre = new Monstre(5920, 1500, 80, 1); //Initialisation du Monstre de type 1
-	static Monstre monstre1 = new Monstre(5920, 1300, 80, 7);
+	static Monstre monstre = new Monstre(6500, 2050, 80, 2); //Initialisation du Monstre de type 1
+	static Monstre monstre1 = new Monstre(7114, 2316, 80, 2);
+	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
+	static Monstre monstre3 = new Monstre(7198, 2162, 80, 2);
+	static Monstre monstre4 = new Monstre(7112, 1947, 80, 5);
+	static Monstre monstre5 = new Monstre(6838, 1922, 80, 2);
+	static Monstre monstre6 = new Monstre(5920, 1503, 80, 3);
+	static Monstre monstre7 = new Monstre(7042, 1461, 80, 5);
+//	static Monstre monstre8 = new Monstre(7323, 2868, 80, 5);
+//	static Monstre monstre9 = new Monstre(7702, 2789, 80, 1);
+//	static Monstre monstre10 = new Monstre(7587, 2326, 80, 5);
+//	static Monstre monstre11 = new Monstre(6690, 1930, 80, 2);
+//	static Monstre monstre12 = new Monstre(6680, 2330, 80, 6);
+//	static Monstre monstre13 = new Monstre(6557, 1513, 80, 3);
+//	static Monstre monstre14 = new Monstre(5919, 1805, 80, 7);
+	
 	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
 
 
@@ -63,12 +75,27 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		miniCamera = new OrthographicCamera();
         camera.setToOrtho(false, map.getWidth(), map.getHeight());
 		parent = orch;
-		map.create();//Création de la map (batch & texture)
-		link.create();//Création du personnage (sprite)
+		map.create();//Crï¿½ation de la map (batch & texture)
+		link.create();//Crï¿½ation du personnage (sprite)
 		princesse.create();
 		hud=new Hud(map.batch);
 		monstre.create();//Crï¿½ation du monstre (sprite)
 		monstre1.create();
+		monstre2.create();
+		monstre3.create();
+		monstre4.create();
+		monstre5.create();
+		monstre6.create();
+		monstre7.create();
+//		monstre8.create();
+//		monstre9.create();
+//		monstre10.create();
+//		monstre11.create();
+//		monstre12.create();
+//		monstre13.create();
+//		monstre14.create();
+
+		
 	}
 
 	@Override
@@ -125,10 +152,37 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		//link.render();
 		monstres.add(monstre);
 		monstres.add(monstre1);
-		link.render(monstres); //Commande de déplacement personnage
-		monstre.render(link);//Déplacement Monstre
-		monstre1.render(link);
+		monstres.add(monstre2);
+		monstres.add(monstre3);
+		monstres.add(monstre4);
+		monstres.add(monstre5);
+		monstres.add(monstre6);
+		monstres.add(monstre7);
+//		monstres.add(monstre8);
+//		monstres.add(monstre9);
+//		monstres.add(monstre10);
+//		monstres.add(monstre11);
+//		monstres.add(monstre12);
+//		monstres.add(monstre13);
+//		monstres.add(monstre14);
 
+		
+		link.render(monstres); //Commande de dï¿½placement personnage
+		monstre.render(link);//Dï¿½placement Monstre
+		monstre1.render(link);
+		monstre2.render(link);
+		monstre3.render(link);
+		monstre4.render(link);
+		monstre5.render(link);
+		monstre6.render(link);
+		monstre7.render(link);
+//		monstre8.render(link);
+//		monstre9.render(link);
+//		monstre10.render(link);
+//		monstre11.render(link);
+//		monstre12.render(link);
+//		monstre13.render(link);
+//		monstre14.render(link);
 		camera.update();
 		miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -143,6 +197,19 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
 		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
+		map.batch.draw(monstre2.getSprite(), monstre2.getMonstreX(), monstre2.getMonstreY());
+		map.batch.draw(monstre3.getSprite(), monstre3.getMonstreX(), monstre3.getMonstreY());
+		map.batch.draw(monstre4.getSprite(), monstre4.getMonstreX(), monstre4.getMonstreY());
+		map.batch.draw(monstre5.getSprite(), monstre5.getMonstreX(), monstre5.getMonstreY());
+		map.batch.draw(monstre6.getSprite(), monstre6.getMonstreX(), monstre6.getMonstreY());
+		map.batch.draw(monstre7.getSprite(), monstre7.getMonstreX(), monstre7.getMonstreY());
+//		map.batch.draw(monstre8.getSprite(), monstre8.getMonstreX(), monstre8.getMonstreY());
+//		map.batch.draw(monstre9.getSprite(), monstre9.getMonstreX(), monstre9.getMonstreY());
+//		map.batch.draw(monstre10.getSprite(), monstre10.getMonstreX(), monstre10.getMonstreY());
+//		map.batch.draw(monstre11.getSprite(), monstre11.getMonstreX(), monstre11.getMonstreY());
+//		map.batch.draw(monstre12.getSprite(), monstre12.getMonstreX(), monstre12.getMonstreY());
+//		map.batch.draw(monstre13.getSprite(), monstre13.getMonstreX(), monstre13.getMonstreY());
+//		map.batch.draw(monstre14.getSprite(), monstre14.getMonstreX(), monstre14.getMonstreY());
 
 //		draw(Texture texture, float x, float y, float width, float height)
 //		Draws a rectangle with the bottom left corner at x,y and stretching the region to cover the given width and height.
