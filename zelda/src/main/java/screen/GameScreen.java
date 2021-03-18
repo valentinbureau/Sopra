@@ -122,7 +122,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	{
 
 		princesse.render();
-
+		//link.render();
 		monstres.add(monstre);
 		monstres.add(monstre1);
 		link.render(monstres); //Commande de déplacement personnage

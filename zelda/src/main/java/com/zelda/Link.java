@@ -355,255 +355,269 @@ public class Link extends Entite {
 	}
 
 
-	public void render() {
-		//Préparation du spriteSheet de Link
-		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
-
-		//Préparation du SpriteSheet de l'attaque
-		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
-		TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
-		TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
-		TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
-		TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-
-
-		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
-		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+//	public void render() {
+//		//Préparation du spriteSheet de Link
+//		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
+//
+//		//Préparation du SpriteSheet de l'attaque
+//		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
+//		TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
+//		TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
+//		TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
+//		TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
+//
+//
+//		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
+//		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+//	}
+	public void setFramesRight(Array<TextureRegion> framesRight) {
+		this.framesRight = framesRight;
 	}
-		public void setFramesRight(Array<TextureRegion> framesRight) {
-			this.framesRight = framesRight;
+
+	public Array<TextureRegion> getFramesUp() {
+		return framesUp;
+	}
+
+	public void setFramesUp(Array<TextureRegion> framesUp) {
+		this.framesUp = framesUp;
+	}
+
+	public Array<TextureRegion> getFramesBot() {
+		return framesBot;
+	}
+
+	public void setFramesBot(Array<TextureRegion> framesBot) {
+		this.framesBot = framesBot;
+	}
+
+	public void create () {
+		sprite= new Sprite( tmpFrames[0][0] );
+		hitbox = new Rectangle(linkX, linkY, 45, 45);
+
+		for (int i = 8; i < 14; i++) {
+			framesLeft.add(tmpFrames[1][i]);
 		}
 
-		public Array<TextureRegion> getFramesUp() {
-			return framesUp;
+		for (int i = 8; i < 14; i++) {
+			framesRight.add(tmpFrames[4][i]);
 		}
 
-		public void setFramesUp(Array<TextureRegion> framesUp) {
-			this.framesUp = framesUp;
+		for (int i = 0; i < 8; i++) {
+			framesUp.add(tmpFrames[4][i]);
 		}
 
-		public Array<TextureRegion> getFramesBot() {
-			return framesBot;
-		}
-
-		public void setFramesBot(Array<TextureRegion> framesBot) {
-			this.framesBot = framesBot;
-		}
-
-		public void create () {
-			sprite= new Sprite( tmpFrames[0][0] );
-			hitbox = new Rectangle(linkX, linkY, 45, 45);
-
-			for (int i = 8; i < 14; i++) {
-				framesLeft.add(tmpFrames[1][i]);
-			}
-
-			for (int i = 8; i < 14; i++) {
-				framesRight.add(tmpFrames[4][i]);
-			}
-
-			for (int i = 0; i < 8; i++) {
-				framesUp.add(tmpFrames[4][i]);
-			}
-
-			for (int i = 0; i < 8; i++) {
-				framesBot.add(tmpFrames[1][i]);
-			}
-
-		}
-
-		public void render(List<Monstre> monstres) {
-
-
-
-
-					if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
-
-						animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
-						animLeft.setPlayMode(Animation.PlayMode.LOOP);
-						float delta = Gdx.graphics.getDeltaTime();
-						int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
-						this.sprite = new Sprite (framesLeft.get(currentFrame));
-
-						framesSword.clear();
-						framesSword.add(tmpFramesSword5[0][0]);
-						framesSword.add(tmpFramesSword5[0][1]);
-
-						framesSword.add(tmpFramesSword5[0][2]);
-						framesSword.add(tmpFramesSword5[0][3]);
-						framesSword.add(tmpFramesSword5[0][4]);
-						double toScanX= (linkX)/5.01-1;
-						double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
-						canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
-						linkSpeed = defaultSpeed;
-
-
-						if(!canLeft) {
-							linkSpeed=0;
-						}
-
-						else {canLeft=true;}
-						linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;
-						hitbox.setPosition(linkX, linkY);
-						for (Monstre monstre : monstres) {
-							if (collision == false) {
-								System.out.println(hitbox.overlaps(monstre.getHitbox()));
-								collision = hitbox.overlaps(monstre.getHitbox());
-							}
-						}
-						if(collision) {
-							linkX += Gdx.graphics.getDeltaTime() * linkSpeed;
-							hitbox.setPosition(linkX, linkY);
-						}
-					}
-
-
-			if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
-
-				animRight = new Animation<TextureRegion>(0.08f, framesRight);
-				animRight.setPlayMode(Animation.PlayMode.LOOP);
-				float delta = Gdx.graphics.getDeltaTime();
-				int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
-				this.sprite = new Sprite (framesRight.get(currentFrame));
-
-				framesSword.clear();
-
-				framesSword.add(tmpFramesSword7[0][0]);
-				framesSword.add(tmpFramesSword7[0][1]);
-				framesSword.add(tmpFramesSword7[0][2]);
-				framesSword.add(tmpFramesSword7[0][3]);
-				framesSword.add(tmpFramesSword7[0][4]);
-				double toScanX= (linkX + this.sprite.getWidth())/5;
-				double toScanY=map.getGameSceneHeight()/5-(linkY+sprite.getHeight()/2)/5;
-				canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
-				linkSpeed = defaultSpeed;
-
-
-
-				if(!canRight ) {
-					linkSpeed=0;
-				}
-				else {canRight=true;}
-				linkX += Gdx.graphics.getDeltaTime() * linkSpeed;
-				hitbox.setPosition(linkX, linkY);
-				hitbox.setPosition(linkX, linkY);
-				for (Monstre monstre : monstres) {
-					if (collision == false) {
-						System.out.println(hitbox.overlaps(monstre.getHitbox()));
-						collision = hitbox.overlaps(monstre.getHitbox());
-					}
-				}
-				if(collision) {
-					linkX -= Gdx.graphics.getDeltaTime() * linkSpeed;
-					hitbox.setPosition(linkX, linkY);
-				}
-			}
-
-
-			if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
-
-
-				this.animTop = new Animation<TextureRegion>(0.08f, framesUp);
-				animTop.setPlayMode(Animation.PlayMode.LOOP);
-				float delta = Gdx.graphics.getDeltaTime();
-				int currentFrame = animTop.getKeyFrameIndex(stateTime += delta);
-				this.sprite = new Sprite (framesUp.get(currentFrame));
-
-				framesSword.clear();
-
-				framesSword.add(tmpFramesSword6[0][0]);
-				framesSword.add(tmpFramesSword6[0][1]);
-				framesSword.add(tmpFramesSword6[0][2]);
-				framesSword.add(tmpFramesSword6[0][3]);
-
-				framesSword.add(tmpFramesSword6[0][4]);
-				double toScanX= (linkX+sprite.getWidth()/2)/4.996;
-				double toScanY=map.getGameSceneHeight()/5-(linkY+this.sprite.getHeight())/5-1;
-				canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
-				linkSpeed = defaultSpeed;
-
-
-
-				if(!canUp) {
-					linkSpeed=0;
-
-				}
-				else {canUp=true;}
-				linkY += Gdx.graphics.getDeltaTime() * linkSpeed;
-				hitbox.setPosition(linkX, linkY);
-				for (Monstre monstre : monstres) {
-					if (collision == false) {
-						System.out.println(hitbox.overlaps(monstre.getHitbox()));
-						collision = hitbox.overlaps(monstre.getHitbox());
-					}
-				}
-				if(collision) {
-					linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;
-					hitbox.setPosition(linkX, linkY);
-				}
-			}
-
-
-			if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
-
-				animBot = new Animation<TextureRegion>(0.08f, framesBot);
-				animBot.setPlayMode(Animation.PlayMode.LOOP);
-				float delta = Gdx.graphics.getDeltaTime();
-				int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
-				this.sprite = new Sprite (framesBot.get(currentFrame));
-
-				framesSword.clear();
-
-				framesSword.add(tmpFramesSword[0][0]);
-				framesSword.add(tmpFramesSword2[0][1]);
-				framesSword.add(tmpFramesSword3[0][2]);
-				framesSword.add(tmpFramesSword4[0][4]);
-				framesSword.add(tmpFramesSword4[0][3]);
-
-
-				double toScanX= ((linkX+sprite.getWidth()/2)/4.996);
-				double toScanY= map.getGameSceneHeight()/5-(linkY)/5+1;
-				canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
-				linkSpeed = defaultSpeed;
-
-
-
-				if(!canDown) {
-					linkSpeed=0;
-				}
-
-				else {canDown=true;}
-				linkY -= Gdx.graphics.getDeltaTime() * linkSpeed;
-				hitbox.setPosition(linkX, linkY);
-				for (Monstre monstre : monstres) {
-					if (collision == false) {
-						System.out.println(hitbox.overlaps(monstre.getHitbox()));
-						collision = hitbox.overlaps(monstre.getHitbox());
-					}
-				}
-				if(collision) {
-					linkY += Gdx.graphics.getDeltaTime() * linkSpeed;
-					hitbox.setPosition(linkX, linkY);
-				}
-			}
-
-			if(Gdx.input.isKeyPressed(Keys.E)) {
-
-				Sprite initialSprite = this.sprite;
-
-				Animation<TextureRegion> animSword = new Animation<TextureRegion>(0.04f, framesSword);
-				animSword.setPlayMode(Animation.PlayMode.LOOP);
-				float delta = Gdx.graphics.getDeltaTime();
-				TextureRegion currentFrame = animSword.getKeyFrame(stateTime += delta, true);
-
-
-				this.sprite = new Sprite (currentFrame);
-
-
-
-
-			}
-			collision = false;	
+		for (int i = 0; i < 8; i++) {
+			framesBot.add(tmpFrames[1][i]);
 		}
 
 	}
+
+	public void render(List<Monstre> monstres) {
+
+//		public void render() {
+			//Préparation du spriteSheet de Link
+			TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
+
+			//Préparation du SpriteSheet de l'attaque
+			Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
+			TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
+			TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
+			TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
+			TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
+
+
+			Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
+			TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
+			
+
+
+		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
+
+			animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
+			animLeft.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (framesLeft.get(currentFrame));
+
+			framesSword.clear();
+			framesSword.add(tmpFramesSword5[0][0]);
+			framesSword.add(tmpFramesSword5[0][1]);
+
+			framesSword.add(tmpFramesSword5[0][2]);
+			framesSword.add(tmpFramesSword5[0][3]);
+			framesSword.add(tmpFramesSword5[0][4]);
+			double toScanX= (this.posX)/5.01-1;
+			double toScanY=map.getGameSceneHeight()/5-(this.posY+sprite.getHeight()/2)/5;
+			canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
+			linkSpeed = defaultSpeed;
+
+
+			if(!canLeft) {
+				linkSpeed=0;
+			}
+
+			else {canLeft=true;}
+			posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(posX, posY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				posX += Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(posX, posY);
+			}
+		}
+
+
+		if(Gdx.input.isKeyPressed(Keys.DPAD_RIGHT)) {
+
+			animRight = new Animation<TextureRegion>(0.08f, framesRight);
+			animRight.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (framesRight.get(currentFrame));
+
+			framesSword.clear();
+
+			framesSword.add(tmpFramesSword7[0][0]);
+			framesSword.add(tmpFramesSword7[0][1]);
+			framesSword.add(tmpFramesSword7[0][2]);
+			framesSword.add(tmpFramesSword7[0][3]);
+			framesSword.add(tmpFramesSword7[0][4]);
+			double toScanX= (posX + this.sprite.getWidth())/5;
+			double toScanY=map.getGameSceneHeight()/5-(posY+sprite.getHeight()/2)/5;
+			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
+			linkSpeed = defaultSpeed;
+
+
+
+			if(!canRight ) {
+				linkSpeed=0;
+			}
+			else {canRight=true;}
+			posX += Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(posX, posY);
+			hitbox.setPosition(posX, posY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(posX, posY);
+			}
+		}
+
+
+		if(Gdx.input.isKeyPressed(Keys.DPAD_UP)) {
+
+
+			this.animTop = new Animation<TextureRegion>(0.08f, framesUp);
+			animTop.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animTop.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (framesUp.get(currentFrame));
+
+			framesSword.clear();
+
+			framesSword.add(tmpFramesSword6[0][0]);
+			framesSword.add(tmpFramesSword6[0][1]);
+			framesSword.add(tmpFramesSword6[0][2]);
+			framesSword.add(tmpFramesSword6[0][3]);
+
+			framesSword.add(tmpFramesSword6[0][4]);
+			double toScanX= (posX+sprite.getWidth()/2)/4.996;
+			double toScanY=map.getGameSceneHeight()/5-(posY+this.sprite.getHeight())/5-1;
+			canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
+			linkSpeed = defaultSpeed;
+
+
+
+			if(!canUp) {
+				linkSpeed=0;
+
+			}
+			else {canUp=true;}
+			posY += Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(posX, posY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				posY -= Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(posX, posY);
+			}
+		}
+
+
+		if(Gdx.input.isKeyPressed(Keys.DPAD_DOWN)) {
+
+			animBot = new Animation<TextureRegion>(0.08f, framesBot);
+			animBot.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			int currentFrame = animBot.getKeyFrameIndex(stateTime += delta);
+			this.sprite = new Sprite (framesBot.get(currentFrame));
+
+			framesSword.clear();
+
+			framesSword.add(tmpFramesSword[0][0]);
+			framesSword.add(tmpFramesSword2[0][1]);
+			framesSword.add(tmpFramesSword3[0][2]);
+			framesSword.add(tmpFramesSword4[0][4]);
+			framesSword.add(tmpFramesSword4[0][3]);
+
+
+			double toScanX= ((posX+sprite.getWidth()/2)/4.996);
+			double toScanY= map.getGameSceneHeight()/5-(posY)/5+1;
+			canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
+			linkSpeed = defaultSpeed;
+
+
+
+			if(!canDown) {
+				linkSpeed=0;
+			}
+
+			else {canDown=true;}
+			posY -= Gdx.graphics.getDeltaTime() * linkSpeed;
+			hitbox.setPosition(posX, posY);
+			for (Monstre monstre : monstres) {
+				if (collision == false) {
+					System.out.println(hitbox.overlaps(monstre.getHitbox()));
+					collision = hitbox.overlaps(monstre.getHitbox());
+				}
+			}
+			if(collision) {
+				posY += Gdx.graphics.getDeltaTime() * linkSpeed;
+				hitbox.setPosition(posX, posY);
+			}
+		}
+
+		if(Gdx.input.isKeyPressed(Keys.E)) {
+
+			Sprite initialSprite = this.sprite;
+
+			Animation<TextureRegion> animSword = new Animation<TextureRegion>(0.04f, framesSword);
+			animSword.setPlayMode(Animation.PlayMode.LOOP);
+			float delta = Gdx.graphics.getDeltaTime();
+			TextureRegion currentFrame = animSword.getKeyFrame(stateTime += delta, true);
+
+
+			this.sprite = new Sprite (currentFrame);
+
+
+
+
+		}
+		collision = false;	
+	}
+
+}
