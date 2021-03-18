@@ -224,7 +224,7 @@ public class Monstre extends Entite{
 		LocalTime now = LocalTime.now();
 		
 		
-		if (now.isAfter(tempsDeplacement.plusSeconds(1))) {
+		if (now.isAfter(tempsDeplacement.plusNanos(100000000))) {
 ////			if (deplacement == 1) {
 //				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
 //				for (int i = indexSprite; i < indexSprite + 3; i++) {
@@ -363,7 +363,6 @@ public class Monstre extends Entite{
 				for (int i = indexSprite; i < indexSprite + 3; i++) {
 					framesUp.add(tmpFrames[lineSprite][i]);
 				}
-				
 				this.animTop = new Animation<TextureRegion>(0.08f, framesUp);
 				this.animTop.setPlayMode(Animation.PlayMode.LOOP);
 				float delta = Gdx.graphics.getDeltaTime();
@@ -373,6 +372,7 @@ public class Monstre extends Entite{
 				double toScanX= (posX+sprite.getWidth()/2)/4.996;
 				double toScanY=map.getGameSceneHeight()/5-(posY+this.sprite.getHeight())/5-1;
 				canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
+				
 				
 				if(!canUp) {
 					monstreSpeed = 0;
@@ -397,7 +397,6 @@ public class Monstre extends Entite{
 				for (int i = indexSprite; i < indexSprite + 3; i++) {
 					framesBot.add(tmpFrames[lineSprite+2][i]);
 				}
-				
 				this.animBot = new Animation<TextureRegion>(0.08f, framesBot);
 				this.animBot.setPlayMode(Animation.PlayMode.LOOP);
 				float delta = Gdx.graphics.getDeltaTime();
@@ -407,7 +406,7 @@ public class Monstre extends Entite{
 				double toScanX= ((posX+sprite.getWidth()/2)/4.996);
 				double toScanY= map.getGameSceneHeight()/5-(posY)/5+1;
 				canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
-				
+							
 				if(!canDown) {
 					monstreSpeed = 0;
 					deplacement = 1;
