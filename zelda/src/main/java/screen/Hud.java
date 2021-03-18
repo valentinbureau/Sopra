@@ -57,6 +57,7 @@ public class Hud implements Screen{
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
+		stage.clear();
 		Table table=new Table();  
 		table.setWidth(stage.getWidth());
 		table.top().left(); //-- Bandeau haut  
@@ -64,10 +65,14 @@ public class Hud implements Screen{
 		table.align(Align.right|Align.top);
 		//	table.setPosition(0, Gdx.graphics.getHeight());
 		lifeLabel   =new Label("Lives",new Label.LabelStyle(bitmapfont, Color.WHITE));  
-		table.add(lifeLabel).top().center().row();//.expandX().padTop(10); 
+		table.add(lifeLabel).top().right().padRight(20).row();//.expandX().padTop(10); 
+		
 		Table tableImg=new Table();  
 		//tableImg.add(img).width(28).height(20).left();//.padTop(15);
-		for (int i = 0 ; i < GameScreen.link.getVie() ; ++i)
+		tableImg.setSize(GameScreen.link.getVie(), 1);
+		System.out.println(tableImg.getWidth());
+		tableImg.clear();
+		for (int i = 0 ; i < tableImg.getWidth() ; ++i)
 		{
 			tableImg.add(new Image (new Texture(Gdx.files.internal("screen/assets/heart.png")))).width(28).height(20).left();//.padTop(15);
 		}

@@ -132,8 +132,6 @@ public class Link{
 		this.sprite = sprite;
 	}
 
-
-
 	public float getLinkSpeed() {
 		return linkSpeed;
 	}
