@@ -224,7 +224,7 @@ public class Monstre extends Entite{
 		LocalTime now = LocalTime.now();
 		
 		
-		if (now.isAfter(tempsDeplacement.plusNanos(100000000))) {
+		if (now.isAfter(tempsDeplacement.plusSeconds(1))) {
 ////			if (deplacement == 1) {
 //				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
 //				for (int i = indexSprite; i < indexSprite + 3; i++) {
@@ -314,10 +314,7 @@ public class Monstre extends Entite{
 				else {
 					posY += Gdx.graphics.getDeltaTime() * monstreSpeed;
 					hitbox.setPosition(posX, posY);
-					if (collision == false) {
-
 					collision = hitbox.overlaps(link.getHitbox());
-					}
 					if(collision) {
 						posY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
 						hitbox.setPosition(posX, posY);
@@ -346,10 +343,7 @@ public class Monstre extends Entite{
 				else {
 					posY -= Gdx.graphics.getDeltaTime() * monstreSpeed;
 					hitbox.setPosition(posX, posY);
-					if (collision == false) {
-
 					collision = hitbox.overlaps(link.getHitbox());
-					}
 					if(collision) {
 						posY += Gdx.graphics.getDeltaTime() * monstreSpeed;
 						hitbox.setPosition(posX, posY);
