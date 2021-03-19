@@ -559,11 +559,11 @@ public class Link{
 			posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			
-			if (!collisionPrincesse) {
-				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
-				System.out.println(collisionPrincesse);
-				if(collisionPrincesse) { victory=true;}
-			}
+//			if (!collisionPrincesse) {
+//				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+//				System.out.println(collisionPrincesse);
+//				if(collisionPrincesse) { victory=true;}
+//			}
 			
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
@@ -608,11 +608,11 @@ public class Link{
 			posX += Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			hitbox.setPosition(posX, posY);
-			if (!collisionPrincesse) {
-				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
-				System.out.println(collisionPrincesse);
-				if(collisionPrincesse) { victory=true;}
-			}
+//			if (!collisionPrincesse) {
+//				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+//				System.out.println(collisionPrincesse);
+//				if(collisionPrincesse) { victory=true;}
+//			}
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 
@@ -650,20 +650,20 @@ public class Link{
 			canUp = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
 
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;}
+			}
 
-
-			if(!canUp) {
+			else if(!canUp) {
 				linkSpeed=0;
 
 			}
 			else {canUp=true;}
 			posY += Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
-			if (!collisionPrincesse) {
-				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
-				System.out.println(collisionPrincesse);
-				if(collisionPrincesse) { victory=true;}
-			}
+			
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 
@@ -709,12 +709,12 @@ public class Link{
 			else {canDown=true;}
 			posY -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
-			if (!collisionPrincesse) {
-				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
-				System.out.println(collisionPrincesse);
-				if(collisionPrincesse) { victory=true;
-				posY += Gdx.graphics.getDeltaTime() * linkSpeed;}
-			}
+//			if (!collisionPrincesse) {
+//				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+//				System.out.println(collisionPrincesse);
+//				if(collisionPrincesse) { victory=true;
+//				posY += Gdx.graphics.getDeltaTime() * linkSpeed;}
+//			}
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 

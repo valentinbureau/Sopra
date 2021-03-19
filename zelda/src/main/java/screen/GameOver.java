@@ -18,6 +18,8 @@ public class GameOver implements Screen{
 	private Table table;
 	private Texture texture;
 	private Image img;
+	private int vie;
+	private boolean victory;
 
 	public GameOver(TheLegendOfSopra orch) {
 		parent = orch;

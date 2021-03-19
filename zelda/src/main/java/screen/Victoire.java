@@ -33,7 +33,7 @@ public class Victoire implements Screen {
 		table = new Table();
 		table.setFillParent(true);
 		table.setDebug(true);
-		table.addActor(table);
+		stage.addActor(table);
 		table.align(Align.center);
 		
 		texture =  new Texture(Gdx.files.internal("screen/assets/Fin.png"));

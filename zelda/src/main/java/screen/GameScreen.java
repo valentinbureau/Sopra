@@ -42,8 +42,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 //	static Monstre monstre = new Monstre(6500, 2050, 80, 2); //Initialisation du Monstre de type 1
 //	static Monstre monstre1 = new Monstre(7114, 2316, 80, 2);
-	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
-	static Monstre monstre3 = new Monstre(7198, 2162, 50, 2);
+//	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
+//	static Monstre monstre3 = new Monstre(7198, 2162, 50, 2);
 //	static Monstre monstre4 = new Monstre(7112, 1947, 80, 5);
 //	static Monstre monstre5 = new Monstre(6838, 1922, 80, 2);
 	static Monstre monstre6 = new Monstre(5920, 1503, 50, 3);
@@ -58,9 +58,6 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	
 
 	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
-
-
-
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	private Texture miniMap;
@@ -86,9 +83,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 //		monstre.create();//Cr�ation du monstre (sprite)
 //		monstre1.create();
-		monstre2.create();
+//		monstre2.create();
 
-		monstre3.create();
+//		monstre3.create();
 		//		monstre4.create();
 		//		monstre5.create();
 		monstre6.create();
@@ -165,8 +162,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 //		monstres.add(monstre);
 //		monstres.add(monstre1);
-		monstres.add(monstre2);
-		monstres.add(monstre3);
+//		monstres.add(monstre2);
+//		monstres.add(monstre3);
 		//		monstres.add(monstre4);
 		//		monstres.add(monstre5);
 		monstres.add(monstre6);
@@ -183,8 +180,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 //		monstre.render(link);//D�placement Monstre
 //		monstre1.render(link);
-		monstre2.render(link);
-		monstre3.render(link);
+//		monstre2.render(link);
+//		monstre3.render(link);
 //		monstre4.render(link);
 //		monstre5.render(link);
 		monstre6.render(link);
@@ -212,8 +209,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 //		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
 //		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
-		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
-		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
+//		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
+//		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
 //		map.batch.draw(monstre4.getSprite(), monstre4.getPosX(), monstre4.getPosY());
 //		map.batch.draw(monstre5.getSprite(), monstre5.getPosX(), monstre5.getPosY());
 
@@ -252,7 +249,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 			parent.changeScreen(TheLegendOfSopra.VICTOIRE);
 			
 		}
-		if (link.getVie() <= 0)
+		if (link.getVie() <= 0 || link.isVictory())
 		{
 			parent.changeScreen(TheLegendOfSopra.GAMEOVER);
 		}
