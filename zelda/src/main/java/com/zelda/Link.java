@@ -549,9 +549,14 @@ public class Link{
 			double toScanY=map.getGameSceneHeight()/5-(this.posY+sprite.getHeight()/2)/5;
 			canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
 			linkSpeed = defaultSpeed;
+			
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;}
+			}
 
-
-			if(!canLeft) {
+			else if(!canLeft) {
 				linkSpeed=0;
 			}
 
@@ -599,9 +604,13 @@ public class Link{
 			canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
 
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;}
+			}
 
-
-			if(!canRight ) {
+			else if(!canRight ) {
 				linkSpeed=0;
 			}
 			else {canRight=true;}
@@ -700,9 +709,13 @@ public class Link{
 			canDown = map.analyseImage(map.secretScene, toScanX, toScanY);
 			linkSpeed = defaultSpeed;
 
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;}
+			}
 
-
-			if(!canDown) {
+			else if(!canDown) {
 				linkSpeed=0;
 			}
 
