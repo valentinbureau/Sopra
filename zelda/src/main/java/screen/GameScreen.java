@@ -70,8 +70,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	public GameScreen(TheLegendOfSopra orch) 
 	{
 		miniMap = new Texture(Gdx.files.internal("screen/assets/miniMap.png"));
-		//sound = Gdx.audio.newSound(Gdx.files.internal("com/zelda/world/Music.mp3"));
-		//sound.play(0.05f);
+		sound = Gdx.audio.newSound(Gdx.files.internal("com/zelda/world/Music.mp3"));
+		sound.play(0.05f);
+		sound.loop();
 		camera = new OrthographicCamera();
 		miniCamera = new OrthographicCamera();
 		camera.setToOrtho(false, map.getWidth(), map.getHeight());
