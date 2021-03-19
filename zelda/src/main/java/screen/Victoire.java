@@ -30,16 +30,9 @@ public class Victoire implements Screen {
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 		
-		table = new Table();
-		table.setFillParent(true);
-		table.setDebug(true);
-		table.addActor(table);
-		table.align(Align.center);
-		
 		texture =  new Texture(Gdx.files.internal("screen/assets/Fin.png"));
 		imageFin = new Image(texture);
-		table.add(imageFin);
-		
+
 		stage.addActor(imageFin);
 	}
 	@Override
@@ -72,7 +65,6 @@ public class Victoire implements Screen {
 	}
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		stage.dispose();
 	}
 	
