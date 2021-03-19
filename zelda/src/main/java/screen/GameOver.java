@@ -2,6 +2,7 @@ package screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -32,21 +33,27 @@ public class GameOver implements Screen{
 	private Image img;
 	private int vie;
 	private boolean victory;
-
+	boolean done = false;
 //	private TextButton quitter;
 //	private TextButton retry;
 
 	private Skin skin;
+	
+	private Sound sound;
 
 	public GameOver(TheLegendOfSopra orch) {
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
 		
+		
 	}
 
 	@Override
 	public void show() {
-		
+		GameScreen.sound.pause();
+		//sound.setLooping(sound.play(), false);
+		sound = Gdx.audio.newSound(Gdx.files.internal("screen/assets/gameOver.wav"));
+		sound.play();
 	}
 
 	@Override
@@ -54,8 +61,8 @@ public class GameOver implements Screen{
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		//Gdx.input.setInputProcessor(stage);
 		draw();
-		Gdx.input.setInputProcessor(stage);
 		stage.draw();
 		
 	}
@@ -114,20 +121,24 @@ public class GameOver implements Screen{
 		table.add(quitter).padBottom(10).padRight(10);
 		table.add(retry).padBottom(10).padLeft(10);
 		MenuPrincipal.userConnected.getAvatar().setVie(8);
-//		MenuPrincipal.userConnected.getAvatar().setPosX(5920);
-//		MenuPrincipal.userConnected.getAvatar().setPosY(1700);
-		MenuPrincipal.userConnected=Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
+		MenuPrincipal.userConnected.getAvatar().setPosX(MenuPrincipal.userConnected.getAvatar().getPosX()-2);
+		MenuPrincipal.userConnected.getAvatar().setPosY(MenuPrincipal.userConnected.getAvatar().getPosY()-2);
+		
+
+			Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
 		
 		quitter.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				
 				Gdx.app.exit();
 			}
 		});
 		
 		retry.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
+				sound.stop();
+				GameScreen.sound.play();
 				parent.changeScreen(TheLegendOfSopra.APP);
+
 			}
 		});
 
