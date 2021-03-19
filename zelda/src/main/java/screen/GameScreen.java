@@ -4,7 +4,9 @@ package screen;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.stream.Collectors;
+
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -56,7 +58,6 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	static Monstre monstre13 = new Monstre(6557, 1513, 50, 3);
 	static Monstre monstre14 = new Monstre(5919, 1805, 50, 7);
 	
-
 	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
 	static GameMap map = new GameMap();//Initialisation de la map
 
@@ -97,7 +98,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		monstre12.create();
 		monstre13.create();
 		monstre14.create();
-		
+
 		monstres.add(monstre);
 		monstres.add(monstre1);
 		monstres.add(monstre2);
@@ -172,6 +173,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		}
 
 		princesse.render(link);
+
 		
 		monstres.forEach(m-> m.onCamera(link)); // Init du booléen (présence sous caméra)
 
@@ -181,28 +183,48 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 		monsters.stream().forEach(m -> m.render(link)); //Rendering des monstres présents à l'écran
 
-		link.render(monsters,princesse); //Commande de dï¿½placement personnage
 
-		camera.update();
+		link.render(monsters,princesse); //Rendering de Link
+camera.update();
 		miniCamera.update();
+
+
+
+
+		// Initialisation du spriteBatch
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.position.set(link.getPosX(), link.getPosY(), 0);
-		camera.update();
-		map.batch.setProjectionMatrix(camera.combined); 
+		map.batch.setProjectionMatrix(camera.combined);
 		map.batch.begin();
+		//Affichage monstres
 
+
+		//Affichage de la scene et de Link
 		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getPosX(), link.getPosY());//Affichage personnage
+
+
+		//affichage de la princesse
 		map.batch.draw(princesse.getSprite(), princesse.getPosX(), princesse.getPosY(),princesse.getWidth(),princesse.getHeight());//Affichage personnage
+
+
+		//Affichage monstres
 		monsters.stream().forEach(m ->map.batch.draw(m.getSprite(), m.getPosX(), m.getPosY()));
 
+
+		// Creation de la minimap
 		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
-		map.batch.setProjectionMatrix(camera.invProjectionView);
+		//map.batch.setProjectionMatrix(camera.invProjectionView);
+
+		//setting de la caméra
+
 		camera.position.set(link.getPosX() , link.getPosY() , 0);
 		camera.update();
 
 		map.batch.end();
+
+		//Création Hud
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 		shapeRenderer.setColor(Color.RED);
@@ -211,7 +233,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		shapeRenderer.end();
 
 		if(Gdx.input.isKeyPressed(Keys.TAB)) {
-			System.out.println("PRESSED");
+			//			System.out.println("PRESSED");
 			parent.changeScreen(TheLegendOfSopra.MINIMAP);
 		}
 		hud.show();
@@ -219,13 +241,13 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		{
 			link.setVictory(false);
 			parent.changeScreen(TheLegendOfSopra.VICTOIRE);
-			
+
 		}
 		if (link.getVie() <= 0 || link.isVictory())
 		{
 			parent.changeScreen(TheLegendOfSopra.GAMEOVER);
 		}
-		
+
 	}
 }
 

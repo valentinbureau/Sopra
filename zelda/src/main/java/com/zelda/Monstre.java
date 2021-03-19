@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -36,7 +37,7 @@ public class Monstre extends Entite{
 	private SpriteBatch batch=  new SpriteBatch();
 	private Texture gameScene= new Texture("com/zelda/world/World.png");
 	GameMap map= new GameMap(batch,gameScene);
-	
+	OrthographicCamera camera;
 	
 	public Monstre() {
 		super();
@@ -203,13 +204,7 @@ public class Monstre extends Entite{
 		this.deplacement = deplacement;
 	}
 	
-	public boolean isOnAir() {
-		return onAir;
-	}
 
-	public void setOnAir(boolean onAir) {
-		this.onAir = onAir;
-	}
 
 	public void create () {
 		this.texture = new Texture("com/zelda/Monster-sprites.png");
@@ -381,8 +376,19 @@ public class Monstre extends Entite{
 //		System.out.println(link.getPosY()+map.getHeight()/2);
 //		System.out.println("-------------------------------------------------");
 		if ((link.getPosX()-map.getWidth()/2) > posX || (link.getPosX()+map.getWidth()/2) < posX || (link.getPosY()-map.getHeight()/2) > posY || (link.getPosY()+map.getHeight()/2) < posY) {
+
 			this.onAir = false;
 		}
 		else {this.onAir = true;}
 	}
+
+	public boolean isOnAir() {
+		return onAir;
+	}
+
+	public void setOnAir(boolean onAir) {
+		this.onAir = onAir;
+	}
+	
+
 }
