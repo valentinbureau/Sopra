@@ -1,6 +1,5 @@
 package com.zelda;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Embeddable;
@@ -15,8 +14,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.zelda.world.GameMap;
-
-import screen.GameScreen;
 
 //Les méthodes sont après les getters et setters
 

@@ -2,7 +2,9 @@ package com.zelda;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.zelda.world.GameMap;
 
 public class Entite {
 	protected Sprite sprite;
@@ -11,8 +13,15 @@ public class Entite {
 	protected float posX;
 	protected float posY;
 	protected boolean collision = false;
+	protected boolean onAir;
+	private SpriteBatch batch;
+	private Texture gameScene;
+	GameMap map;
 	public Entite() {
-		
+		this.onAir = false;
+		this.batch = new SpriteBatch();
+		this.gameScene= new Texture("com/zelda/world/World.png");
+		this.map = new GameMap(batch,gameScene);
 	}	
 	
 	public float getPosX() {
@@ -68,7 +77,21 @@ public class Entite {
 		this.collision = collision;
 	}
 
-	
+	public boolean isOnAir() {
+		return onAir;
+	}
+
+	public void setOnAir(boolean onAir) {
+		this.onAir = onAir;
+	}
+
+	public void onCamera(Link link) {
+		if ((link.getPosX()-map.getWidth()/2) > posX || (link.getPosX()+map.getWidth()/2) < posX || (link.getPosY()-map.getHeight()/2) > posY || (link.getPosY()+map.getHeight()/2) < posY) {
+
+			this.onAir = false;
+		}
+		else {this.onAir = true;}
+	}
 	
 	
 	
