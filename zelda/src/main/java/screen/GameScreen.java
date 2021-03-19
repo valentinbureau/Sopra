@@ -59,6 +59,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	static Monstre monstre13 = new Monstre(6557, 1513, 50, 3);
 	static Monstre monstre14 = new Monstre(5919, 1805, 50, 7);
 
+	static List<Monstre> monsters;
+
 	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
 	static GameMap map = new GameMap();//Initialisation de la map
 
@@ -74,8 +76,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	{
 		miniMap = new Texture(Gdx.files.internal("screen/assets/miniMap.png"));
 		sound = Gdx.audio.newSound(Gdx.files.internal("com/zelda/world/Music.mp3"));
-		sound.play(0.05f);
 		sound.loop();
+		sound.play(0.01f);
 		camera = new OrthographicCamera();
 		//miniCamera = new OrthographicCamera();
 		camera.setToOrtho(false, map.getWidth(), map.getHeight());
@@ -84,25 +86,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		cameraPrinc.setToOrtho(false,map.getWidth(), map.getHeight());
 		parent = orch;
 		map.create();//Crï¿½ation de la map (batch & texture)
-		link.create();//Crï¿½ation du personnage (sprite)
-		princesse.create();
+		
 		hud=new Hud(map.batch);
-
-		monstre.create();//Crï¿½ation du monstre (sprite)
-		monstre1.create();
-		monstre2.create();
-		monstre3.create();
-		monstre4.create();
-		monstre5.create();
-		monstre6.create();
-		monstre7.create();
-		monstre8.create();
-		monstre9.create();
-		monstre10.create();
-		monstre11.create();
-		monstre12.create();
-		monstre13.create();
-		monstre14.create();
 
 		monstres.add(monstre);
 		monstres.add(monstre1);
@@ -119,7 +104,11 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		monstres.add(monstre12);
 		monstres.add(monstre13);
 		monstres.add(monstre14);
-
+		
+		
+		monstres.stream().forEach(m -> m.create());
+		princesse.create();
+		link.create();//Crï¿½ation du personnage (sprite)
 	}
 
 	@Override
@@ -177,18 +166,19 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 			parent.changeScreen(TheLegendOfSopra.VICTOIRE);
 		}
 
-		princesse.render(link);
 
+		
 
-		monstres.forEach(m-> m.onCamera(link)); // Init du boolï¿½en (prï¿½sence sous camï¿½ra)
+		//Check de ce qui doit être présent à l'écran
+		monstres.forEach(m-> m.onCamera(link)); // Init du booléen (présence sous caméra)
+		monsters = monstres.stream().filter(m -> m.isOnAir())
+				.collect(Collectors.toList()); //On filtre les monstres présents sous la camera
+		
+		monsters.stream().forEach(m -> m.render(link)); //Rendering des monstres présents à l'écran
 
-		List<Monstre> monsters = monstres.stream().filter(m -> m.isOnAir())
-				.collect(Collectors.toList()); //On filtre les monstres prï¿½sents sous la camera
-
-
-		monsters.stream().forEach(m -> m.render(link)); //Rendering des monstres prï¿½sents ï¿½ l'ï¿½cran
-
-		link.render(monsters,princesse); //Commande de dï¿½placement personnage
+		princesse.onCamera(link);
+		if (princesse.isOnAir()) {princesse.render(link);}
+		link.render(monsters,princesse); //Rendering de Link
 		camera.update();
 
 
@@ -210,7 +200,10 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 
 		//affichage de la princesse
-		map.batch.draw(princesse.getSprite(), princesse.getPosX(), princesse.getPosY(),princesse.getWidth(),princesse.getHeight());//Affichage personnage
+		
+		if (princesse.isOnAir()) {
+			map.batch.draw(princesse.getSprite(), princesse.getPosX(), princesse.getPosY(),princesse.getWidth(),princesse.getHeight());//Affichage personnage
+		}
 
 
 		//Affichage monstres

@@ -22,7 +22,6 @@ public class Monstre extends Entite{
 	private static LocalTime tempsDeplacement = LocalTime.now();
 	private int deplacement = 1;
 
-	private boolean onAir;
 	private boolean canUp;
 	private boolean canDown;
 	private boolean canLeft;
@@ -34,9 +33,9 @@ public class Monstre extends Entite{
 	private TextureRegion[][] tmpFrames;
 	private int monsterType;
 	
-	private SpriteBatch batch=  new SpriteBatch();
-	private Texture gameScene= new Texture("com/zelda/world/World.png");
-	GameMap map= new GameMap(batch,gameScene);
+//	private SpriteBatch batch=  new SpriteBatch();
+//	private Texture gameScene= new Texture("com/zelda/world/World.png");
+//	GameMap map= new GameMap(batch,gameScene);
 	OrthographicCamera camera;
 	
 	public Monstre() {
@@ -140,21 +139,6 @@ public class Monstre extends Entite{
 		this.animRight = animRight;
 	}
 
-	public SpriteBatch getBatch() {
-		return batch;
-	}
-
-	public void setBatch(SpriteBatch batch) {
-		this.batch = batch;
-	}
-
-	public Texture getGameScene() {
-		return gameScene;
-	}
-
-	public void setGameScene(Texture gameScene) {
-		this.gameScene = gameScene;
-	}
 
 	public GameMap getMap() {
 		return map;
@@ -230,72 +214,6 @@ public class Monstre extends Entite{
 		
 		
 		if (now.isAfter(tempsDeplacement.plusSeconds(1))) {
-////			if (deplacement == 1) {
-//				Array<TextureRegion> framesLeft = new Array<TextureRegion>();
-//				for (int i = indexSprite; i < indexSprite + 3; i++) {
-//					framesLeft.add(tmpFrames[lineSprite+3][i]);
-//				}
-//				
-//				this.animLeft = new Animation<TextureRegion>(0.08f, framesLeft);
-//				this.animLeft.setPlayMode(Animation.PlayMode.LOOP);
-//				float delta = Gdx.graphics.getDeltaTime();
-//				int currentFrame = animLeft.getKeyFrameIndex(stateTime += delta);
-//				this.sprite = new Sprite (framesLeft.get(currentFrame));
-//				
-//				double toScanX= (monstreX)/5.01-1;
-//				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
-//				canLeft = map.analyseImage(map.secretScene,toScanX , toScanY);
-//				
-//				if(!canLeft) {
-//					monstreSpeed = 0;
-//				}
-//				else {
-//					monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
-//					tempsDeplacement = LocalTime.now();
-//					hitbox.setPosition(monstreX, monstreY);
-//					if (collision == false) {
-////					System.out.println(hitbox.overlaps(link.getHitbox()));
-//					collision = hitbox.overlaps(link.getHitbox());
-//					}
-//					if(collision) {
-//						monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
-//						hitbox.setPosition(monstreX, monstreY);
-//					}
-//				}
-////			}
-////			else if (deplacement == 2) {
-//				Array<TextureRegion> framesRight = new Array<TextureRegion>();
-//				for (int i = indexSprite; i < indexSprite + 3; i++) {
-//					framesRight.add(tmpFrames[lineSprite+1][i]);
-//				}
-//				
-//				this.animRight = new Animation<TextureRegion>(0.08f, framesRight);
-//				this.animRight.setPlayMode(Animation.PlayMode.LOOP);
-//				float delta = Gdx.graphics.getDeltaTime();
-//				int currentFrame = animRight.getKeyFrameIndex(stateTime += delta);
-//				this.sprite = new Sprite (framesRight.get(currentFrame));
-//				
-//				double toScanX= (monstreX + this.sprite.getWidth())/4.987+1;
-//				double toScanY=map.getGameSceneHeight()/5-(monstreY+sprite.getHeight()/2)/5;
-//				canRight = map.analyseImage(map.secretScene, toScanX, toScanY);
-//				
-//				if(!canRight) {
-//					monstreSpeed = 0;
-//				}
-//				else {
-//					monstreX += Gdx.graphics.getDeltaTime() * monstreSpeed;
-//					tempsDeplacement = LocalTime.now();
-//					hitbox.setPosition(monstreX, monstreY);
-//					if (collision == false) {
-////					System.out.println(hitbox.overlaps(link.getHitbox()));
-//					collision = hitbox.overlaps(link.getHitbox());
-//					}
-//					if(collision) {
-//						monstreX -= Gdx.graphics.getDeltaTime() * monstreSpeed;
-//						hitbox.setPosition(monstreX, monstreY);
-//					}
-//				}
-////			}
 			if (deplacement == 1) {
 				Array<TextureRegion> framesUp = new Array<TextureRegion>();
 				for (int i = indexSprite; i < indexSprite + 3; i++) {
@@ -359,27 +277,6 @@ public class Monstre extends Entite{
 			}
 		}
 		collision = false;
-	}
-	
-	public void onCamera(Link link) {
-//		System.out.println("-------------------------------------------------");
-//		System.out.print(link.getPosX()-map.getWidth()/2);
-//		System.out.print(" ");
-//		System.out.print(posX);
-//		System.out.print(" ");
-//		System.out.println(link.getPosX()+map.getWidth()/2);
-//
-//		System.out.print(link.getPosY()-map.getHeight()/2 );
-//		System.out.print(" ");
-//		System.out.print(posY);
-//		System.out.print(" ");
-//		System.out.println(link.getPosY()+map.getHeight()/2);
-//		System.out.println("-------------------------------------------------");
-		if ((link.getPosX()-map.getWidth()/2) > posX || (link.getPosX()+map.getWidth()/2) < posX || (link.getPosY()-map.getHeight()/2) > posY || (link.getPosY()+map.getHeight()/2) < posY) {
-
-			this.onAir = false;
-		}
-		else {this.onAir = true;}
 	}
 
 	public boolean isOnAir() {
