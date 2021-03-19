@@ -2,6 +2,7 @@ package screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,7 +19,7 @@ public class Victoire implements Screen {
 	private Table table;
 	private Texture texture;
 	private Image imageFin;
-	
+	private Sound sound;
 	public Victoire(TheLegendOfSopra orch) 
 	{
 		parent = orch;
@@ -27,6 +28,10 @@ public class Victoire implements Screen {
 	
 	@Override
 	public void show() {
+		GameScreen.sound.pause();
+		//sound.setLooping(sound.play(), false);
+		sound = Gdx.audio.newSound(Gdx.files.internal("screen/assets/victory.mp3"));
+		sound.play();
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 		
