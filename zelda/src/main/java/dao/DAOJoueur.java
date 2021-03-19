@@ -70,16 +70,25 @@ public class DAOJoueur implements IDAOJoueur{
 	@Override
 	public Joueur checkConnect(String login, String password) {
 		EntityManager em = Context.getInstance().getEmf().createEntityManager();
-		Query query = em.createQuery("from Joueur j where j.login = :login and j.password = :password", Joueur.class);
-		query.setParameter("login", login);
-		query.setParameter("password", password);
-		//query.getSingleResult();
-		//System.out.println("CLasse : "+query.getSingleResult().getClass().getName().toString());
-		//query.getSingleResult();
-		//String type = (String) query.getParameterValue("typeJoueur");
-//		String findPwd = (String) query.getParameterValue("c.password");
-//		System.out.println("Pwd:" + findPwd);
-		return (Joueur) query.getSingleResult();
+		Joueur j = findByLogin(login);
+		if (!(j.getPassword().equals(password)))
+		{
+			return null;
+		}
+		else
+		{
+			Query query = em.createQuery("from Joueur j where j.login = :login and j.password = :password", Joueur.class);
+			query.setParameter("login", login);
+			query.setParameter("password", password);
+			//query.getSingleResult();
+			//System.out.println("CLasse : "+query.getSingleResult().getClass().getName().toString());
+			//query.getSingleResult();
+			//String type = (String) query.getParameterValue("typeJoueur");
+//			String findPwd = (String) query.getParameterValue("c.password");
+//			System.out.println("Pwd:" + findPwd);
+			return (Joueur) query.getSingleResult();
+		}
+		
 	}
 	
 

@@ -54,6 +54,7 @@ public class TheLegendOfSopra extends Game {
 	public void changeScreen (int screen)
 	{
 		switch (screen) {
+		
 		case PRINCIPAL :
 			if (menuPrincipal == null)
 			{

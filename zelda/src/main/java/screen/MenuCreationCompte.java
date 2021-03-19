@@ -3,6 +3,8 @@ import com.zelda.*;
 
 import util.Context;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -30,6 +32,7 @@ public class MenuCreationCompte implements Screen{
 	private Label confPwdLabel;
 	private Label badPwdLabel;
 	private Label mailLabel;
+	private Label badLoginLabel;
 
 	private TextField saisieLogin;
 	private TextField saisiePwd;
@@ -38,11 +41,13 @@ public class MenuCreationCompte implements Screen{
 
 	private TextButton valider;
 
+	private boolean verifLogin = false;
+
 	public MenuCreationCompte(TheLegendOfSopra orch) 
 	{
 		parent = orch;
 		stage = new Stage (new ScreenViewport());
-		
+
 	}
 
 	@Override
@@ -60,17 +65,19 @@ public class MenuCreationCompte implements Screen{
 		pwdLabel = new Label("Mot de passe : ", skin);
 		confPwdLabel = new Label ("Confirmation du mot de passe", skin);
 		mailLabel = new Label ("E-Mail : ", skin);
-		badPwdLabel = new Label ("Mail", skin);
-		
+		badPwdLabel = new Label (null, skin);
+		badLoginLabel = new Label (null, skin);
+
 		saisieLogin = new TextField("login", skin);
 		saisiePwd = new TextField(null, skin);
 		saisieConfPwd = new TextField(null, skin);
 		saisieMail = new TextField(null, skin);
-		
+
 		valider = new TextButton("Valider", skin);
 
 		table.add(loginLabel).left();
 		table.add(saisieLogin);
+		table.add(badLoginLabel);
 		table.row();
 		table.add(pwdLabel).left();
 		table.add(saisiePwd);
@@ -83,19 +90,40 @@ public class MenuCreationCompte implements Screen{
 		table.add(saisieMail);
 		table.row();
 		table.add(valider).colspan(2);
+		List<Joueur> joueurs = Context.getInstance().getDaoJoueur().findAll();
 		
 		valider.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				if (verifPwd(saisiePwd.getText(), saisieConfPwd.getText()))
+				verifLogin=false;
+				for (Joueur j : joueurs)
 				{
-					MenuPrincipal.userConnected= new Joueur(saisieLogin.getText(), saisieMail.getText(), saisiePwd.getText());
-				//	MenuPrincipal.userConnected = newC;
-					Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
-					parent.changeScreen(TheLegendOfSopra.INFOS);
+					if (j.getLogin().equals(saisieLogin.getText()))
+					{
+						if (verifLogin == false) 
+						{
+							badLoginLabel.setText("Login non dispo");
+							badPwdLabel.setText(null);
+							verifLogin = true;
+							break;
+						}
+					}
 				}
-				else
+				if (verifLogin == false)
 				{
-					badPwdLabel.setText("Mot de passe incorrect");
+					if (verifPwd(saisiePwd.getText(), saisieConfPwd.getText()))
+					{
+						badPwdLabel.setText(null);
+						badLoginLabel.setText(null);
+						MenuPrincipal.userConnected= new Joueur(saisieLogin.getText(), saisieMail.getText(), saisiePwd.getText());
+
+						MenuPrincipal.userConnected=Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
+						parent.changeScreen(TheLegendOfSopra.INFOS);
+					}
+					else
+					{
+						badPwdLabel.setText("Mot de passe incorrect");
+						badLoginLabel.setText(null);
+					}
 				}
 			}
 		});
@@ -164,7 +192,7 @@ public class MenuCreationCompte implements Screen{
 		}while(!(pwd1.equals(pwd2)));
 		return pwd1;
 	}
-	
+
 	public boolean verifPwd(String pwd1, String pwd2)
 	{
 		return pwd1.equals(pwd2);

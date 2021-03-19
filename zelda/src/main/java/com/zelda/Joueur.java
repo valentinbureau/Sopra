@@ -53,6 +53,7 @@ public class Joueur implements Serializable{
 		this.login = login;
 		this.mail = mail;
 		this.password = password;
+		this.link= new Link();
 	}
 	
 	public String getLogin() {
@@ -89,7 +90,7 @@ public class Joueur implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Joueur [login=" + login + ", mail=" + mail + ", password=" + password + ", link=" + link + "]";
+		return "Joueur [login=" + login + ", mail=" + mail + ", password=" + password + ", linkX = " + link.getPosX() + " - linkY =  " + link.getPosY() + " - linkVie = " + link.getVie() + "]";
 	}
 
 	

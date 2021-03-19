@@ -1,6 +1,7 @@
 package screen;
 
 import java.util.Iterator;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -21,24 +22,26 @@ import com.zelda.TheLegendOfSopra;
 import util.Context;
 
 public class MenuConnexion implements Screen{
-	
+
 	private TheLegendOfSopra parent;
 	private Stage stage;
 	private Table table;
 	private Skin skin;
-	
+
 	private Label titre;
 	private Label loginLabel;
 	private Label pwdLabel;
-	
+
 	private Label badLogin;
 	private Label badPwd;
-	
+
 	private TextField saisieLogin;
 	private TextField saisiePwd;
-	
+
 	private TextButton connexion;
-	
+
+	private boolean verifLogin = false;
+
 	public MenuConnexion(TheLegendOfSopra orch) 
 	{
 		parent = orch;
@@ -59,15 +62,15 @@ public class MenuConnexion implements Screen{
 		titre = new Label ("CONNEXION",skin);
 		loginLabel = new Label ("Login : ", skin);
 		pwdLabel = new Label("Mot de passe : ", skin);
-		
+
 		badLogin = new Label ("", skin);
 		badPwd = new Label ("", skin);
-		
+
 		saisieLogin = new TextField(null, skin);
 		saisiePwd = new TextField(null, skin);
-		
+
 		connexion = new TextButton("Valider", skin);
-		
+
 		table.add(titre);
 		table.row();
 		table.add(loginLabel);
@@ -79,44 +82,42 @@ public class MenuConnexion implements Screen{
 		table.add(badPwd);
 		table.row();
 		table.add(connexion);
-		
+		List<Joueur> joueurs = Context.getInstance().getDaoJoueur().findAll();
+
 		connexion.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
 				String log = saisieLogin.getText();
 				String pass = saisiePwd.getText();
 				System.out.println(log+ " - " + pass);
-				MenuPrincipal.userConnected = Context.getInstance().getDaoJoueur().checkConnect(log, pass);
-				parent.changeScreen(TheLegendOfSopra.INFOS);
-			//	boolean essai = false;
-//				Iterator<String>it=Joueur.getListUtilisateur().keySet().iterator();
-//				do
-//				{
-//					String key=it.next();
-//					if (key.equals(log))
-//					{
-//						essai=true;
-//						MenuPrincipal.userConnected=Joueur.getListUtilisateur().get(key);
-//					}
-//					else
-//					{
-//						essai=false;
-//					}
-//				}while(it.hasNext() && (essai == false));
-//				if (essai == false)
-//				{
-//					badLogin.setText("Login inconnu");
-//				}
-//				else if (!(pass.equals(MenuPrincipal.userConnected.getPassword())))
-//				{
-//					badPwd.setText("Mot de passe incorrect");
-//				}
-//				else
-//				{
-//					parent.changeScreen(TheLegendOfSopra.INFOS);
-//				}
+				verifLogin = false;
+				for (Joueur j : joueurs)
+				{
+					if (j.getLogin().equals(log))
+					{
+						verifLogin = true;
+						break;
+					}
+				}
+				if (verifLogin==true)
+				{
+					if (Context.getInstance().getDaoJoueur().checkConnect(log, pass) == null)
+					{
+						badPwd.setText("Mot de passe incorrect");
+						badLogin.setText(null);
+					}
+					else
+					{
+						MenuPrincipal.userConnected = Context.getInstance().getDaoJoueur().checkConnect(log, pass);
+						parent.changeScreen(TheLegendOfSopra.INFOS);
+					}
+				}
+				else
+				{
+					badLogin.setText("Login Inconnu");
+					badPwd.setText(null);
+				}
 			}
 		});
-		
 	}
 
 	@Override
@@ -125,37 +126,34 @@ public class MenuConnexion implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
-		
+
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().update(width, height, true);
-		
+
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 	@Override
 	public void dispose() {
 		stage.dispose();
-		
-	}
 
+	}
 }

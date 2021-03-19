@@ -35,7 +35,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	BitmapFont bitmapfont;
 	Sound sound;
 	OrthographicCamera camera;
-	OrthographicCamera miniCamera;
+	//OrthographicCamera miniCamera;
 
 	static Princesse princesse = new Princesse();
 	static Link link = MenuPrincipal.userConnected.getAvatar(); // Initialisation du Joueur
@@ -76,7 +76,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		//sound = Gdx.audio.newSound(Gdx.files.internal("com/zelda/world/Music.mp3"));
 		//sound.play(0.05f);
 		camera = new OrthographicCamera();
-		miniCamera = new OrthographicCamera();
+		//miniCamera = new OrthographicCamera();
 		camera.setToOrtho(false, map.getWidth(), map.getHeight());
 		parent = orch;
 		map.create();//Cr�ation de la map (batch & texture)
@@ -197,7 +197,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		//		monstre13.render(link);
 		//		monstre14.render(link);
 		camera.update();
-		miniCamera.update();
+		//miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.position.set(link.getPosX(), link.getPosY(), 0);
