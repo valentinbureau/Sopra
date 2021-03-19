@@ -13,7 +13,7 @@ public class Princesse extends PNJ{
 	public Princesse() {
 		super();
 		this.posX=7145;
-		this.posY=3230;
+		this.posY=3200;
 		this.width=60;
 		this.height=60;
 	}
@@ -21,7 +21,7 @@ public class Princesse extends PNJ{
 		texture = new Texture ("com/zelda/princesse.png");
 		TextureRegion[][] tmpFrames = TextureRegion.split(texture, 30, 38);
 		sprite= new Sprite( tmpFrames[1][0] );
-		hitbox = new Rectangle(posX, posY, sprite.getWidth(), sprite.getHeight());
+		hitbox = new Rectangle(posX, posY, 30, 30);
 	}
 	public void render(Link link) {
 		
