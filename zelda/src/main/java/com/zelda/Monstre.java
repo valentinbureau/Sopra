@@ -1,7 +1,6 @@
 package com.zelda;
 
 import java.time.LocalTime;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,6 +31,7 @@ public class Monstre extends Entite{
 	private Animation<TextureRegion> animRight;
 	private TextureRegion[][] tmpFrames;
 	private int monsterType;
+	private int vie = 2;
 	
 //	private SpriteBatch batch=  new SpriteBatch();
 //	private Texture gameScene= new Texture("com/zelda/world/World.png");
@@ -187,8 +187,14 @@ public class Monstre extends Entite{
 	public void setDeplacement(int deplacement) {
 		this.deplacement = deplacement;
 	}
-	
 
+	public int getVie() {
+		return vie;
+	}
+
+	public void setVie(int vie) {
+		this.vie = vie;
+	}
 
 	public void create () {
 		this.texture = new Texture("com/zelda/Monster-sprites.png");
