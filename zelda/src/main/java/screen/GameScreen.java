@@ -35,7 +35,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	BitmapFont bitmapfont;
 	Sound sound;
 	OrthographicCamera camera;
-	//OrthographicCamera miniCamera;
+	OrthographicCamera cameraPrinc;
 
 	static Princesse princesse = new Princesse();
 	static Link link = MenuPrincipal.userConnected.getAvatar(); // Initialisation du Joueur
@@ -66,6 +66,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	private static final int MINI_MAP_WIDTH = map.getGameSceneWidth()/MINI_MAP_RATIO;
 	private static final int MINI_MAP_HEIGHT = map.getGameSceneHeight()/MINI_MAP_RATIO;
 	private ShapeRenderer shapeRenderer;
+	private ShapeRenderer shapeRendererPrinc;
 	public static boolean victory = false;
 	public GameScreen(TheLegendOfSopra orch) 
 	{
@@ -75,6 +76,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		camera = new OrthographicCamera();
 		//miniCamera = new OrthographicCamera();
 		camera.setToOrtho(false, map.getWidth(), map.getHeight());
+		cameraPrinc = new OrthographicCamera();
+		//miniCamera = new OrthographicCamera();
+		cameraPrinc.setToOrtho(false,map.getWidth(), map.getHeight());
 		parent = orch;
 		map.create();//Cr�ation de la map (batch & texture)
 		link.create();//Cr�ation du personnage (sprite)
@@ -193,7 +197,9 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		//		monstre12.render(link);
 		//		monstre13.render(link);
 		//		monstre14.render(link);
+		
 		camera.update();
+		
 		//miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -229,14 +235,24 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.setProjectionMatrix(camera.invProjectionView);
 		camera.position.set(link.getPosX() , link.getPosY() , 0);
 		camera.update();
+		
+		cameraPrinc.position.set(princesse.getPosX() , princesse.getPosY() , 0);
+		cameraPrinc.update();
 
 		map.batch.end();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-		shapeRenderer.setColor(Color.RED);
+		shapeRenderer.setColor(Color.GREEN);
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		shapeRenderer.rect(link.getPosX()-map.getWidth()/2-2 + link.getPosX()/MINI_MAP_RATIO, (link.getPosY()+map.getHeight()/3+14)+link.getPosY()/MINI_MAP_RATIO,2, 2);
 		shapeRenderer.end();
+		
+		shapeRendererPrinc = new ShapeRenderer();
+		shapeRendererPrinc.begin(ShapeRenderer.ShapeType.Filled);
+		shapeRendererPrinc.setColor(Color.MAGENTA);
+		shapeRendererPrinc.setProjectionMatrix(cameraPrinc.combined);
+		shapeRendererPrinc.rect(princesse.getPosX()-map.getWidth()/2-2 + princesse.getPosX()/MINI_MAP_RATIO, (princesse.getPosY()+map.getHeight()/3+13)+princesse.getPosY()/MINI_MAP_RATIO,3, 3);
+		shapeRendererPrinc.end();
 
 		if(Gdx.input.isKeyPressed(Keys.TAB)) {
 			System.out.println("PRESSED");

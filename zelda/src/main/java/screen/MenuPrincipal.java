@@ -88,9 +88,6 @@ public class MenuPrincipal implements Screen{
 				parent.changeScreen(TheLegendOfSopra.CREATION);
 			}
 		});
-		
-		
-		
 	}
 
 	@Override

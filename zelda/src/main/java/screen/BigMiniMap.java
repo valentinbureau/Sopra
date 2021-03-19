@@ -25,7 +25,9 @@ public class BigMiniMap extends ApplicationAdapter implements Screen{
 	private static final int MINI_MAP_WIDTH = GameScreen.map.getGameSceneWidth()/MINI_MAP_RATIO;
 	private static final int MINI_MAP_HEIGHT = GameScreen.map.getGameSceneHeight()/MINI_MAP_RATIO;
 	private ShapeRenderer shapeRenderer;
+	private ShapeRenderer shapeRendererPrinc;
 	OrthographicCamera camera;
+	OrthographicCamera cameraPrinc;
 	
 	static GameMap map = new GameMap();
 
@@ -35,6 +37,7 @@ public class BigMiniMap extends ApplicationAdapter implements Screen{
 		//miniMap = new Texture(Gdx.files.internal("com/zelda/world/World.png"));
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,GameScreen.map.getGameSceneWidth(),GameScreen.map.getGameSceneHeight());
+		
 		map.create();
 	}
 
@@ -98,13 +101,21 @@ public class BigMiniMap extends ApplicationAdapter implements Screen{
 		
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         shapeRenderer.rect(GameScreen.link.getPosX(), GameScreen.link.getPosY(),50, 50);
 
         shapeRenderer.end();
         
+        shapeRendererPrinc = new ShapeRenderer();
+        shapeRendererPrinc.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRendererPrinc.setColor(Color.MAGENTA);
+        shapeRendererPrinc.setProjectionMatrix(camera.combined);
+
+        shapeRendererPrinc.rect(GameScreen.princesse.getPosX(), GameScreen.princesse.getPosY(),70, 70);
+        
+        shapeRendererPrinc.end();
         map.batch.end();
 		
 		if(!(Gdx.input.isKeyPressed(Keys.TAB))) {
