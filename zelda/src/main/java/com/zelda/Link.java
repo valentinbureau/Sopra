@@ -18,7 +18,7 @@ import com.zelda.world.GameMap;
 
 import screen.GameScreen;
 
-//Les mÃ©thodes sont aprÃ¨s les getters et setters
+//Les méthodes sont après les getters et setters
 
 
 @Embeddable
@@ -439,23 +439,6 @@ public class Link{
 		this.attackDirection = attackDirection;
 	}
 
-
-	//	public void render() {
-//		//Préparation du spriteSheet de Link
-//		TextureRegion[][] tmpFrames = TextureRegion.split(linkTexture, 45, 45);
-//
-//		//Préparation du SpriteSheet de l'attaque
-//		Texture animationSwordDown = new Texture("com/zelda/link2-sword_down-left.png"); 
-//		TextureRegion[][] tmpFramesSword = TextureRegion.split(animationSwordDown, 45, 45);
-//		TextureRegion[][] tmpFramesSword2 = TextureRegion.split(animationSwordDown, 45, 45);
-//		TextureRegion[][] tmpFramesSword3 = TextureRegion.split(animationSwordDown, 45, 49);
-//		TextureRegion[][] tmpFramesSword4 = TextureRegion.split(animationSwordDown, 43, 47);
-//
-//
-//		Texture animationSwordLeft = new Texture("com/zelda/link2-sword_left.png");
-//		TextureRegion[][] tmpFramesSword5 = TextureRegion.split(animationSwordLeft, 45, 48);
-//	}
-
 	public void setFramesRight(Array<TextureRegion> framesRight) {
 		this.framesRight = framesRight;
 	}
@@ -558,12 +541,18 @@ public class Link{
 			posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			
+
 			if (!collisionPrincesse) {
 				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
 				System.out.println(collisionPrincesse);
 				if(collisionPrincesse) { victory=true;}
 			}
 			
+
+//			monstres.stream()
+//				.filter(m -> m.collision)
+//				.forEach(m -> m.collision = hitbox.overlaps(m.getHitbox());
+
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 					collision = hitbox.overlaps(monstre.getHitbox());
@@ -605,11 +594,13 @@ public class Link{
 			posX += Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			hitbox.setPosition(posX, posY);
+
 			if (!collisionPrincesse) {
 				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
 				System.out.println(collisionPrincesse);
 				if(collisionPrincesse) { victory=true;}
 			}
+
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 
@@ -684,7 +675,7 @@ public class Link{
 			this.sprite = new Sprite (framesBot.get(currentFrame));
 
 			framesSword.clear();
-
+			//Ajout d'animation attaque bas
 			framesSword.add(tmpFramesSword[0][0]);
 			framesSword.add(tmpFramesSword2[0][1]);
 			framesSword.add(tmpFramesSword3[0][2]);
@@ -710,6 +701,7 @@ public class Link{
 				if(collisionPrincesse) { victory=true;
 				posY += Gdx.graphics.getDeltaTime() * linkSpeed;}
 			}
+
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 
@@ -734,23 +726,23 @@ public class Link{
 			switch (attackDirection) {
 			case 1:
 				attackHitbox.setPosition(posX - 15, posY);
-				System.out.println(attackHitbox.getX());
-				System.out.println(getPosX());
+//				System.out.println(attackHitbox.getX());
+//				System.out.println(getPosX());
 				break;
 			case 2 :
 				attackHitbox.setPosition(posX, posY + 15);
-				System.out.println(attackHitbox.getX());
-				System.out.println(getPosX());
+//				System.out.println(attackHitbox.getX());
+//				System.out.println(getPosX());
 				break;
 			case 3 :
 				attackHitbox.setPosition(posX + 15, posY);
-				System.out.println(attackHitbox.getX());
-				System.out.println(getPosX());
+//				System.out.println(attackHitbox.getX());
+//				System.out.println(getPosX());
 				break;
 			case 4 : 
 				attackHitbox.setPosition(posX, posY - 15);
-				System.out.println(attackHitbox.getX());
-				System.out.println(getPosX());
+//				System.out.println(attackHitbox.getX());
+//				System.out.println(getPosX());
 				break;
 			default:
 				break;
