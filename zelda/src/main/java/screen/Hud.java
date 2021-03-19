@@ -81,35 +81,25 @@ public class Hud implements Screen{
 		Skin skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
 		quit = new TextButton("Quitter", skin);
 		table2.add(quit);
-
-		music = new TextButton("No Music", skin);
-		table2.add(music).bottom().right().padRight(10);
-
+		
+		Texture monstreTexture = new Texture ("com/zelda/Monster-sprites.png");
+		Image monstre = new Image(GameScreen.monstre1.getSprite());
+		Table table3 = new Table();
+		table3.setFillParent(true);
+		table3.align(Align.top);
+		table3.add(monstre);
+		
+		Label nbMonstre = new Label(""+GameScreen.monstres.size(),skin);
+		table3.add(nbMonstre);
 		stage.addActor(table);  
-		stage.addActor(table2);  
+		stage.addActor(table2); 
+		stage.addActor(table3);
 		quit.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("Etat Joueur : " + MenuPrincipal.userConnected.getAvatar().toString());
 				Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
 				Gdx.app.exit();
-			}
-		});
-
-		music.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				if (music.getText().equals("No Music"))
-				{
-					GameScreen.sound.stop();
-					music.setText("Music");
-
-				}
-				else
-				{
-					GameScreen.sound.play();
-					music.setText("No Music");
-				}
 			}
 		});
 

@@ -31,8 +31,6 @@ import util.Context;
 public class GameScreen extends ApplicationAdapter implements Screen{
 
 
-
-
 	private TheLegendOfSopra parent;
 	private Hud hud;
 	static FileHandle fontFile;

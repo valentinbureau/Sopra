@@ -83,6 +83,7 @@ public class MenuConnexion implements Screen{
 		table.add(badPwd);
 		table.row();
 		table.add(connexion);
+
 		connexion.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
 				connexion();
