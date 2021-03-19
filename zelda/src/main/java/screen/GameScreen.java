@@ -58,9 +58,6 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	
 
 	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
-
-
-
 	static GameMap map = new GameMap();//Initialisation de la map
 
 	private Texture miniMap;
@@ -167,7 +164,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 //		monstres.add(monstre1);
 		monstres.add(monstre2);
 		monstres.add(monstre3);
-		//		monstres.add(monstre4);
+//				monstres.add(monstre4);
 		//		monstres.add(monstre5);
 		monstres.add(monstre6);
 		//		monstres.add(monstre7);

@@ -30,6 +30,8 @@ public class GameOver implements Screen{
 	private Table tableImg;
 	private Texture texture;
 	private Image img;
+	private int vie;
+	private boolean victory;
 
 //	private TextButton quitter;
 //	private TextButton retry;
