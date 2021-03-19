@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.zelda.Link;
 import com.zelda.Monstre;
+import com.zelda.Objet;
 import com.zelda.Princesse;
 import com.zelda.TheLegendOfSopra;
 import com.zelda.world.GameMap;
@@ -58,6 +59,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	static Monstre monstre12 = new Monstre(6680, 2330, 50, 6);
 	static Monstre monstre13 = new Monstre(6557, 1513, 50, 3);
 	static Monstre monstre14 = new Monstre(5919, 1805, 50, 7);
+	
+	static Objet epee = new Objet(6865, 2335);
 
 	static List<Monstre> monsters;
 
@@ -104,8 +107,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		monstres.add(monstre12);
 		monstres.add(monstre13);
 		monstres.add(monstre14);
-		
-		
+		epee.create();
 		monstres.stream().forEach(m -> m.create());
 		princesse.create();
 		link.create();//Cr�ation du personnage (sprite)
@@ -166,19 +168,22 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 			parent.changeScreen(TheLegendOfSopra.VICTOIRE);
 		}
 
-
-		
-
 		//Check de ce qui doit �tre pr�sent � l'�cran
 		monstres.forEach(m-> m.onCamera(link)); // Init du bool�en (pr�sence sous cam�ra)
 		monsters = monstres.stream().filter(m -> m.isOnAir())
 				.collect(Collectors.toList()); //On filtre les monstres pr�sents sous la camera
-		
-		monsters.stream().forEach(m -> m.render(link)); //Rendering des monstres pr�sents � l'�cran
+
+//		List<Monstre> monstreToDelete = monsters.stream().filter(m -> m.getVie() < 1)
+//				.collect(Collectors.toList());
+//		monstreToDelete.forEach(m -> m.remove());
+		monsters.stream().filter(m -> m.getVie() > 0)
+				.forEach(m -> m.render(link)); //Rendering des monstres pr�sents � l'�cran et selection monstres vivants
 
 		princesse.onCamera(link);
+		epee.onCamera(link);
 		if (princesse.isOnAir()) {princesse.render(link);}
-		link.render(monsters,princesse); //Rendering de Link
+		if (epee.isOnAir()) {epee.render(link);};
+		link.render(monsters,princesse, epee); //Commande de d�placement personnage
 		camera.update();
 
 
@@ -198,17 +203,17 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getPosX(), link.getPosY());//Affichage personnage
 
-
 		//affichage de la princesse
 		
 		if (princesse.isOnAir()) {
 			map.batch.draw(princesse.getSprite(), princesse.getPosX(), princesse.getPosY(),princesse.getWidth(),princesse.getHeight());//Affichage personnage
 		}
 
-
 		//Affichage monstres
 		monsters.stream().forEach(m ->map.batch.draw(m.getSprite(), m.getPosX(), m.getPosY()));
-
+		
+		//Affichage objet
+		map.batch.draw(epee.getSprite(), epee.getPosX(), epee.getPosY(), epee.getSprite().getWidth(), epee.getSprite().getHeight());
 
 		// Creation de la minimap
 		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
@@ -218,7 +223,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 		camera.position.set(link.getPosX() , link.getPosY() , 0);
 		camera.update();
-
+		
 		cameraPrinc.position.set(princesse.getPosX() , princesse.getPosY() , 0);
 		cameraPrinc.update();
 	

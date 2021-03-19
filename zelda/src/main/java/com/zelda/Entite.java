@@ -7,7 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.zelda.world.GameMap;
 
-public class Entite extends Actor{
+public class Entite extends Actor {
+
 	protected Sprite sprite;
 	protected Texture texture;
 	protected Rectangle hitbox;

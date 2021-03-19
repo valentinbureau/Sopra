@@ -66,7 +66,6 @@ public class Hud implements Screen{
 		Table tableImg=new Table();  
 		//tableImg.add(img).width(28).height(20).left();//.padTop(15);
 		tableImg.setSize(GameScreen.link.getVie(), 1);
-		System.out.println(tableImg.getWidth());
 		tableImg.clear();
 		for (int i = 0 ; i < tableImg.getWidth() ; ++i)
 		{

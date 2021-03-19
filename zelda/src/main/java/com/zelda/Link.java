@@ -1,5 +1,6 @@
 package com.zelda;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.Embeddable;
@@ -44,12 +45,14 @@ public class Link{
 	private transient float linkSpeed;
 	private transient float defaultSpeed;
 	private transient float stateTime = 0;
+	private transient LocalTime timeSpriteSword = LocalTime.now().minusSeconds(2);
 	private transient int swordDirection;
 	private transient Rectangle hitbox;
 	private transient Rectangle attackHitbox;
 	private transient boolean collision = false;
 	private transient boolean collisionAttack = false;
 	private transient boolean collisionPrincesse =false;
+	private transient boolean collisionEpee =false;
 	private transient int attackDirection = 0;
 	private transient boolean victory;
 	private transient SpriteBatch batch=  new SpriteBatch();
@@ -456,6 +459,16 @@ public class Link{
 		this.framesBot = framesBot;
 	}
 
+	
+	public boolean isCollisionEpee() {
+		return collisionEpee;
+	}
+
+	public void setCollisionEpee(boolean collisionEpee) {
+		this.collisionEpee = collisionEpee;
+	}
+	
+
 	public void create () {
 		texture = new Texture ("com/zelda/link2.png");
 
@@ -476,7 +489,7 @@ public class Link{
 		tmpFramesSword6 = TextureRegion.split(animationSwordUp, 45, animationSwordLeft.getHeight());
 		animationSwordRight = new Texture("com/zelda/link2-sword_right.png");
 		tmpFramesSword7 = TextureRegion.split(animationSwordRight, 44, animationSwordRight.getHeight());
-
+		
 		attackHitbox = new Rectangle(posX, posY, 55, 55);
 
 
@@ -491,6 +504,7 @@ public class Link{
 		for (int i = 8; i < 14; i++) {
 			framesLeft.add(tmpFrames[1][i]);
 		}
+		
 
 		for (int i = 8; i < 14; i++) {
 			framesRight.add(tmpFrames[4][i]);
@@ -503,11 +517,19 @@ public class Link{
 		for (int i = 0; i < 8; i++) {
 			framesBot.add(tmpFrames[1][i]);
 		}
+		
+		framesSword.add(tmpFramesSword[0][0]);
+		framesSword.add(tmpFramesSword2[0][1]);
+		framesSword.add(tmpFramesSword3[0][2]);
+		framesSword.add(tmpFramesSword4[0][3]);
+		framesSword.add(tmpFramesSword4[0][4]);
+		
+		attackDirection = 4; 
 
 	}
 
 
-	public void render(List<Monstre> monstres,Princesse princesse) {
+	public void render(List<Monstre> monstres,Princesse princesse, Objet epee) {
 
 		if(Gdx.input.isKeyPressed(Keys.DPAD_LEFT)) {
 
@@ -538,10 +560,18 @@ public class Link{
 			posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			
+			if(collisionEpee == false) {
+				collisionEpee = hitbox.overlaps(epee.getHitbox());
+				if(collisionEpee) {
+					this.sprite = new Sprite(new Texture("com/zelda/link2-sprite-epee.png"));
+					epee.setPosX(100);
+					epee.setPosY(100);
+					timeSpriteSword = LocalTime.now();}
+			}
 
 			if (!collisionPrincesse) {
 				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
-				System.out.println(collisionPrincesse);
+//				System.out.println(collisionPrincesse);
 				if(collisionPrincesse) { victory=true;}
 			}
 			
@@ -591,6 +621,15 @@ public class Link{
 			posX += Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			hitbox.setPosition(posX, posY);
+			
+			if(collisionEpee == false) {
+				collisionEpee = hitbox.overlaps(epee.getHitbox());
+				if(collisionEpee) {
+					this.sprite = new Sprite(new Texture("com/zelda/link2-sprite-epee.png"));
+					epee.setPosX(100);
+					epee.setPosY(100);
+					timeSpriteSword = LocalTime.now();}
+			}
 
 			if (!collisionPrincesse) {
 				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
@@ -643,6 +682,15 @@ public class Link{
 			posY += Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			
+			if(collisionEpee == false) {
+				collisionEpee = hitbox.overlaps(epee.getHitbox());
+				if(collisionEpee) {
+					this.sprite = new Sprite(new Texture("com/zelda/link2-sprite-epee.png"));
+					epee.setPosX(100);
+					epee.setPosY(100);
+					timeSpriteSword = LocalTime.now();}
+			}
+			
 			if (!collisionPrincesse) {
 				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
 				System.out.println(collisionPrincesse);
@@ -676,8 +724,9 @@ public class Link{
 			framesSword.add(tmpFramesSword[0][0]);
 			framesSword.add(tmpFramesSword2[0][1]);
 			framesSword.add(tmpFramesSword3[0][2]);
-			framesSword.add(tmpFramesSword4[0][4]);
 			framesSword.add(tmpFramesSword4[0][3]);
+			framesSword.add(tmpFramesSword4[0][4]);
+			
 
 			attackDirection = 4;
 			double toScanX= ((posX+sprite.getWidth()/2)/4.996);
@@ -692,6 +741,16 @@ public class Link{
 			else {canDown=true;}
 			posY -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
+			
+			if(collisionEpee == false) {
+				collisionEpee = hitbox.overlaps(epee.getHitbox());
+				if(collisionEpee) {
+					this.sprite = new Sprite(new Texture("com/zelda/link2-sprite-epee.png"));
+					epee.setPosX(100);
+					epee.setPosY(100);
+					timeSpriteSword = LocalTime.now();}
+			}
+			
 			if (!collisionPrincesse) {
 				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
 				System.out.println(collisionPrincesse);
@@ -725,6 +784,7 @@ public class Link{
 				attackHitbox.setPosition(posX - 15, posY);
 //				System.out.println(attackHitbox.getX());
 //				System.out.println(getPosX());
+//				System.out.println(getPosY());
 				break;
 			case 2 :
 				attackHitbox.setPosition(posX, posY + 15);
@@ -749,14 +809,30 @@ public class Link{
 				if (collisionAttack == false) {
 					collisionAttack = attackHitbox.overlaps(monstre.getHitbox());
 					if(collisionAttack) {
-						monstre.setPosX(100);
-						monstre.setPosY(100);
-						monstre.getHitbox().setPosition(100, 100);
+						if (epee.posX == 100) {
+							monstre.setVie(monstre.getVie()-2);
+							monstre.setPosX(100);
+							monstre.setPosY(100);
+							monstre.getHitbox().setPosition(100, 100);
+						}
+						else {
+							monstre.setVie(monstre.getVie()-1);
+							if (monstre.getVie() < 1) {
+								monstre.setPosX(100);
+								monstre.setPosY(100);
+								monstre.getHitbox().setPosition(100, 100);
+							}
+						}
 					}
 				}
 			}
 
 
+		}
+		
+		if (LocalTime.now().isBefore(timeSpriteSword.plusSeconds(1)) && LocalTime.now().isAfter(timeSpriteSword))
+		{
+			this.sprite = new Sprite(new Texture("com/zelda/link2-sprite-epee.png"));
 		}
 		collision = false;
 		collisionAttack = false;
