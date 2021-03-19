@@ -826,8 +826,6 @@ public class Link{
 					}
 				}
 			}
-
-
 		}
 		
 		if (LocalTime.now().isBefore(timeSpriteSword.plusSeconds(1)) && LocalTime.now().isAfter(timeSpriteSword))

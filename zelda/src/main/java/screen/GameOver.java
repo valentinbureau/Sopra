@@ -115,7 +115,7 @@ public class GameOver implements Screen{
 		stage.addActor(tableImg);
 		stage.addActor(table);
 		TextButton quitter = new TextButton("Quitter", skin);
-		TextButton retry = new TextButton("Reesayer", skin);
+		TextButton retry = new TextButton("Reessayer", skin);
 		table.add(quitter).padBottom(10).padRight(10);
 		table.add(retry).padBottom(10).padLeft(10);
 		MenuPrincipal.userConnected.getAvatar().setVie(8);
