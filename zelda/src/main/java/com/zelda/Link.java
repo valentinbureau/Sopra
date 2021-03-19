@@ -40,7 +40,8 @@ public class Link{
 	public void setPosY(float posY) {
 		this.posY = posY;
 	}
-
+	
+	
 	transient Sprite sprite;
 	transient Texture linkTexture = new Texture ("com/zelda/link2.png");
 	private transient float linkSpeed;
@@ -51,8 +52,9 @@ public class Link{
 	private transient Rectangle attackHitbox;
 	private transient boolean collision = false;
 	private transient boolean collisionAttack = false;
+	private transient boolean collisionPrincesse =false;
 	private transient int attackDirection = 0;
-
+	private transient boolean victory;
 	private transient SpriteBatch batch=  new SpriteBatch();
 	private transient Texture gameScene= new Texture("com/zelda/world/World.png");
 	transient GameMap map= new GameMap(batch,gameScene);
@@ -109,6 +111,7 @@ public class Link{
 		this.canDown=true;
 		this.canRight=true;
 		this.vie=8;
+		this.victory=false;
 
 	}
 
@@ -122,6 +125,7 @@ public class Link{
 		this.canDown=true;
 		this.canRight=true;
 		this.vie=8;
+		this.victory=false;
 	}
 	
 	public boolean recevoirDegats()
@@ -132,6 +136,32 @@ public class Link{
 			return true;
 		}
 		return false;
+	}
+
+	
+	
+	public boolean isCollision() {
+		return collision;
+	}
+
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+
+	public boolean isCollisionPrincesse() {
+		return collisionPrincesse;
+	}
+
+	public void setCollisionPrincesse(boolean collisionPrincesse) {
+		this.collisionPrincesse = collisionPrincesse;
+	}
+
+	public boolean isVictory() {
+		return victory;
+	}
+
+	public void setVictory(boolean victory) {
+		this.victory = victory;
 	}
 
 	public Sprite getSprite() {
@@ -528,10 +558,13 @@ public class Link{
 			else {canLeft=true;}
 			posX -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
-			if (!collision) {
-				collision = hitbox.overlaps(princesse.getHitbox());
-				if(collision) { GameScreen.victory=true;}
+			
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;}
 			}
+			
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 					collision = hitbox.overlaps(monstre.getHitbox());
@@ -575,6 +608,11 @@ public class Link{
 			posX += Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
 			hitbox.setPosition(posX, posY);
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;}
+			}
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 
@@ -621,6 +659,11 @@ public class Link{
 			else {canUp=true;}
 			posY += Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;}
+			}
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 
@@ -666,6 +709,12 @@ public class Link{
 			else {canDown=true;}
 			posY -= Gdx.graphics.getDeltaTime() * linkSpeed;
 			hitbox.setPosition(posX, posY);
+			if (!collisionPrincesse) {
+				collisionPrincesse = hitbox.overlaps(princesse.getHitbox());
+				System.out.println(collisionPrincesse);
+				if(collisionPrincesse) { victory=true;
+				posY += Gdx.graphics.getDeltaTime() * linkSpeed;}
+			}
 			for (Monstre monstre : monstres) {
 				if (collision == false) {
 

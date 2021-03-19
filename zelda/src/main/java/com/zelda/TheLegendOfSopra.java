@@ -1,16 +1,6 @@
 package com.zelda;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.zelda.world.GameMap;
 
 import screen.BigMiniMap;
 import screen.GameOver;
@@ -23,6 +13,7 @@ import screen.MenuModifMap;
 import screen.MenuModifProfil;
 import screen.MenuPrincipal;
 import screen.MenuRecapPartie;
+import screen.Victoire;
 
 public class TheLegendOfSopra extends Game {
 
@@ -37,6 +28,7 @@ public class TheLegendOfSopra extends Game {
 	private GameScreen app;
 	private BigMiniMap miniMap;
 	private GameOver gameOver;
+	private Victoire victoire;
 	
 	public final static int PRINCIPAL = 0;
 	public final static int CREATION = 1;
@@ -49,6 +41,7 @@ public class TheLegendOfSopra extends Game {
 	public final static int APP = 8;
 	public final static int MINIMAP = 9;
 	public final static int GAMEOVER = 10;
+	public final static int VICTOIRE = 11;
 	
 	@Override
 	public void create () {
@@ -148,6 +141,14 @@ public class TheLegendOfSopra extends Game {
 				gameOver = new GameOver(this);
 			}
 			this.setScreen(gameOver);
+			break;
+		
+		case VICTOIRE : 
+			if (victoire == null)
+			{
+				victoire = new Victoire(this);
+			}
+			this.setScreen(victoire);
 			break;
 		}
 	}
