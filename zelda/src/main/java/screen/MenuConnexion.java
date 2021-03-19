@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -82,40 +83,9 @@ public class MenuConnexion implements Screen{
 		table.add(badPwd);
 		table.row();
 		table.add(connexion);
-		List<Joueur> joueurs = Context.getInstance().getDaoJoueur().findAll();
-
 		connexion.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				String log = saisieLogin.getText();
-				String pass = saisiePwd.getText();
-				System.out.println(log+ " - " + pass);
-				verifLogin = false;
-				for (Joueur j : joueurs)
-				{
-					if (j.getLogin().equals(log))
-					{
-						verifLogin = true;
-						break;
-					}
-				}
-				if (verifLogin==true)
-				{
-					if (Context.getInstance().getDaoJoueur().checkConnect(log, pass) == null)
-					{
-						badPwd.setText("Mot de passe incorrect");
-						badLogin.setText(null);
-					}
-					else
-					{
-						MenuPrincipal.userConnected = Context.getInstance().getDaoJoueur().checkConnect(log, pass);
-						parent.changeScreen(TheLegendOfSopra.INFOS);
-					}
-				}
-				else
-				{
-					badLogin.setText("Login Inconnu");
-					badPwd.setText(null);
-				}
+				connexion();
 			}
 		});
 	}
@@ -155,5 +125,40 @@ public class MenuConnexion implements Screen{
 	public void dispose() {
 		stage.dispose();
 
+	}
+	public void connexion()
+	{
+		String log = saisieLogin.getText();
+		String pass = saisiePwd.getText();
+		System.out.println(log+ " - " + pass);
+		verifLogin = false;
+		List<Joueur> joueurs = Context.getInstance().getDaoJoueur().findAll();
+		for (Joueur j : joueurs)
+		{
+			if (j.getLogin().equals(log))
+			{
+				verifLogin = true;
+				break;
+			}
+		}
+		if (verifLogin==true)
+		{
+			if (Context.getInstance().getDaoJoueur().checkConnect(log, pass) == null)
+			{
+				badPwd.setText("Mot de passe incorrect");
+				badLogin.setText(null);
+			}
+			else
+			{
+				MenuPrincipal.userConnected = Context.getInstance().getDaoJoueur().checkConnect(log, pass);
+				parent.changeScreen(TheLegendOfSopra.INFOS);
+			}
+		}
+		else
+		{
+			badLogin.setText("Login Inconnu");
+			badPwd.setText(null);
+		}
+	
 	}
 }

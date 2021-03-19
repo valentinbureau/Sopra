@@ -46,46 +46,7 @@ public class GameOver implements Screen{
 
 	@Override
 	public void show() {
-		stage.clear();
-		Gdx.input.setInputProcessor(stage);
 		
-		skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
-		tableImg = new Table();
-		tableImg.setFillParent(true);
-		tableImg.setDebug(true);
-		//tableImg.align(Align.top);
-		texture = new Texture(Gdx.files.internal("screen/assets/Game_Over_Modele.png"));
-		img = new Image (texture);
-		table = new Table();
-		table.setFillParent(true);
-		table.setDebug(true);
-		
-		table.align(Align.bottom | Align.center);
-		tableImg.add(img).row();
-		stage.addActor(tableImg);
-		stage.addActor(table);
-		TextButton quitter = new TextButton("Quitter", skin);
-		TextButton retry = new TextButton("Reesayer", skin);
-		table.add(quitter).padBottom(10).padRight(10);
-		table.add(retry).padBottom(10).padLeft(10);
-		MenuPrincipal.userConnected.getAvatar().setVie(8);
-		MenuPrincipal.userConnected.getAvatar().setPosX(5920);
-		MenuPrincipal.userConnected.getAvatar().setPosY(1700);
-		Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
-		
-		quitter.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
-				
-				Gdx.app.exit();
-			}
-		});
-		
-		retry.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
-				parent.changeScreen(TheLegendOfSopra.APP);
-			}
-		});
-
 	}
 
 	@Override
@@ -93,7 +54,9 @@ public class GameOver implements Screen{
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		draw();
 		stage.draw();
+		
 	}
 
 	@Override
@@ -123,6 +86,50 @@ public class GameOver implements Screen{
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+	
+	public void draw()
+	{
+		stage.clear();
+		Gdx.input.setInputProcessor(stage);
+		
+		skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
+		tableImg = new Table();
+		tableImg.setFillParent(true);
+		tableImg.setDebug(true);
+		//tableImg.align(Align.top);
+		texture = new Texture(Gdx.files.internal("screen/assets/Game_Over_Modele.png"));
+		img = new Image (texture);
+		table = new Table();
+		table.setFillParent(true);
+		table.setDebug(true);
+		
+		table.align(Align.bottom | Align.center);
+		tableImg.add(img).row();
+		stage.addActor(tableImg);
+		stage.addActor(table);
+		TextButton quitter = new TextButton("Quitter", skin);
+		TextButton retry = new TextButton("Reesayer", skin);
+		table.add(quitter).padBottom(10).padRight(10);
+		table.add(retry).padBottom(10).padLeft(10);
+		MenuPrincipal.userConnected.getAvatar().setVie(8);
+//		MenuPrincipal.userConnected.getAvatar().setPosX(5920);
+//		MenuPrincipal.userConnected.getAvatar().setPosY(1700);
+		MenuPrincipal.userConnected=Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
+		
+		quitter.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				
+				Gdx.app.exit();
+			}
+		});
+		
+		retry.addListener(new ChangeListener() {
+			public void changed (ChangeEvent event, Actor actor) {
+				parent.changeScreen(TheLegendOfSopra.APP);
+			}
+		});
+
 	}
 
 }

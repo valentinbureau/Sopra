@@ -225,7 +225,6 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		shapeRendererPrinc.end();
 
 		if(Gdx.input.isKeyPressed(Keys.TAB)) {
-			System.out.println("PRESSED");
 			parent.changeScreen(TheLegendOfSopra.MINIMAP);
 		}
 		
