@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.zelda.TheLegendOfSopra;
@@ -69,8 +71,9 @@ public class MenuInfosJoueur implements Screen{
 		table.row();
 		table.add(deconnexion).colspan(2);
 		
-		deconnexion.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
+		deconnexion.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
 				parent.changeScreen(TheLegendOfSopra.PRINCIPAL);
 			}
 		});
@@ -93,8 +96,9 @@ public class MenuInfosJoueur implements Screen{
 			}
 		});
 		
-		commencerPartie.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
+		commencerPartie.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
 				//parent.changeScreen(TheLegendOfSopra.PARTIE);
 				parent.changeScreen(TheLegendOfSopra.APP);
 			}
@@ -106,6 +110,7 @@ public class MenuInfosJoueur implements Screen{
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		Gdx.input.setInputProcessor(stage);
 		stage.draw();
 		
 	}

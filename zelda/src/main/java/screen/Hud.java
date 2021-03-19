@@ -33,6 +33,7 @@ public class Hud implements Screen{
 	private OrthographicCamera hudCamera;
 
 	private TextButton quit;
+	private TextButton music;
 	public Hud(SpriteBatch sb)  
 	{  
 		hudCamera = new OrthographicCamera(GameScreen.map.getWidth(), GameScreen.map.getHeight()+60);
@@ -47,7 +48,7 @@ public class Hud implements Screen{
 		bitmapfont = new BitmapFont(fontFile);
 		bitmapfont.getData().setScale(0.8f);
 		//-- On rempli notre écran  
-		
+
 	}
 	@Override
 	public void show() {
@@ -61,7 +62,7 @@ public class Hud implements Screen{
 		//	table.setPosition(0, Gdx.graphics.getHeight());
 		lifeLabel   =new Label("Lives",new Label.LabelStyle(bitmapfont, Color.WHITE));  
 		table.add(lifeLabel).top().right().padRight(20).row();//.expandX().padTop(10); 
-		
+
 		Table tableImg=new Table();  
 		//tableImg.add(img).width(28).height(20).left();//.padTop(15);
 		tableImg.setSize(GameScreen.link.getVie(), 1);
@@ -80,7 +81,10 @@ public class Hud implements Screen{
 		Skin skin = new Skin (Gdx.files.internal("screen/assets/defaut/uiskin.json"));
 		quit = new TextButton("Quitter", skin);
 		table2.add(quit);
- 
+
+		music = new TextButton("No Music", skin);
+		table2.add(music).bottom().right().padRight(10);
+
 		stage.addActor(table);  
 		stage.addActor(table2);  
 		quit.addListener(new ClickListener() {
@@ -91,40 +95,58 @@ public class Hud implements Screen{
 				Gdx.app.exit();
 			}
 		});
-		
+
+		music.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (music.getText().equals("No Music"))
+				{
+					GameScreen.sound.stop();
+					music.setText("Music");
+
+				}
+				else
+				{
+					GameScreen.sound.play();
+					music.setText("No Music");
+				}
+			}
+		});
+
 	}
 	@Override
 	public void render(float delta) {
-//		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		Gdx.input.setInputProcessor(stage);
 		stage.draw();
-		
+
 	}
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 	@Override
 	public void dispose() {
 		stage.dispose();
-		
+
 	}
 
 

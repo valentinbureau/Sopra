@@ -55,6 +55,7 @@ public class GameOver implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		draw();
+		Gdx.input.setInputProcessor(stage);
 		stage.draw();
 		
 	}

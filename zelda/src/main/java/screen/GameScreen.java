@@ -26,6 +26,8 @@ import com.zelda.Princesse;
 import com.zelda.TheLegendOfSopra;
 import com.zelda.world.GameMap;
 
+import util.Context;
+
 public class GameScreen extends ApplicationAdapter implements Screen{
 
 
@@ -35,7 +37,8 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	private Hud hud;
 	static FileHandle fontFile;
 	BitmapFont bitmapfont;
-	Sound sound;
+	static Sound sound;
+	
 	OrthographicCamera camera;
 	OrthographicCamera cameraPrinc;
 
@@ -248,6 +251,11 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		if(Gdx.input.isKeyPressed(Keys.TAB)) {
 			parent.changeScreen(TheLegendOfSopra.MINIMAP);
 		}
+		
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			MenuPrincipal.userConnected=Context.getInstance().getDaoJoueur().save(MenuPrincipal.userConnected);
+			parent.changeScreen(TheLegendOfSopra.INFOS);
+		}
 
 		if (link.isVictory())
 		{
@@ -262,5 +270,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		}
 		hud.show();
 	}
+
+
 }
 
