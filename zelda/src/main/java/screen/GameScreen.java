@@ -169,12 +169,12 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 		
 
-		//Check de ce qui doit être présent à l'écran
-		monstres.forEach(m-> m.onCamera(link)); // Init du booléen (présence sous caméra)
+		//Check de ce qui doit ï¿½tre prï¿½sent ï¿½ l'ï¿½cran
+		monstres.forEach(m-> m.onCamera(link)); // Init du boolï¿½en (prï¿½sence sous camï¿½ra)
 		monsters = monstres.stream().filter(m -> m.isOnAir())
-				.collect(Collectors.toList()); //On filtre les monstres présents sous la camera
+				.collect(Collectors.toList()); //On filtre les monstres prï¿½sents sous la camera
 		
-		monsters.stream().forEach(m -> m.render(link)); //Rendering des monstres présents à l'écran
+		monsters.stream().forEach(m -> m.render(link)); //Rendering des monstres prï¿½sents ï¿½ l'ï¿½cran
 
 		princesse.onCamera(link);
 		if (princesse.isOnAir()) {princesse.render(link);}
@@ -221,6 +221,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 
 		cameraPrinc.position.set(princesse.getPosX() , princesse.getPosY() , 0);
 		cameraPrinc.update();
+	
 
 		map.batch.end();
 
