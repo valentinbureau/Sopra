@@ -21,7 +21,7 @@ public class Monstre extends Entite{
 	private static LocalTime tempsDeplacement = LocalTime.now();
 	private int deplacement = 1;
 
-	
+	private boolean onAir;
 	private boolean canUp;
 	private boolean canDown;
 	private boolean canLeft;
@@ -202,6 +202,15 @@ public class Monstre extends Entite{
 	public void setDeplacement(int deplacement) {
 		this.deplacement = deplacement;
 	}
+	
+	public boolean isOnAir() {
+		return onAir;
+	}
+
+	public void setOnAir(boolean onAir) {
+		this.onAir = onAir;
+	}
+
 	public void create () {
 		this.texture = new Texture("com/zelda/Monster-sprites.png");
 		this.tmpFrames = TextureRegion.split(texture, texture.getWidth()/12, texture.getHeight()/8);
@@ -357,4 +366,23 @@ public class Monstre extends Entite{
 		collision = false;
 	}
 	
+	public void onCamera(Link link) {
+//		System.out.println("-------------------------------------------------");
+//		System.out.print(link.getPosX()-map.getWidth()/2);
+//		System.out.print(" ");
+//		System.out.print(posX);
+//		System.out.print(" ");
+//		System.out.println(link.getPosX()+map.getWidth()/2);
+//
+//		System.out.print(link.getPosY()-map.getHeight()/2 );
+//		System.out.print(" ");
+//		System.out.print(posY);
+//		System.out.print(" ");
+//		System.out.println(link.getPosY()+map.getHeight()/2);
+//		System.out.println("-------------------------------------------------");
+		if ((link.getPosX()-map.getWidth()/2) > posX || (link.getPosX()+map.getWidth()/2) < posX || (link.getPosY()-map.getHeight()/2) > posY || (link.getPosY()+map.getHeight()/2) < posY) {
+			this.onAir = false;
+		}
+		else {this.onAir = true;}
+	}
 }

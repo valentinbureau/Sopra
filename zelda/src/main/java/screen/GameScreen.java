@@ -4,6 +4,7 @@ package screen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -16,7 +17,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.zelda.Link;
 import com.zelda.Monstre;
@@ -40,21 +40,21 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 	static Princesse princesse = new Princesse();
 	static Link link = MenuPrincipal.userConnected.getAvatar(); // Initialisation du Joueur
 
-//	static Monstre monstre = new Monstre(6500, 2050, 80, 2); //Initialisation du Monstre de type 1
-//	static Monstre monstre1 = new Monstre(7114, 2316, 80, 2);
-	static Monstre monstre2 = new Monstre(7010, 2338, 80, 5);
+	static Monstre monstre = new Monstre(6500, 2050, 50, 2); //Initialisation du Monstre de type 1
+	static Monstre monstre1 = new Monstre(7114, 2316, 50, 2);
+	static Monstre monstre2 = new Monstre(7010, 2338, 50, 5);
 	static Monstre monstre3 = new Monstre(7198, 2162, 50, 2);
-//	static Monstre monstre4 = new Monstre(7112, 1947, 80, 5);
-//	static Monstre monstre5 = new Monstre(6838, 1922, 80, 2);
+	static Monstre monstre4 = new Monstre(7112, 1947, 50, 5);
+	static Monstre monstre5 = new Monstre(6838, 1922, 50, 2);
 	static Monstre monstre6 = new Monstre(5920, 1503, 50, 3);
-//	static Monstre monstre7 = new Monstre(7042, 1461, 80, 5);
-//	static Monstre monstre8 = new Monstre(7323, 2868, 80, 5);
-//	static Monstre monstre9 = new Monstre(7702, 2789, 80, 1);
-//	static Monstre monstre10 = new Monstre(7587, 2326, 80, 5);
-//	static Monstre monstre11 = new Monstre(6690, 1930, 80, 2);
-//	static Monstre monstre12 = new Monstre(6680, 2330, 80, 6);
-//	static Monstre monstre13 = new Monstre(6557, 1513, 80, 3);
-//	static Monstre monstre14 = new Monstre(5919, 1805, 80, 7);
+	static Monstre monstre7 = new Monstre(7042, 1461, 50, 5);
+	static Monstre monstre8 = new Monstre(7323, 2868, 50, 5);
+	static Monstre monstre9 = new Monstre(7702, 2789, 50, 1);
+	static Monstre monstre10 = new Monstre(7587, 2326, 50, 5);
+	static Monstre monstre11 = new Monstre(6690, 1930, 50, 2);
+	static Monstre monstre12 = new Monstre(6680, 2330, 50, 6);
+	static Monstre monstre13 = new Monstre(6557, 1513, 50, 3);
+	static Monstre monstre14 = new Monstre(5919, 1805, 50, 7);
 	
 
 	static ArrayList<Monstre> monstres = new ArrayList<Monstre>();
@@ -81,23 +81,37 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		princesse.create();
 		hud=new Hud(map.batch);
 
-//		monstre.create();//Crï¿½ation du monstre (sprite)
-//		monstre1.create();
+		monstre.create();//Crï¿½ation du monstre (sprite)
+		monstre1.create();
 		monstre2.create();
-
 		monstre3.create();
-		//		monstre4.create();
-		//		monstre5.create();
+		monstre4.create();
+		monstre5.create();
 		monstre6.create();
-		//		monstre7.create();
-		//		monstre8.create();
-		//		monstre9.create();
-		//		monstre10.create();
-		//		monstre11.create();
-		//		monstre12.create();
-		//		monstre13.create();
-		//		monstre14.create();
-
+		monstre7.create();
+		monstre8.create();
+		monstre9.create();
+		monstre10.create();
+		monstre11.create();
+		monstre12.create();
+		monstre13.create();
+		monstre14.create();
+		
+		monstres.add(monstre);
+		monstres.add(monstre1);
+		monstres.add(monstre2);
+		monstres.add(monstre3);
+		monstres.add(monstre4);
+		monstres.add(monstre5);
+		monstres.add(monstre6);
+		monstres.add(monstre7);
+		monstres.add(monstre8);
+		monstres.add(monstre9);
+		monstres.add(monstre10);
+		monstres.add(monstre11);
+		monstres.add(monstre12);
+		monstres.add(monstre13);
+		monstres.add(monstre14);
 
 	}
 
@@ -157,42 +171,17 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		}
 
 		princesse.render(link);
-		//link.render(princesse);
-		//link.render();
+		
+		monstres.forEach(m-> m.onCamera(link)); // Init du booléen (présence sous caméra)
 
-//		monstres.add(monstre);
-//		monstres.add(monstre1);
-		monstres.add(monstre2);
-		monstres.add(monstre3);
-//				monstres.add(monstre4);
-		//		monstres.add(monstre5);
-		monstres.add(monstre6);
-		//		monstres.add(monstre7);
-		//		monstres.add(monstre8);
-		//		monstres.add(monstre9);
-		//		monstres.add(monstre10);
-		//		monstres.add(monstre11);
-		//		monstres.add(monstre12);
-		//		monstres.add(monstre13);
-		//		monstres.add(monstre14);
+		List<Monstre> monsters = monstres.stream().filter(m -> m.isOnAir())
+				.collect(Collectors.toList()); //On filtre les monstres présents sous la camera
 
-		link.render(monstres,princesse); //Commande de dï¿½placement personnage
 
-//		monstre.render(link);//Dï¿½placement Monstre
-//		monstre1.render(link);
-		monstre2.render(link);
-		monstre3.render(link);
-//		monstre4.render(link);
-//		monstre5.render(link);
-		monstre6.render(link);
-		//		monstre7.render(link);
-		//		monstre8.render(link);
-		//		monstre9.render(link);
-		//		monstre10.render(link);
-		//		monstre11.render(link);
-		//		monstre12.render(link);
-		//		monstre13.render(link);
-		//		monstre14.render(link);
+		monsters.stream().forEach(m -> m.render(link)); //Rendering des monstres présents à l'écran
+
+		link.render(monsters,princesse); //Commande de dï¿½placement personnage
+
 		camera.update();
 		miniCamera.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -205,25 +194,7 @@ public class GameScreen extends ApplicationAdapter implements Screen{
 		map.batch.draw(map.gameScene, 0, 0,10000,3424);//Affichage map
 		map.batch.draw(link.getSprite(), link.getPosX(), link.getPosY());//Affichage personnage
 		map.batch.draw(princesse.getSprite(), princesse.getPosX(), princesse.getPosY(),princesse.getWidth(),princesse.getHeight());//Affichage personnage
-
-
-//		map.batch.draw(monstre.getSprite(), monstre.getPosX(), monstre.getPosY()); //Affichage Monstre
-//		map.batch.draw(monstre1.getSprite(), monstre1.getPosX(), monstre1.getPosY());
-		map.batch.draw(monstre2.getSprite(), monstre2.getPosX(), monstre2.getPosY());
-		map.batch.draw(monstre3.getSprite(), monstre3.getPosX(), monstre3.getPosY());
-//		map.batch.draw(monstre4.getSprite(), monstre4.getPosX(), monstre4.getPosY());
-//		map.batch.draw(monstre5.getSprite(), monstre5.getPosX(), monstre5.getPosY());
-
-		map.batch.draw(monstre6.getSprite(), monstre6.getPosX(), monstre6.getPosY());
-		//		map.batch.draw(monstre7.getSprite(), monstre7.getPosX(), monstre7.getPosY());
-		//		map.batch.draw(monstre8.getSprite(), monstre8.getPosX(), monstre8.getPosY());
-		//		map.batch.draw(monstre9.getSprite(), monstre9.getPosX(), monstre9.getPosY());
-		//		map.batch.draw(monstre10.getSprite(), monstre10.getPosX(), monstre10.getPosY());
-		//		map.batch.draw(monstre11.getSprite(), monstre11.getPosX(), monstre11.getPosY());
-		//		map.batch.draw(monstre12.getSprite(), monstre12.getPosX(), monstre12.getPosY());
-		//		map.batch.draw(monstre13.getSprite(), monstre13.getPosX(), monstre13.getPosY());
-		//		map.batch.draw(monstre14.getSprite(), monstre14.getPosX(), monstre14.getPosY());
-
+		monsters.stream().forEach(m ->map.batch.draw(m.getSprite(), m.getPosX(), m.getPosY()));
 
 		map.batch.draw(miniMap,  camera.position.x-map.getWidth()/2, camera.position.y+map.getHeight()/3+15, MINI_MAP_WIDTH,MINI_MAP_HEIGHT);
 		map.batch.setProjectionMatrix(camera.invProjectionView);
