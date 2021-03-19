@@ -75,7 +75,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>Pong</finalName>
+		<finalName>TheLegendOfSopra</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -101,7 +101,7 @@
 							<archive>
 								<manifest>
 									<addClasspath>true</addClasspath>
-									<mainClass>DesktopLauncher</mainClass>
+									<mainClass>com.zelda.desktop.DesktopLauncher</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>
