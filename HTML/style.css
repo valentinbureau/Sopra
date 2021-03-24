@@ -4,12 +4,27 @@ body{
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-position: absolute;
-width: 1440px;
-height: 951px;
-left: 0px;
-top: 73px;
+
+}
 
 
+form{
 
+  display:flex;
+  display: none;
+  flex-direction: column;
+  border: solid black 5px;
+  border-radius: 12px;
+  border
+  width: 15%;
+  padding: 10px;
+  text-align: center;
+  background-color: lightblue;
+  position: absolute;
+  left: 42%;
+  top: 30%;
+}
+
+div{
+  padding-bottom: 2%;
 }

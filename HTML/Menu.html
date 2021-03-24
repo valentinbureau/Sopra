@@ -1,9 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+    <link rel="stylesheet" href="../node_modules/nes.css/css/nes.min.css">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    
+    <form id="login" class="connexion">
+      <h2>S'identifier</h2>
+      <div>
+      Pseudo<input class="nes-input" type="text" placholder="pseudo"  required>
+      </div>
+      <div>
+      Mot de Passe<input class="nes-input" type="password" placholder="password" required>
+      </div>
+      <button type="submit" class="nes-btn is-primary" onclick="signin()">Connexion</button>
+    </form>
+    <form id="signup">
+      <h2>Créer un compte</h2>
+      <div>
+      Mail<input class="nes-input" type="email" placholder="email" required>
+      </div>
+      <div>
+      Pseudo<input class="nes-input" type="text" placholder="pseudo"  required>
+      </div>
+      <div>
+      Mot de Passe<input class="nes-input" type="password" placholder="password" required>
+      </div>
+      <div>
+      Confirmation<input class="nes-input" type="password" placholder="password" required>
+      </div>
+      <button type="submit" class="nes-btn is-primary" onclick="signup()">Créer compte</button>
+    </form>
+    <button type="button" class="nes-btn is-primary" onclick="identifier()">S'identifier</button>
+    <button type="button" class="nes-btn is-success" onclick="creer()"">Créer un compte</button>
   </body>
 </html>
+<script>
+  function identifier(){
+    document.getElementById("login").style.display = "block";
+    document.getElementById("signup").style.display = "none";
+  }
+  function creer(){
+    document.getElementById("signup").style.display = "block";
+    document.getElementById("login").style.display = "none";
+  }
+
+  function signin(){
+
+  }
+
+  function signup(){
+    identifier();
+  }
+</script>
