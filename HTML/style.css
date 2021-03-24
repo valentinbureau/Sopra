@@ -1,0 +1,15 @@
+body{
+  background-image: url('img/background.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+position: absolute;
+width: 1440px;
+height: 951px;
+left: 0px;
+top: 73px;
+
+
+
+}
