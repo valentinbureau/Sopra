@@ -14,6 +14,11 @@ body{
   align-items: center;
 }
 
+img{
+  position: absolute;
+  width: 16%;
+  left: 0;
+}
 
 form{
 
@@ -31,23 +36,51 @@ form{
 
 }
 
+.leaderboard {
+  display:flex;
+  flex-direction: column;
+  border: solid black 5px;
+  border-radius: 12px;
+  width: 60% !important;
+  margin-top: 10%;
+  padding: 10px;
+  text-align: center;
+  background-color: lightblue;
+}
+
+.leaderboard-title {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 10px;
+  align-items: center;
+}
+/*
+.leaderboard
+{
+  background-color: black;
+  text-align: center;
+  margin-top: 20%;
+  padding: 10px;
+  color : white;
+}
+
+.nes-table
+{
+  color : magenta;
+  background-color: black;
+  border-color : white;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}*/
+
+.joueur {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 10px;
+}
+
 div{
   padding-bottom: 2%;
 }
-
-#scoreBoard
-{
-  align-items : center;
-  text-align : center;
-  color : white;
-  background-color: black;
-}
-
-#scoreBoard table
-{
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
 }

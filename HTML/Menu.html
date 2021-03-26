@@ -21,7 +21,8 @@
       <div>
       Mot de Passe<input class="nes-input" type="password" placholder="password" required>
       </div>
-      <button type="submit" class="nes-btn is-primary" onclick="signin()">Connexion</button>
+      <a href="./MenuJoueur.html" class="nes-btn is-primary">Connexion</a>
+    <!--  <button type="submit" class="nes-btn is-primary" onclick="signin()">Connexion</button> -->
     </form>
     <form id="signup">
       <h2 >Créer un compte</h2>
@@ -39,7 +40,7 @@
       </div>
       <button type="submit" class="nes-btn is-primary" onclick="signup()">Créer compte</button>
     </form>
-    <form id="profil">
+  <!--  <form id="profil">
       <h2 >Informations du profil</h2>
       <div>
       Mail<input class="nes-input" type="email" placholder="email" required>
@@ -55,30 +56,18 @@
       </div>
       <button type="submit" class="nes-btn is-success" onclick="saveInfos()">Enregistrer</button>
       <button type="submit" class="nes-btn is-error" onclick="signin()">Annuler</button>
-    </form>
+    </form> -->
     <div id="menuPrincipal">
       <button type="button" class="nes-btn is-primary" onclick="identifier()">S'identifier</button>
       <button type="button" class="nes-btn is-success" onclick="creer()">Créer un compte</button>
+      <a href="./Scores.html" class="nes-btn is-error">LeaderBoard</a>
     </div>
-    <div id="menuJoueur">
+<!--    <div id="menuJoueur">
         <button type="button" class="nes-btn is-primary" onclick="modifProfil()">Modifier le profil</button>
         <button type="button" class="nes-btn is-success">Commencer la partie</button>
         <button type="button" class="nes-btn is-error" onclick="mainMenu()" >Déconnexion</button>
-        <div id="scoreBoard">
-          <h2>Best Players</h2>
-          <table class="nes-table is-dark is-bordered is-centered">
-            <tr>
-              <td>Meilleur score 1</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>Meilleur score 2 </td>
-              <td>-10</td>
-            </tr>
-          </table>
-        </div>
-
-    </div>
+        <a href="./Scores.html" class="nes-btn is-primary">LeaderBoard</a>
+    </div> -->
   </body>
 </html>
 <script>

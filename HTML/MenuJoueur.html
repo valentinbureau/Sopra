@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link rel="stylesheet" href="../node_modules/nes.css/css/nes.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="back.js"></script>
+  </head>
+
+
+  <body>
+    <div id="infos">
+      <button type="button" class="nes-btn is-primary" onclick="modifProfil()">Modifier le profil</button>
+      <button type="button" class="nes-btn is-success">Commencer la partie</button>
+      <a href="./Menu.html" class="nes-btn is-error">Déconnexion</a>
+      <a href="./Scores.html" class="nes-btn is-primary">LeaderBoard</a>
+    </div>
+
+<form id="profil">
+  <h2 >Informations du profil</h2>
+  <div>
+  Mail<input class="nes-input" type="email" placholder="email" required>
+  </div>
+  <div>
+  Pseudo<input class="nes-input" type="text" placholder="pseudo"  required>
+  </div>
+  <div>
+  Mot de Passe<input class="nes-input" type="password" placholder="password" required>
+  </div>
+  <div>
+  Confirmation<input class="nes-input" type="password" placholder="password" required>
+  </div>
+  <button type="submit" class="nes-btn is-success" onclick="saveInfos()">Enregistrer</button>
+  <button type="submit" class="nes-btn is-error" onclick="signin()">Annuler</button>
+</form>
+
+</<body>
+</html>
+
+<script>
+  function modifProfil()
+  {
+    document.getElementById("infos").style.display = "none";
+    document.getElementById("profil").style.display = "block";
+  }
+
+  function signin()
+  {
+    document.getElementById("infos").style.display = "block";
+    document.getElementById("profil").style.display = "none";
+  }
+
+  function saveInfos()
+  {
+    document.getElementById("infos").style.display = "block";
+    document.getElementById("profil").style.display = "none";
+  }
+
+</script>
