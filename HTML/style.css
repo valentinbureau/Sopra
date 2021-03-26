@@ -92,8 +92,10 @@ div{
 .image{
   border-radius:50%;
 }
-.avatar{
-  float: left;
-    margin-right: 4%;
+
+
+i{
+  float:left;
+  margin-right: 4%;
 }
 }

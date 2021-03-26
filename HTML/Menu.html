@@ -68,8 +68,8 @@
     </div> -->
     <div id="credit">
       <section class="nes-container is-dark member-card">
-        <div class="avatar">
-          <img class="image" src="img/Maguy.png">
+        <<div>
+          <i class="nes-charmander"></i>
         </div>
         <div class="profile">
           <h4 class="name">Maguy</h4>
@@ -77,8 +77,8 @@
         </div>
       </section>
       <section class="nes-container is-dark member-card">
-        <div class="avatar">
-          <img class="image" src="img/Pierre-Damien.png">
+        <div>
+          <i class="nes-mario"></i>
         </div>
         <div class="profile">
           <h4 class="name">Piere Damien</h4>
@@ -86,8 +86,8 @@
         </div>
       </section>
       <section class="nes-container is-dark member-card">
-        <div class="avatar">
-          <img class="image" src="img/Valentin.png">
+        <div>
+          <i class="nes-pokeball"></i>
         </div>
         <div class="profile">
           <h4 class="name">Valentin</h4>
@@ -100,28 +100,21 @@
 </html>
 <script>
 
-  document.getElementById("menuJoueur").style.display = "none";
   document.getElementById("credit").style.display = "none";
   function identifier(){
     document.getElementById("login").style.display = "block";
     document.getElementById("signup").style.display = "none";
-    document.getElementById("menuJoueur").style.display = "none";
-    document.getElementById("profil").style.display = "none";
     document.getElementById("credit").style.display = "none";
   }
   function creer(){
     document.getElementById("signup").style.display = "block";
     document.getElementById("login").style.display = "none";
-    document.getElementById("menuJoueur").style.display = "none";
-    document.getElementById("profil").style.display = "none";
     document.getElementById("credit").style.display = "none";
   }
 
   function signin(){
     document.getElementById("login").style.display = "none";
     document.getElementById("menuPrincipal").style.display = "none";
-    document.getElementById("menuJoueur").style.display = "block";
-    document.getElementById("profil").style.display = "none";
     document.getElementById("credit").style.display = "none";
 
   }
@@ -130,8 +123,6 @@
   {
     document.getElementById("login").style.display = "none";
     document.getElementById("menuPrincipal").style.display = "none";
-    document.getElementById("menuJoueur").style.display = "none";
-    document.getElementById("profil").style.display = "block";
     document.getElementById("credit").style.display = "none";
   }
 
@@ -143,7 +134,6 @@
   {
     document.getElementById("login").style.display = "none";
     document.getElementById("menuPrincipal").style.display = "block";
-    document.getElementById("menuJoueur").style.display = "none";
     document.getElementById("credit").style.display = "none";
   }
 
@@ -151,8 +141,6 @@
   {
     document.getElementById("login").style.display = "none";
     document.getElementById("menuPrincipal").style.display = "block";
-    document.getElementById("menuJoueur").style.display = "none";
-    document.getElementById("profil").style.display = "none";
     document.getElementById("credit").style.display = "block";
   }
 
