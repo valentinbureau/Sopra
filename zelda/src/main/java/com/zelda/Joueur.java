@@ -38,7 +38,7 @@ public class Joueur implements Serializable{
         column=@Column(name="vie_link")),
 	})
 	@Column(nullable=true)
-	private Link link=new Link();
+	private Link link;
 	
 	public Joueur() {}
 
