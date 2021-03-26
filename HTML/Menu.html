@@ -23,7 +23,7 @@
       <button type="submit" class="nes-btn is-primary" onclick="signin()">Connexion</button>
     </form>
     <form id="signup">
-      <h2>Créer un compte</h2>
+      <h2 >Créer un compte</h2>
       <div>
       Mail<input class="nes-input" type="email" placholder="email" required>
       </div>
@@ -38,27 +38,80 @@
       </div>
       <button type="submit" class="nes-btn is-primary" onclick="signup()">Créer compte</button>
     </form>
-    <div>
+    <form id="profil">
+      <h2 >Informations du profil</h2>
+      <div>
+      Mail<input class="nes-input" type="email" placholder="email" required>
+      </div>
+      <div>
+      Pseudo<input class="nes-input" type="text" placholder="pseudo"  required>
+      </div>
+      <div>
+      Mot de Passe<input class="nes-input" type="password" placholder="password" required>
+      </div>
+      <div>
+      Confirmation<input class="nes-input" type="password" placholder="password" required>
+      </div>
+      <button type="submit" class="nes-btn is-success" onclick="saveInfos()">Enregistrer</button>
+      <button type="submit" class="nes-btn is-error" onclick="signin()">Annuler</button>
+    </form>
+    <div id="menuPrincipal">
       <button type="button" class="nes-btn is-primary" onclick="identifier()">S'identifier</button>
       <button type="button" class="nes-btn is-success" onclick="creer()">Créer un compte</button>
+    </div>
+    <div id="menuJoueur">
+        <button type="button" class="nes-btn is-primary" onclick="modifProfil()">Modifier le profil</button>
+        <button type="button" class="nes-btn is-success">Commencer la partie</button>
+        <button type="button" class="nes-btn is-error" onclick="mainMenu()" >Déconnexion</button>
+
     </div>
   </body>
 </html>
 <script>
+
+  document.getElementById("menuJoueur").style.display = "none";
   function identifier(){
     document.getElementById("login").style.display = "block";
     document.getElementById("signup").style.display = "none";
+    document.getElementById("menuJoueur").style.display = "none";
+    document.getElementById("profil").style.display = "none";
   }
   function creer(){
     document.getElementById("signup").style.display = "block";
     document.getElementById("login").style.display = "none";
+    document.getElementById("menuJoueur").style.display = "none";
+    document.getElementById("profil").style.display = "none";
   }
 
   function signin(){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("menuPrincipal").style.display = "none";
+    document.getElementById("menuJoueur").style.display = "block";
+    document.getElementById("profil").style.display = "none";
 
+  }
+
+  function modifProfil()
+  {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("menuPrincipal").style.display = "none";
+    document.getElementById("menuJoueur").style.display = "none";
+    document.getElementById("profil").style.display = "block";
   }
 
   function signup(){
     identifier();
+  }
+
+  function mainMenu()
+  {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("menuPrincipal").style.display = "block";
+    document.getElementById("menuJoueur").style.display = "none";
+  }
+
+  function saveInfos()
+  {
+    signin();
   }
 </script>
