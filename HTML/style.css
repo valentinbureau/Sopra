@@ -14,7 +14,7 @@ body{
   align-items: center;
 }
 
-img{
+#logo{
   position: absolute;
   width: 16%;
   left: 0;
@@ -63,5 +63,18 @@ form{
 
 div{
   padding-bottom: 2%;
+}
+
+#credits{
+  position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.image{
+  border-radius:50%;
+}
+.avatar{
+  float: left;
+    margin-right: 4%;
 }
 }
